@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: scp-config
+  cloud:
+      config:
+        server:
+          git:
+            searchPaths: config-repo
+            uri: ${SCP_CONFIG_GIT_URI:https://github.com/tiscs/spring-cloud-practices.git}

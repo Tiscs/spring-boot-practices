@@ -1,0 +1,7 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/${spring.application.name}?useSSL=false
+  jpa:
+    showSql: true
+logging:
+  level: debug
