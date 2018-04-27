@@ -2,7 +2,7 @@
 
 ## Components
 
-- scp-parent
+- scp-parent:  
     Public Parent Project
-- scp-config
+- scp-config:  
     Spring Cloud Config Server
