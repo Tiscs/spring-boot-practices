@@ -9,9 +9,10 @@
     <packaging>jar</packaging>
 
     <parent>
-        <groupId>com.github.tiscs</groupId>
+        <groupId>io.github.tiscs</groupId>
         <artifactId>scp-parent</artifactId>
-        <version>1.0.0-RELEASE</version>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../scp-parent/pom.xml</relativePath>
     </parent>
 
     <dependencies>
