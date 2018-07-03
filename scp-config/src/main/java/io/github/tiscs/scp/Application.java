@@ -1,4 +1,4 @@
-package com.github.tiscs.scp;
+package io.github.tiscs.scp;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

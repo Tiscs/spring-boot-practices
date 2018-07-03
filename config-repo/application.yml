@@ -1,6 +1,5 @@
 spring:
   datasource:
-    type: com.zaxxer.hikari.HikariDataSource
     username: ${SCP_MYSQL_USERNAME}
     password: ${SCP_MYSQL_PASSWORD}
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -9,4 +8,5 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL5Dialect
 logging:
-  level: info
+  level:
+    io.github.tiscs.scp: info

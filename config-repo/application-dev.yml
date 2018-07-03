@@ -4,4 +4,5 @@ spring:
   jpa:
     showSql: true
 logging:
-  level: debug
+  level:
+    io.github.tiscs.scp: debug
