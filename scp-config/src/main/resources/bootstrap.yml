@@ -1,9 +1,25 @@
 spring:
+  main:
+    banner-mode: 'off'
   application:
     name: scp-config
+  http:
+    encoding:
+      force: true
   cloud:
-      config:
-        server:
-          git:
-            searchPaths: config-repo
-            uri: ${SCP_CONFIG_GIT_URI:https://github.com/tiscs/spring-cloud-practices.git}
+    config:
+      server:
+        default-label: ${CONFIG_DEFAULT_LABEL:master}
+        native:
+          search-locations: ${CONFIG_REPO_NATIVE_PATHS}
+        git:
+          uri: ${CONFIG_REPO_GIT_URI:https://github.com/tiscs/spring-cloud-practices.git}
+          username: ${CONFIG_REPO_GIT_USERNAME}
+          password: ${CONFIG_REPO_GIT_PASSWORD}
+          searchPaths: ${CONFIG_REPO_GIT_PATHS:config-repo}
+    consul:
+      host: localhost
+      port: 8500
+      discovery:
+        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
+        prefer-ip-address: true
