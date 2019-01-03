@@ -1,6 +1,6 @@
-package io.github.tiscs.scp.entities;
+package io.github.tiscs.scp.models;
 
-public class UserEntity {
+public class User {
     private Long id;
 
     private String name;

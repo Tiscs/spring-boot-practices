@@ -8,5 +8,7 @@ spring:
     username: ${SCP_MYSQL_USERNAME}
     password: ${SCP_MYSQL_PASSWORD}
     driverClassName: com.mysql.cj.jdbc.Driver
+  devtools:
+    add-properties: false
 mybatis:
   type-aliases-package: io.github.tiscs.scp.entities

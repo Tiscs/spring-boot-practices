@@ -23,3 +23,5 @@ spring:
       discovery:
         instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
         prefer-ip-address: true
+  devtools:
+    add-properties: false
