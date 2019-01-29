@@ -11,4 +11,4 @@ spring:
   devtools:
     add-properties: false
 mybatis:
-  type-aliases-package: io.github.tiscs.scp.entities
+  type-aliases-package: io.github.tiscs.scp.models

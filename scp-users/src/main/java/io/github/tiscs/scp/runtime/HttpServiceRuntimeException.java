@@ -3,9 +3,9 @@ package io.github.tiscs.scp.runtime;
 import org.springframework.http.HttpStatus;
 
 public class HttpServiceRuntimeException extends RuntimeException {
-    private HttpStatus status;
-    private String error;
-    private Object errorDescription;
+    private final HttpStatus status;
+    private final String error;
+    private final Object errorDescription;
 
     public HttpServiceRuntimeException(HttpStatus status) {
         this(status, status.getReasonPhrase(), null, null);

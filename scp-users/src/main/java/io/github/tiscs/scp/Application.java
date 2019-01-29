@@ -1,5 +1,6 @@
 package io.github.tiscs.scp;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.springframework.boot.SpringApplication;
@@ -28,6 +29,7 @@ public class Application {
     public Jackson2ObjectMapperBuilder jacksonBuilder() {
         return new Jackson2ObjectMapperBuilder()
                 .findModulesViaServiceLoader(true)
+                .serializationInclusion(JsonInclude.Include.NON_NULL)
                 .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
                 .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
@@ -37,6 +39,7 @@ public class Application {
         return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("v1.0.0")
                 .useDefaultResponseMessages(false)
+                .forCodeGeneration(true)
                 .alternateTypeRules(AlternateTypeRules.newRule(ResponseEntity.class, Void.class))
                 .apiInfo(new ApiInfoBuilder()
                         .title("SCP-Users")

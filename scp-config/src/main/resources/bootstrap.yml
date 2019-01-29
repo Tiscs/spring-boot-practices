@@ -17,11 +17,5 @@ spring:
           username: ${CONFIG_REPO_GIT_USERNAME}
           password: ${CONFIG_REPO_GIT_PASSWORD}
           searchPaths: ${CONFIG_REPO_GIT_PATHS:config-repo}
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
-        prefer-ip-address: true
   devtools:
     add-properties: false

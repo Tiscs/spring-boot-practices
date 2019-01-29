@@ -1,7 +1,6 @@
-package io.github.tiscs.scp.handlers;
+package io.github.tiscs.scp.runtime;
 
 import io.github.tiscs.scp.models.APIError;
-import io.github.tiscs.scp.runtime.HttpServiceRuntimeException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;

@@ -5,12 +5,4 @@ spring:
     name: scp-users
   cloud:
     config:
-      discovery:
-        enabled: true
-        service-id: scp-config
-    consul:
-      host: localhost
-      port: 8500
-      discovery:
-        instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port:8080}
-        prefer-ip-address: true
+      uri: ${CONFIG_SERVICE_URI}

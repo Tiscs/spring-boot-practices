@@ -8,6 +8,9 @@ import java.util.List;
 
 @MapperComponent
 public interface UserMapper {
-    @Select("SELECT * FROM `users`")
-    List<User> findAll();
+    @Select("SELECT * FROM `users` ORDER BY `id` ASC")
+    List<User> find();
+
+    @Select("SELECT * FROM `users` where `id` = #{id}")
+    User findOne(long id);
 }
