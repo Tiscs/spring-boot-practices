@@ -18,4 +18,5 @@ spring:
           password: ${CONFIG_REPO_GIT_PASSWORD}
           searchPaths: ${CONFIG_REPO_GIT_PATHS:config-repo}
   devtools:
-    add-properties: false
+    livereload:
+      enabled: false

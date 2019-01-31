@@ -10,5 +10,7 @@ spring:
     driverClassName: com.mysql.cj.jdbc.Driver
   devtools:
     add-properties: false
+    livereload:
+      enabled: false
 mybatis:
   type-aliases-package: io.github.tiscs.scp.models
