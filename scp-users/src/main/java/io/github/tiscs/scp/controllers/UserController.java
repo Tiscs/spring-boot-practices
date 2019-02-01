@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,7 +34,7 @@ public class UserController {
     })
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity fetch() {
-        return ResponseEntity.ok(userMapper.find());
+        return ResponseEntity.ok(userMapper.find(new RowBounds(0, 1)));
     }
 
     @ApiResponses({
