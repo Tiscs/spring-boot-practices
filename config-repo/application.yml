@@ -5,8 +5,6 @@ logging:
     io.swagger.models.parameters.AbstractSerializableParameter: error
 spring:
   datasource:
-    username: ${SCP_MYSQL_USERNAME}
-    password: ${SCP_MYSQL_PASSWORD}
     driverClassName: com.mysql.cj.jdbc.Driver
   devtools:
     add-properties: false

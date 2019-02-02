@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "scp-config",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "io.github.tiscs.scp.Application",
+            "projectName": "scp-config",
+            "args": "--server.port=8190 --spring.profiles.include=local"
+        },
+        {
+            "type": "java",
+            "name": "scp-users",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "io.github.tiscs.scp.Application",
+            "projectName": "scp-users",
+            "args": "--server.port=8080 --spring.profiles.include=local"
+        }
+    ]
+}

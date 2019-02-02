@@ -3,6 +3,8 @@ package io.github.tiscs.scp.runtime;
 import org.springframework.http.HttpStatus;
 
 public class HttpServiceRuntimeException extends RuntimeException {
+    private static final long serialVersionUID = 6885288163935885777L;
+
     private final HttpStatus status;
     private final String error;
     private final Object errorDescription;

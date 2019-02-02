@@ -5,3 +5,5 @@
 /scp-*/.project
 /scp-*/.settings
 /scp-*/.classpath
+/scp-*/.factorypath
+/scp-*/src/main/resources/bootstrap-local.yml
