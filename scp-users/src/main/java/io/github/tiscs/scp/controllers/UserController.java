@@ -34,7 +34,7 @@ public class UserController {
     })
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity fetch() {
-        return ResponseEntity.ok(userMapper.find(new RowBounds(0, 1)));
+        return ResponseEntity.ok(userMapper.find(new RowBounds(0, 10)));
     }
 
     @ApiResponses({
