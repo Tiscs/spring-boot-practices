@@ -3,6 +3,11 @@ logging:
     io.github.tiscs.scp: info
     # Fix https://github.com/springfox/springfox/issues/1100, https://github.com/swagger-api/swagger-core/issues/1568
     io.swagger.models.parameters.AbstractSerializableParameter: error
+server:
+  use-forward-headers: true
+  tomcat:
+    protocol-header: x-forwarded-proto
+    remote-ip-header: x-forwarded-for
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
@@ -12,3 +17,6 @@ spring:
       enabled: false
 mybatis:
   type-aliases-package: io.github.tiscs.scp.models
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
