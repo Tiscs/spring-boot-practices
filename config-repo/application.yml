@@ -10,7 +10,7 @@ server:
     remote-ip-header: x-forwarded-for
 spring:
   datasource:
-    driverClassName: com.mysql.cj.jdbc.Driver
+    driverClassName: org.postgresql.Driver
   devtools:
     add-properties: false
     livereload:

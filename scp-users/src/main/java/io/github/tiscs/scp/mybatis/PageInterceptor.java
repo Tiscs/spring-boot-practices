@@ -38,7 +38,7 @@ public class PageInterceptor implements Interceptor {
         MetaObject metaObject = SystemMetaObject.forObject(statementHandler);
         RowBounds rowBounds = (RowBounds) metaObject.getValue("delegate.rowBounds");
         if (rowBounds != null && rowBounds.getLimit() < RowBounds.NO_ROW_LIMIT) {
-            metaObject.setValue("delegate.boundSql.sql", statementHandler.getBoundSql().getSql() + " LIMIT " + rowBounds.getOffset() + ", " + rowBounds.getLimit());
+            metaObject.setValue("delegate.boundSql.sql", statementHandler.getBoundSql().getSql() + " LIMIT " + rowBounds.getLimit() + " OFFSET " + rowBounds.getOffset());
             metaObject.setValue("delegate.rowBounds.offset", RowBounds.NO_ROW_OFFSET);
             metaObject.setValue("delegate.rowBounds.limit", RowBounds.NO_ROW_LIMIT);
         }

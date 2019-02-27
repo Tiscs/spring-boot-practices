@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface UserMapper {
-    @Select("SELECT * FROM `users` ORDER BY `id` ASC")
+    @Select("SELECT * FROM users ORDER BY id ASC")
     List<User> find(RowBounds bounds);
 
-    @Select("SELECT * FROM `users` where `id` = #{id}")
+    @Select("SELECT * FROM users where id = #{id}")
     User findOne(long id);
 }

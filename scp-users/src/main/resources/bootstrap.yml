@@ -1,3 +1,6 @@
+server:
+  servlet:
+    context-path: /uaa
 spring:
   main:
     banner-mode: 'off'
