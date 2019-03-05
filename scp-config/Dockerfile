@@ -1,5 +1,4 @@
 FROM maven:3.6.0-jdk-11 as build
-COPY ./scp-parent/ /src/scp-parent
 COPY ./scp-config/ /src/scp-config
 WORKDIR /src/scp-config
 RUN mvn package
