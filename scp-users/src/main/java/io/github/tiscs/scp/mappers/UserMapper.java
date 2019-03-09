@@ -10,7 +10,13 @@ import java.util.UUID;
 
 @Repository
 public interface UserMapper {
-    List<User> find(RowBounds bounds);
+    List<User> findAll(RowBounds bounds);
 
-    User findOne(@Param("id") UUID id);
+    User findById(@Param("id") UUID id);
+
+    int delete(@Param("id") UUID id);
+
+    int create(@Param("user") User user);
+
+    int update(@Param("user") User user);
 }

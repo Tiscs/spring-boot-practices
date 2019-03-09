@@ -1,8 +1,8 @@
 package io.github.tiscs.scp.controllers;
 
-import io.github.tiscs.scp.mappers.UserMapper;
 import io.github.tiscs.scp.models.APIError;
 import io.github.tiscs.scp.models.User;
+import io.github.tiscs.scp.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
@@ -15,38 +15,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
-@Api(value = "Users")
+@Api(tags = "Users")
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserMapper userMapper;
+    private final UserService userService;
 
     @Autowired
-    public UserController(UserMapper userMapper) {
-        this.userMapper = userMapper;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request", response = APIError.class),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = APIError.class),
-            @ApiResponse(code = 501, message = "Not Implemented", response = APIError.class)
-    })
+            @ApiResponse(code = 500, message = "Internal Server Error", response = APIError.class)})
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<?> fetch() {
-        return ResponseEntity.ok(userMapper.find(new RowBounds(0, 10)));
+    public ResponseEntity<List<User>> fetch() {
+        return ResponseEntity.ok(userService.findAll(new RowBounds(0, 10)));
     }
 
     @ApiResponses({
             @ApiResponse(code = 200, message = "OK"),
             @ApiResponse(code = 400, message = "Bad Request", response = APIError.class),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = APIError.class),
-            @ApiResponse(code = 501, message = "Not Implemented", response = APIError.class)
-    })
+            @ApiResponse(code = 404, message = "Not Found", response = APIError.class),
+            @ApiResponse(code = 500, message = "Internal Server Error", response = APIError.class)})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<User> fetch(@ApiParam(required = true) @PathVariable UUID id) {
-        return ResponseEntity.ok(userMapper.findOne(id));
+        return ResponseEntity.ok(userService.findById(id));
     }
 }

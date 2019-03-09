@@ -3,10 +3,10 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="io.github.tiscs.scp.mappers.UserMapper">
-    <select id="find" resultType="User">
+    <select id="findAll" resultType="User">
         SELECT "id", "name" FROM "public"."users" ORDER BY "id" ASC
     </select>
-    <select id="findOne" resultType="User">
+    <select id="findById" resultType="User">
         SELECT "id", "name" FROM "public"."users" WHERE "id" = #{id}
     </select>
 </mapper>
