@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.UUID;
+
 @Api(value = "Users")
 @RestController
 @RequestMapping("/users")
@@ -33,7 +35,7 @@ public class UserController {
             @ApiResponse(code = 501, message = "Not Implemented", response = APIError.class)
     })
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity fetch() {
+    public ResponseEntity<?> fetch() {
         return ResponseEntity.ok(userMapper.find(new RowBounds(0, 10)));
     }
 
@@ -44,7 +46,7 @@ public class UserController {
             @ApiResponse(code = 501, message = "Not Implemented", response = APIError.class)
     })
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public ResponseEntity<User> fetch(@ApiParam(required = true) @PathVariable Long id) {
+    public ResponseEntity<User> fetch(@ApiParam(required = true) @PathVariable UUID id) {
         return ResponseEntity.ok(userMapper.findOne(id));
     }
 }

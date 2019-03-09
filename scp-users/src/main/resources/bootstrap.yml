@@ -8,4 +8,4 @@ spring:
     name: scp-users
   cloud:
     config:
-      uri: ${CONFIG_SERVICE_URI}
+      uri: ${CONFIG_SERVICE_URI:http://localhost:8888}
