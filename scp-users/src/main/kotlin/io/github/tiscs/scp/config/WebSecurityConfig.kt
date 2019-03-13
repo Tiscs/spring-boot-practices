@@ -12,9 +12,11 @@ import org.springframework.security.crypto.password.PasswordEncoder
 @Configuration
 class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder()
-    }
+    fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
+
+    @Bean
+    @Throws(Exception::class)
+    override fun authenticationManagerBean(): AuthenticationManager = super.authenticationManagerBean()
 
     @Throws(Exception::class)
     override fun configure(auth: AuthenticationManagerBuilder?) {
@@ -22,12 +24,6 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
                 .withUser("admin")
                 .password("{noop}6J2fUK1CkC68wPjChWtNvXvk")
                 .authorities("PROFILE:FULL")
-    }
-
-    @Bean
-    @Throws(Exception::class)
-    override fun authenticationManagerBean(): AuthenticationManager {
-        return super.authenticationManagerBean()
     }
 
     @Throws(Exception::class)

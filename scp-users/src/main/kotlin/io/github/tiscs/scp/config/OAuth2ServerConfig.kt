@@ -23,9 +23,7 @@ constructor(
 ) : AuthorizationServerConfigurer {
 
     @Bean
-    fun tokenStore(): TokenStore {
-        return InMemoryTokenStore()
-    }
+    fun tokenStore(): TokenStore = InMemoryTokenStore()
 
     @Throws(Exception::class)
     override fun configure(security: AuthorizationServerSecurityConfigurer) {

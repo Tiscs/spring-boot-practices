@@ -21,9 +21,8 @@ class UserController {
             ApiResponse(code = 400, message = "Bad Request", response = APIError::class)
     )
     @RequestMapping(method = [RequestMethod.GET])
-    fun fetch(): ResponseEntity<List<User>> {
-        val result = Users.selectAll().orderBy(Users.id, SortOrder.DESC).toUsers()
-        return ResponseEntity.ok(result);
+    fun fetch(): ResponseEntity<Page<User>> {
+        return ResponseEntity.ok(Page(Users.selectAll().orderBy(Users.id, SortOrder.DESC), 0, 10, ResultRow::toUser))
     }
 
     @ApiResponses(
@@ -35,8 +34,8 @@ class UserController {
     fun fetch(
             @ApiParam(value = "id", required = true)
             @PathVariable id: UUID): ResponseEntity<User> {
-        val result = Users.select{Users.id eq id}.single().toUser()
-        return ResponseEntity.ok(result);
+        val result = Users.select { Users.id eq id }.single().toUser()
+        return ResponseEntity.ok(result)
     }
 
     @ApiResponses(
@@ -49,7 +48,7 @@ class UserController {
             @ApiParam(value = "id", required = true)
             @PathVariable id: UUID): ResponseEntity<Void> {
         Users.deleteWhere { Users.id eq id }
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build()
     }
 
     @ApiResponses(
@@ -62,7 +61,7 @@ class UserController {
         val result = Users.insert {
             it[name] = user.name
         }.resultedValues!!.single().toUser()
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(result)
     }
 
     @ApiResponses(
@@ -72,9 +71,9 @@ class UserController {
     )
     @RequestMapping(method = [RequestMethod.PUT])
     fun update(@RequestBody user: User): ResponseEntity<User> {
-        Users.update({Users.id eq user.id}) {
+        Users.update({ Users.id eq user.id }) {
             it[name] = user.name
         }
-        return ResponseEntity.ok(user);
+        return ResponseEntity.ok(user)
     }
 }
