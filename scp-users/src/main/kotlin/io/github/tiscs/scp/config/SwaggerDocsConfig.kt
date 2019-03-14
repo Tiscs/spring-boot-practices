@@ -1,5 +1,6 @@
 package io.github.tiscs.scp.config
 
+import io.github.tiscs.scp.models.Query
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.ResponseEntity
@@ -19,6 +20,7 @@ class SwaggerDocsConfig {
             .groupName("v1.0.0")
             .useDefaultResponseMessages(false)
             .forCodeGeneration(true)
+            .ignoredParameterTypes(Query::class.java)
             .alternateTypeRules(AlternateTypeRules.newRule(ResponseEntity::class.java, Void::class.java))
             .apiInfo(ApiInfoBuilder()
                     .title("SCP-Users")

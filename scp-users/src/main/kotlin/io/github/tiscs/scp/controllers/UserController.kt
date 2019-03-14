@@ -1,6 +1,8 @@
 package io.github.tiscs.scp.controllers
 
 import io.github.tiscs.scp.models.*
+import io.github.tiscs.scp.models.Query
+import io.github.tiscs.scp.swagger.ApiFilterNames
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
@@ -20,9 +22,10 @@ class UserController {
             ApiResponse(code = 200, message = "OK"),
             ApiResponse(code = 400, message = "Bad Request", response = APIError::class)
     )
+    @ApiFilterNames("name_like", required = true)
     @RequestMapping(method = [RequestMethod.GET])
-    fun fetch(): ResponseEntity<Page<User>> {
-        return ResponseEntity.ok(Page(Users.selectAll().orderBy(Users.id, SortOrder.DESC), 0, 10, ResultRow::toUser))
+    fun fetch(query: Query): ResponseEntity<Page<User>> {
+        return ResponseEntity.ok(Page(Users.selectAll(), 0, 10, ResultRow::toUser))
     }
 
     @ApiResponses(
