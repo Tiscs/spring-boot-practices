@@ -1,6 +1,7 @@
 package io.github.tiscs.scp.swagger
 
 import io.github.tiscs.scp.models.Query
+import io.github.tiscs.scp.webmvc.*
 import org.springframework.core.annotation.Order
 import org.springframework.stereotype.Component
 import springfox.documentation.builders.ParameterBuilder
@@ -27,31 +28,31 @@ class QueryParamsPlugin : OperationBuilderPlugin {
         if (context!!.parameters.any { p -> p.parameterType.isInstanceOf(Query::class.java) }) {
             val filterNames = context.findAnnotation(ApiFilterNames::class.java)
             context.operationBuilder().parameters(listOf(
-                    ParameterBuilder().name("\$filter.name")
+                    ParameterBuilder().name(FilterNameParameter)
                             .parameterType("query")
                             .modelRef(StringModelRef)
                             .required(filterNames.isPresent && filterNames.get().required)
                             .allowableValues(if (filterNames.isPresent) filterNames.get().allowableValues() else null)
                             .build(),
-                    ParameterBuilder().name("\$filter.params")
+                    ParameterBuilder().name(FilterParamsParameter)
                             .parameterType("query")
                             .modelRef(StringModelRef)
                             .build(),
-                    ParameterBuilder().name("\$paging.page")
+                    ParameterBuilder().name(PagingPageParameter)
                             .parameterType("query")
                             .modelRef(IntegerModelRef)
                             .defaultValue("0")
                             .build(),
-                    ParameterBuilder().name("\$paging.size")
+                    ParameterBuilder().name(PagingSizeParameter)
                             .parameterType("query")
                             .modelRef(IntegerModelRef)
                             .defaultValue("10")
                             .build(),
-                    ParameterBuilder().name("\$orderby")
+                    ParameterBuilder().name(OrderByParameter)
                             .parameterType("query")
                             .modelRef(StringModelRef)
                             .build(),
-                    ParameterBuilder().name("\$count")
+                    ParameterBuilder().name(CountOnlyParameter)
                             .parameterType("query")
                             .modelRef(BooleanModelRef)
                             .build()
