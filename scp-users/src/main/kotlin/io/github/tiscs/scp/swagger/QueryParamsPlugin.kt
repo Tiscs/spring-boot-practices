@@ -26,13 +26,13 @@ class QueryParamsPlugin : OperationBuilderPlugin {
 
     override fun apply(context: OperationContext?) {
         if (context!!.parameters.any { p -> p.parameterType.isInstanceOf(Query::class.java) }) {
-            val filterNames = context.findAnnotation(ApiFilterNames::class.java)
+            val filterNames = context.findAllAnnotations(ApiFilterNames::class.java).firstOrNull()
             context.operationBuilder().parameters(listOf(
                     ParameterBuilder().name(FilterNameParameter)
                             .parameterType("query")
                             .modelRef(StringModelRef)
-                            .required(filterNames.isPresent && filterNames.get().required)
-                            .allowableValues(if (filterNames.isPresent) filterNames.get().allowableValues() else null)
+                            .required(filterNames?.required ?: false)
+                            .allowableValues(filterNames?.allowableValues())
                             .build(),
                     ParameterBuilder().name(FilterParamsParameter)
                             .parameterType("query")

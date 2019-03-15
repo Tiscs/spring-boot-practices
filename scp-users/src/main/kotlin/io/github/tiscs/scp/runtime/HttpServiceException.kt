@@ -13,13 +13,12 @@ class HttpServiceException(
         val error: String = status.reasonPhrase,
         val description: Any? = null,
         message: String? = null,
-        cause: Throwable? = null) : RuntimeException(message, cause) {
-}
+        cause: Throwable? = null) : RuntimeException(message, cause)
 
 @ControllerAdvice(annotations = [RestController::class])
 class GlobalControllerAdvice {
     @ExceptionHandler(value = [HttpServiceException::class])
     @ResponseBody
-    fun HandleHttpServiceException(ex: HttpServiceException): ResponseEntity<APIError> =
+    fun handleHttpServiceException(ex: HttpServiceException): ResponseEntity<APIError> =
             ResponseEntity.status(ex.status).body(APIError(ex.error, ex.description))
 }
