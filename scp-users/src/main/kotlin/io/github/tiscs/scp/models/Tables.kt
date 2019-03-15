@@ -5,5 +5,5 @@ import java.util.*
 
 object Users : Table("users") {
     val id = uuid("id").primaryKey().clientDefault { UUID.randomUUID() }
-    val name = varchar("name", 32).nullable()
+    val name = varchar("name", 32).index().nullable()
 }
