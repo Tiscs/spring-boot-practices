@@ -7,5 +7,4 @@ data class Filter(val name: String, val params: List<Any?> = listOf()) {
 
 data class Paging(val page: Int, val size: Int)
 
-data class Query(val paging: Paging, val orderBy: String? = null, val filter: Filter? = null, val countOnly: Boolean = false)
-
+data class Query(val paging: Paging, val filter: Filter? = null, val orderBy: String? = null, val countOnly: Boolean = false)

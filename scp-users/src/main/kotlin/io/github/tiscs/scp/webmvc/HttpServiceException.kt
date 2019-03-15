@@ -1,4 +1,4 @@
-package io.github.tiscs.scp.runtime
+package io.github.tiscs.scp.webmvc
 
 import io.github.tiscs.scp.models.APIError
 import org.springframework.http.HttpStatus

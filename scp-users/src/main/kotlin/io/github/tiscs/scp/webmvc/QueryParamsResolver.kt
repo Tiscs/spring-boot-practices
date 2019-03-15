@@ -36,6 +36,6 @@ class QueryParamsResolver : HandlerMethodArgumentResolver {
         val pagingSize = webRequest.getParameter(PagingSizeParameter) ?: "10"
         val orderby = webRequest.getParameter(OrderByParameter)
         val countOnly = webRequest.getParameter(CountOnlyParameter) ?: "false"
-        return Query(Paging(pagingPage.toInt(), pagingSize.toInt()), orderby, filter, countOnly == "true" || countOnly == "")
+        return Query(Paging(pagingPage.toInt(), pagingSize.toInt()), filter, orderby, countOnly == "true" || countOnly == "")
     }
 }
