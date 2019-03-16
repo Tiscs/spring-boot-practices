@@ -1,6 +1,7 @@
 logging:
   level:
     io.github.tiscs.scp: debug
+    Exposed: debug
 server:
   use-forward-headers: true
 spring:

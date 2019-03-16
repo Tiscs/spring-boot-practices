@@ -1,6 +1,7 @@
 logging:
   level:
     io.github.tiscs.scp: info
+    Exposed: warn
     # Fix https://github.com/springfox/springfox/issues/1100, https://github.com/swagger-api/swagger-core/issues/1568
     io.swagger.models.parameters.AbstractSerializableParameter: error
 server:
