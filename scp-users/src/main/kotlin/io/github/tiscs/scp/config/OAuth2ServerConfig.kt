@@ -1,5 +1,7 @@
 package io.github.tiscs.scp.config
 
+import io.github.tiscs.scp.services.DbClientDetailsService
+import io.github.tiscs.scp.services.RedisAuthCodeService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -15,36 +17,29 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 @Configuration
 @EnableAuthorizationServer
-class OAuth2ServerConfig
-@Autowired
-constructor(
-        private val passwordEncoder: PasswordEncoder,
-        private val authenticationManager: AuthenticationManager
+class OAuth2ServerConfig(
+        @Autowired private val passwordEncoder: PasswordEncoder,
+        @Autowired private val authenticationManager: AuthenticationManager,
+        @Autowired private val clientDetailsService: DbClientDetailsService,
+        @Autowired private val authCodeService: RedisAuthCodeService
 ) : AuthorizationServerConfigurer {
 
     @Bean
     fun tokenStore(): TokenStore = InMemoryTokenStore()
 
-    @Throws(Exception::class)
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
         security.tokenKeyAccess("isAuthenticated()")
                 .checkTokenAccess("isAuthenticated()")
                 .passwordEncoder(passwordEncoder)
     }
 
-    @Throws(Exception::class)
     override fun configure(clients: ClientDetailsServiceConfigurer) {
-        clients.inMemory()
-                .withClient("CGtU4ayx9xUR")
-                .secret("{noop}IzFS77pjBZoQD3eS5WDl4Hu6")
-                .scopes("OPENID")
-                .authorizedGrantTypes("authorization_code", "refresh_token", "password", "implicit", "client_credentials")
-                .redirectUris("https://github.com/tiscs/spring-cloud-practices")
+        clients.withClientDetails(clientDetailsService)
     }
 
-    @Throws(Exception::class)
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         endpoints.authenticationManager(authenticationManager)
+                .authorizationCodeServices(authCodeService)
                 .tokenStore(tokenStore())
                 .reuseRefreshTokens(false)
     }

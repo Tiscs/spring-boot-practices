@@ -1,8 +1,12 @@
 package io.github.tiscs.scp.config
 
+import io.github.tiscs.scp.services.DbUserDetailsService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
+import org.springframework.security.authentication.AuthenticationProvider
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter
@@ -10,23 +14,19 @@ import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
-class WebSecurityConfig : WebSecurityConfigurerAdapter() {
+class WebSecurityConfig(
+        @Autowired private val userDetailsService: DbUserDetailsService
+) : WebSecurityConfigurerAdapter() {
     @Bean
     fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 
     @Bean
-    @Throws(Exception::class)
     override fun authenticationManagerBean(): AuthenticationManager = super.authenticationManagerBean()
 
-    @Throws(Exception::class)
-    override fun configure(auth: AuthenticationManagerBuilder?) {
-        auth!!.inMemoryAuthentication()
-                .withUser("admin")
-                .password("{noop}6J2fUK1CkC68wPjChWtNvXvk")
-                .authorities("PROFILE:FULL")
+    override fun configure(auth: AuthenticationManagerBuilder) {
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder())
     }
 
-    @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.csrf()
                 .and().formLogin().loginPage("/login").permitAll()

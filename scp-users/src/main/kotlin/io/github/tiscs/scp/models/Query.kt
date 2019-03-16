@@ -1,6 +1,6 @@
 package io.github.tiscs.scp.models
 
-data class Filter(val name: String, val params: List<Any?> = listOf()) {
+data class Filter(val name: String, val params: List<Any?> = emptyList()) {
     fun mapParams(vararg keys: String): Map<String, Any?> =
             keys.indices.map { keys[it] to if (params.size > it) this.params[it] else null }.toMap()
 }

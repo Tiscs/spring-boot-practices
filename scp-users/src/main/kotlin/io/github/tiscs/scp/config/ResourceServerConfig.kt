@@ -8,7 +8,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 @EnableResourceServer
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 class ResourceServerConfig : ResourceServerConfigurerAdapter() {
-    @Throws(Exception::class)
     override fun configure(http: HttpSecurity) {
         http.antMatcher("/users/**").csrf().disable().authorizeRequests().anyRequest().permitAll()
     }

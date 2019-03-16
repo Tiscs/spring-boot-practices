@@ -28,7 +28,7 @@ class QueryParamsResolver : HandlerMethodArgumentResolver {
         val filterName = webRequest.getParameter(FilterNameParameter)
         if (filterName != null) {
             val filterParams = webRequest.getParameter(FilterParamsParameter)
-            filter = Filter(filterName, if (filterParams.isNullOrEmpty()) listOf() else ObjectMapper.readValue("[$filterParams]", List::class.java))
+            filter = Filter(filterName, if (filterParams.isNullOrEmpty()) emptyList() else ObjectMapper.readValue("[$filterParams]", List::class.java))
         } else {
             filter = null
         }

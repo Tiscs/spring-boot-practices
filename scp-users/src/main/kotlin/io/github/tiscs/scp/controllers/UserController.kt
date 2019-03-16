@@ -74,7 +74,7 @@ class UserController {
     )
     @RequestMapping(method = [RequestMethod.PUT])
     fun update(@RequestBody user: User): ResponseEntity<User> {
-        Users.update({ Users.id eq user.id }) {
+        Users.update({ Users.id eq user.id!! }) {
             it[name] = user.name
         }
         return ResponseEntity.ok(user)
