@@ -7,8 +7,6 @@ import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import java.util.*
 
-private val EmptyUUID: UUID = UUID.fromString("00000000-0000-0000-0000-000000000000")
-
 data class APIError(
         @JsonProperty("error")
         val error: String,
@@ -40,13 +38,30 @@ data class User(
 )
 
 fun ResultRow.toUser() = User(
-        id = this.tryGet(Users.id),
-        createdAt = this.tryGet(Users.createdAt),
-        expiresAt = this.tryGet(Users.expiresAt),
-        disabled = this.tryGet(Users.disabled),
-        username = this.tryGet(Users.username),
-        name = this.tryGet(Users.name),
-        avatar = this.tryGet(Users.avatar),
-        gender = this.tryGet(Users.gender),
-        birthdate = this.tryGet(Users.birthdate)?.toLocalDate()
+        id = this.getOrNull(Users.id),
+        createdAt = this.getOrNull(Users.createdAt),
+        expiresAt = this.getOrNull(Users.expiresAt),
+        disabled = this.getOrNull(Users.disabled),
+        username = this.getOrNull(Users.username),
+        name = this.getOrNull(Users.name),
+        avatar = this.getOrNull(Users.avatar),
+        gender = this.getOrNull(Users.gender),
+        birthdate = this.getOrNull(Users.birthdate)?.toLocalDate()
+)
+
+data class Client(
+        val id: UUID? = null,
+        val createdAt: DateTime? = null,
+        val expiresAt: DateTime? = null,
+        val disabled: Boolean? = null,
+        val accepted: Boolean? = null,
+        val username: String? = null,
+        var name: String? = null,
+        var grantTypes: Set<String>? = null,
+        var resourceIds: Set<String>? = null,
+        var redirectUris: Set<String>? = null
+)
+
+fun ResultRow.toClient() = Client(
+        id = this.getOrNull(Clients.id)
 )

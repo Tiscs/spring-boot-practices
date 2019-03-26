@@ -23,7 +23,6 @@ class OAuth2ServerConfig(
         @Autowired private val clientDetailsService: DbClientDetailsService,
         @Autowired private val authCodeService: RedisAuthCodeService
 ) : AuthorizationServerConfigurer {
-
     @Bean
     fun tokenStore(): TokenStore = InMemoryTokenStore()
 

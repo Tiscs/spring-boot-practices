@@ -2,7 +2,6 @@ package io.github.tiscs.scp.controllers
 
 import io.github.tiscs.scp.models.*
 import io.github.tiscs.scp.models.Query
-import io.github.tiscs.scp.swagger.ApiFilterNames
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
@@ -14,17 +13,16 @@ import org.springframework.web.bind.annotation.*
 import java.util.*
 
 @Api(tags = ["Users"])
-@Transactional
 @RestController
 @RequestMapping("/users")
-class UserController {
+@Transactional
+class UserController : CurdController<User, UUID> {
     @ApiResponses(
             ApiResponse(code = 200, message = "OK"),
             ApiResponse(code = 400, message = "Bad Request", response = APIError::class)
     )
-    @ApiFilterNames("name_like", required = true)
     @RequestMapping(method = [RequestMethod.GET])
-    fun fetch(query: Query): ResponseEntity<Page<User>> {
+    override fun fetch(query: Query): ResponseEntity<Page<User>> {
         return ResponseEntity.ok(Page(Users.selectAll(), 0, 10, ResultRow::toUser))
     }
 
@@ -34,7 +32,7 @@ class UserController {
             ApiResponse(code = 404, message = "Not Found", response = APIError::class)
     )
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
-    fun fetch(
+    override fun fetch(
             @ApiParam(value = "id", required = true)
             @PathVariable id: UUID): ResponseEntity<User> {
         val result = Users.select { Users.id eq id }.single().toUser()
@@ -47,7 +45,7 @@ class UserController {
             ApiResponse(code = 404, message = "Not Found", response = APIError::class)
     )
     @RequestMapping(method = [RequestMethod.DELETE], path = ["/{id}"])
-    fun delete(
+    override fun delete(
             @ApiParam(value = "id", required = true)
             @PathVariable id: UUID): ResponseEntity<Void> {
         Users.deleteWhere { Users.id eq id }
@@ -60,9 +58,9 @@ class UserController {
             ApiResponse(code = 404, message = "Not Found", response = APIError::class)
     )
     @RequestMapping(method = [RequestMethod.POST])
-    fun create(@RequestBody user: User): ResponseEntity<User> {
+    override fun create(@RequestBody model: User): ResponseEntity<User> {
         val result = Users.insert {
-            it[name] = user.name
+            it[name] = model.name
         }.resultedValues!!.single().toUser()
         return ResponseEntity.ok(result)
     }
@@ -73,10 +71,10 @@ class UserController {
             ApiResponse(code = 404, message = "Not Found", response = APIError::class)
     )
     @RequestMapping(method = [RequestMethod.PUT])
-    fun update(@RequestBody user: User): ResponseEntity<User> {
-        Users.update({ Users.id eq user.id!! }) {
-            it[name] = user.name
+    override fun update(@RequestBody model: User): ResponseEntity<User> {
+        Users.update({ Users.id eq model.id!! }) {
+            it[name] = model.name
         }
-        return ResponseEntity.ok(user)
+        return ResponseEntity.ok(model)
     }
 }
