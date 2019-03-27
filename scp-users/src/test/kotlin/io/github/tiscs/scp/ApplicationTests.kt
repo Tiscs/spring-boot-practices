@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @RunWith(SpringRunner::class)
 @SpringBootTest
-@ActiveProfiles("test", "local")
+@ActiveProfiles("test")
 class ApplicationTests {
     @Test
     fun contextLoads() {
