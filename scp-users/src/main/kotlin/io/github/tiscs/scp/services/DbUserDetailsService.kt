@@ -17,7 +17,7 @@ class DbUserDetailsService : UserDetailsService {
                 ?: throw UsernameNotFoundException("Unknown user: $username")
         return User(
                 row[Users.username],
-                row[Users.password],
+                row[Users.password] ?: "",
                 !row[Users.disabled] && row[Users.accepted],
                 row[Users.expiresAt]?.isBeforeNow ?: true,
                 true,
