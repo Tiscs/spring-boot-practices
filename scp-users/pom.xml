@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.github.tiscs</groupId>
         <artifactId>scp-parent</artifactId>
-        <version>1.0.3-RELEASE</version>
+        <version>1.0.4-RELEASE</version>
     </parent>
 
     <repositories>
@@ -57,6 +57,10 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-oauth2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
