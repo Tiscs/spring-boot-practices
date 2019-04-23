@@ -5,16 +5,13 @@
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/3.4.1/dist/css/bootstrap.min.css}"/>
-    <title>Home</title>
+    <title>API Docs</title>
+    <script></script>
 </head>
 
 <body>
-<div class="container">
-    <div class="page-header">
-        <h1>Home</h1>
-    </div>
-</div>
+<redoc th:spec-url="@{/v2/api-docs?group=v1.0.0}"></redoc>
+<script src="//unpkg.com/redoc@^1.22.2/dist/redoc.min.js"></script>
 </body>
 
 </html>

@@ -117,7 +117,7 @@
             <artifactId>springfox-swagger-ui</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.webjars</groupId>
+            <groupId>org.webjars.npm</groupId>
             <artifactId>bootstrap</artifactId>
             <version>3.4.1</version>
         </dependency>

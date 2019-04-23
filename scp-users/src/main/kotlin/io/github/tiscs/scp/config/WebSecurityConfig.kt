@@ -29,7 +29,7 @@ class WebSecurityConfig(
         http.csrf()
                 .and().formLogin().loginPage("/login").permitAll()
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll()
-                .and().authorizeRequests().antMatchers("/", "/webjars/**", "/swagger-ui.html", "/v2/api-docs", "/swagger-resources/**").permitAll()
+                .and().authorizeRequests().antMatchers("/", "/webjars/**", "/swagger-ui.html", "/api-docs.html", "/v2/api-docs", "/swagger-resources/**").permitAll()
                 .and().authorizeRequests().anyRequest().authenticated()
 
     }
