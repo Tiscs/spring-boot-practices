@@ -1,4 +1,4 @@
-FROM maven:3.6.0-jdk-11 as build
+FROM maven:3.6.1-jdk-11 as build
 COPY ./scp-config/ /src/scp-config
 WORKDIR /src/scp-config
 RUN mvn package
