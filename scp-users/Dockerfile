@@ -1,7 +1,7 @@
 FROM maven:3.6.1-jdk-11 as build
 COPY ./scp-users/ /src/scp-users
 WORKDIR /src/scp-users
-RUN mvn package
+RUN mvn package -q -U -DskipTests
 
 FROM openjdk:11-jdk
 COPY --from=build /src/scp-config/target/scp-users.jar /app/bundle.jar
