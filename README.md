@@ -3,11 +3,13 @@
 ## Modules
 
 - scp-parent:
-    Public Parent Project
+    Parent Project
 - scp-config:
-    Spring Cloud Config Server
+    Config Server
 - scp-users:
-    Spring Cloud OAuth2 Server
+    OAuth2 Server
+- scp-mqtt:
+    MQTT Server
 
 
 ## Docker Images

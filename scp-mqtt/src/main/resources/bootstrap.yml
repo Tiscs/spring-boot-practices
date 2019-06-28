@@ -1,0 +1,8 @@
+spring:
+  main:
+    banner-mode: 'off'
+  application:
+    name: scp-mqtt
+  cloud:
+    config:
+      uri: ${CONFIG_SERVICE_URI:http://localhost:8888}
