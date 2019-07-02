@@ -2,13 +2,13 @@
 
 ## Modules
 
-- scp-parent:
+- **scp-parent**:
     Parent Project
-- scp-config:
+- **scp-config**:
     Config Server
-- scp-users:
+- **scp-users**:
     OAuth2 Server
-- scp-mqtt:
+- **scp-mqtt**:
     MQTT Server
 
 
