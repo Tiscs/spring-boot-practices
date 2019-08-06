@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.github.tiscs</groupId>
         <artifactId>scp-parent</artifactId>
-        <version>1.0.8-RELEASE</version>
+        <version>1.0.9-RELEASE</version>
     </parent>
 
     <repositories>
@@ -98,11 +98,7 @@
         </dependency>
         <dependency>
             <groupId>org.jetbrains.exposed</groupId>
-            <artifactId>exposed</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.exposed</groupId>
-            <artifactId>spring-transaction</artifactId>
+            <artifactId>exposed-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.postgresql</groupId>
