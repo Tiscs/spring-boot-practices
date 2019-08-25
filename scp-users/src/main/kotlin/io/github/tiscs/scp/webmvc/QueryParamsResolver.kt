@@ -24,13 +24,12 @@ class QueryParamsResolver : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean = parameter.parameterType == Query::class.java
 
     override fun resolveArgument(parameter: MethodParameter, mavContainer: ModelAndViewContainer?, webRequest: NativeWebRequest, binderFactory: WebDataBinderFactory?): Any? {
-        val filter: Filter?
         val filterName = webRequest.getParameter(FilterNameParameter)
-        if (filterName != null) {
+        val filter = if (filterName != null) {
             val filterParams = webRequest.getParameter(FilterParamsParameter)
-            filter = Filter(filterName, if (filterParams.isNullOrEmpty()) emptyList() else ObjectMapper.readValue("[$filterParams]", List::class.java))
+            Filter(filterName, if (filterParams.isNullOrEmpty()) emptyList() else ObjectMapper.readValue("[$filterParams]", List::class.java))
         } else {
-            filter = null
+            null
         }
         val pagingPage = webRequest.getParameter(PagingPageParameter) ?: "0"
         val pagingSize = webRequest.getParameter(PagingSizeParameter) ?: "10"

@@ -3,7 +3,7 @@ logging:
     io.github.tiscs.scp: debug
     Exposed: debug
 server:
-  use-forward-headers: true
+  use-forward-headers: false
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/${spring.application.name}?currentSchema=public
@@ -11,3 +11,8 @@ spring:
     add-properties: true
     livereload:
       enabled: true
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: full
