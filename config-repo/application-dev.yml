@@ -4,7 +4,13 @@ logging:
     Exposed: debug
 server:
   use-forward-headers: false
+management:
+  health:
+    redis:
+      enabled: false
 spring:
+  session:
+    store-type: none
   datasource:
     url: jdbc:postgresql://localhost:5432/${spring.application.name}?currentSchema=public
   devtools:
