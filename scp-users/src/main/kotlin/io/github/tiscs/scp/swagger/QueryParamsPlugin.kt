@@ -17,7 +17,8 @@ private val StringModelRef = ModelRef("string")
 private val BooleanModelRef = ModelRef("boolean")
 private val IntegerModelRef = ModelRef("int")
 
-private fun ApiFilterNames.allowableValues(): AllowableValues = AllowableListValues(this.value.toMutableList(), "string")
+private fun ApiFilters.allowableValues(): AllowableValues = AllowableListValues(this.value.map { it.name }, "string")
+private fun ApiFilters.getDescriptions(): List<String> = this.value.map { "**${it.name}**: *`${it.description}`*" }
 
 @Component
 @Order(SwaggerPluginSupport.SWAGGER_PLUGIN_ORDER)
@@ -26,35 +27,42 @@ class QueryParamsPlugin : OperationBuilderPlugin {
 
     override fun apply(context: OperationContext?) {
         if (context!!.parameters.any { p -> p.parameterType.isInstanceOf(Query::class.java) }) {
-            val filterNames = context.findAllAnnotations(ApiFilterNames::class.java).firstOrNull()
+            val filters = context.findAllAnnotations(ApiFilters::class.java).firstOrNull()
             context.operationBuilder().parameters(listOf(
                     ParameterBuilder().name(FilterNameParameter)
+                            .description("过滤器名称。")
                             .parameterType("query")
                             .modelRef(StringModelRef)
-                            .required(filterNames?.required ?: false)
-                            .allowableValues(filterNames?.allowableValues())
+                            .required(filters?.required ?: false)
+                            .allowableValues(filters?.allowableValues())
                             .build(),
                     ParameterBuilder().name(FilterParamsParameter)
+                            .description(filters?.getDescriptions()?.joinToString("\n", "过滤器参数。\n") ?: "过滤器参数。")
                             .parameterType("query")
                             .modelRef(StringModelRef)
                             .build(),
                     ParameterBuilder().name(PagingPageParameter)
+                            .description("分页页码。")
                             .parameterType("query")
                             .modelRef(IntegerModelRef)
                             .defaultValue("0")
                             .build(),
                     ParameterBuilder().name(PagingSizeParameter)
+                            .description("分页大小。")
                             .parameterType("query")
                             .modelRef(IntegerModelRef)
                             .defaultValue("10")
                             .build(),
                     ParameterBuilder().name(OrderByParameter)
+                            .description("排序方式。")
                             .parameterType("query")
                             .modelRef(StringModelRef)
                             .build(),
                     ParameterBuilder().name(CountOnlyParameter)
+                            .description("只返回条数。")
                             .parameterType("query")
                             .modelRef(BooleanModelRef)
+                            .defaultValue("false")
                             .build()
             ))
         }
