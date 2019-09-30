@@ -2,6 +2,7 @@ package io.github.tiscs.scp.controllers
 
 import io.github.tiscs.scp.models.*
 import io.github.tiscs.scp.models.Query
+import io.github.tiscs.scp.snowflake.IdWorker
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
@@ -10,13 +11,14 @@ import org.jetbrains.exposed.sql.*
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
-import java.util.*
 
 @Api(tags = ["Users"])
 @RestController
 @RequestMapping("/users")
 @Transactional
-class UserController : CurdController<User, UUID> {
+class UserController(
+        private val idWorker: IdWorker
+) : CurdController<User, Long> {
     @ApiResponses(
             ApiResponse(code = 200, message = "OK"),
             ApiResponse(code = 400, message = "Bad Request", response = APIError::class)
@@ -34,7 +36,7 @@ class UserController : CurdController<User, UUID> {
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
     override fun fetch(
             @ApiParam(value = "id", required = true)
-            @PathVariable id: UUID): ResponseEntity<User> {
+            @PathVariable id: Long): ResponseEntity<User> {
         val result = Users.select { Users.id eq id }.single().toUser()
         return ResponseEntity.ok(result)
     }
@@ -47,7 +49,7 @@ class UserController : CurdController<User, UUID> {
     @RequestMapping(method = [RequestMethod.DELETE], path = ["/{id}"])
     override fun delete(
             @ApiParam(value = "id", required = true)
-            @PathVariable id: UUID): ResponseEntity<Void> {
+            @PathVariable id: Long): ResponseEntity<Void> {
         Users.deleteWhere { Users.id eq id }
         return ResponseEntity.ok().build()
     }
@@ -60,6 +62,8 @@ class UserController : CurdController<User, UUID> {
     @RequestMapping(method = [RequestMethod.POST])
     override fun create(@RequestBody model: User): ResponseEntity<User> {
         val result = Users.insert {
+            it[id] = idWorker.nextLong()
+            it[username] = model.username!!
             it[name] = model.name
         }.resultedValues!!.single().toUser()
         return ResponseEntity.ok(result)

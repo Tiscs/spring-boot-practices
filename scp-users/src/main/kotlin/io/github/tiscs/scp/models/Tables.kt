@@ -3,10 +3,9 @@ package io.github.tiscs.scp.models
 import org.jetbrains.exposed.sql.Table
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
-import java.util.*
 
 object Users : Table("users") {
-    val id = uuid("id").primaryKey().clientDefault { UUID.randomUUID() }
+    val id = long("id").primaryKey()
     val createdAt = datetime("created_at").clientDefault { DateTime.now(DateTimeZone.UTC) }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
@@ -20,7 +19,7 @@ object Users : Table("users") {
 }
 
 object Clients : Table("clients") {
-    val id = uuid("id").primaryKey().clientDefault { UUID.randomUUID() }
+    val id = long("id").primaryKey()
     val createdAt = datetime("created_at").clientDefault { DateTime.now(DateTimeZone.UTC) }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
