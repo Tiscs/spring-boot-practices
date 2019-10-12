@@ -2,10 +2,10 @@ package io.github.tiscs.scp.snowflake
 
 import org.apache.commons.codec.binary.Base64
 import org.apache.commons.codec.binary.Hex
-import java.math.BigInteger
+import java.nio.ByteBuffer
 
-// 2019-01-01T00:00:00Z
-const val DEFAULT_TWEPOCH = 1546300800000L
+// 2019-10-01T10:00:00+08
+const val DEFAULT_TWEPOCH = 1569895200000L
 
 class IdWorker(
         private val clusterId: Long,
@@ -70,14 +70,14 @@ class IdWorker(
     }
 
     fun nextBytes(): ByteArray {
-        return BigInteger.valueOf(nextLong()).toByteArray()
+        return ByteBuffer.allocate(Long.SIZE_BYTES).putLong(nextLong()).array()
     }
 
     fun nextHex(): String {
-        return Base64.encodeBase64String(nextBytes())
+        return Hex.encodeHexString(nextBytes())
     }
 
     fun nextBase64(): String {
-        return Hex.encodeHexString(nextBytes())
+        return Base64.encodeBase64String(nextBytes())
     }
 }

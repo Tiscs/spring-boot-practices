@@ -17,6 +17,11 @@ spring:
     add-properties: true
     livereload:
       enabled: true
+  cloud:
+    config:
+      allow-override: true
+      override-system-properties: false
+      override-none: true
 feign:
   client:
     config:
