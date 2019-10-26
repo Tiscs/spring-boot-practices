@@ -5,7 +5,7 @@ import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
 
 object Users : Table("users") {
-    val id = long("id").primaryKey()
+    val id = varchar("id", 16).primaryKey()
     val createdAt = datetime("created_at").clientDefault { DateTime.now(DateTimeZone.UTC) }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
@@ -19,7 +19,7 @@ object Users : Table("users") {
 }
 
 object Clients : Table("clients") {
-    val id = long("id").primaryKey()
+    val id = varchar("id", 16).primaryKey()
     val createdAt = datetime("created_at").clientDefault { DateTime.now(DateTimeZone.UTC) }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }

@@ -5,7 +5,6 @@ import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SizedIterable
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
-import java.util.*
 
 data class APIError(
         @JsonProperty("error")
@@ -26,7 +25,7 @@ enum class Gender {
 }
 
 data class User(
-        val id: UUID? = null,
+        val id: String? = null,
         val createdAt: DateTime? = null,
         val expiresAt: DateTime? = null,
         val disabled: Boolean? = null,
@@ -50,7 +49,7 @@ fun ResultRow.toUser() = User(
 )
 
 data class Client(
-        val id: UUID? = null,
+        val id: String? = null,
         val createdAt: DateTime? = null,
         val expiresAt: DateTime? = null,
         val disabled: Boolean? = null,
@@ -63,5 +62,13 @@ data class Client(
 )
 
 fun ResultRow.toClient() = Client(
-        id = this.getOrNull(Clients.id)
+        id = this.getOrNull(Clients.id),
+        createdAt = this.getOrNull(Clients.createdAt),
+        expiresAt = this.getOrNull(Clients.expiresAt),
+        disabled = this.getOrNull(Clients.disabled),
+        username = this.getOrNull(Clients.username),
+        name = this.getOrNull(Clients.name),
+        grantTypes = this.getOrNull(Clients.grantTypes)?.split(',')?.toSet(),
+        resourceIds = this.getOrNull(Clients.resourceIds)?.split(',')?.toSet(),
+        redirectUris = this.getOrNull(Clients.redirectUris)?.split(',')?.toSet()
 )

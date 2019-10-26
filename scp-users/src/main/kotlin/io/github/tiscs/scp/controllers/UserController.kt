@@ -3,11 +3,13 @@ package io.github.tiscs.scp.controllers
 import io.github.tiscs.scp.models.*
 import io.github.tiscs.scp.models.Query
 import io.github.tiscs.scp.snowflake.IdWorker
+import io.github.tiscs.scp.webmvc.HttpServiceException
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.jetbrains.exposed.sql.*
+import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
@@ -18,7 +20,7 @@ import org.springframework.web.bind.annotation.*
 @Transactional
 class UserController(
         private val idWorker: IdWorker
-) : CurdController<User, Long> {
+) : CurdController<User, String> {
     @ApiResponses(
             ApiResponse(code = 200, message = "OK"),
             ApiResponse(code = 400, message = "Bad Request", response = APIError::class)
@@ -36,8 +38,9 @@ class UserController(
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
     override fun fetch(
             @ApiParam(value = "id", required = true)
-            @PathVariable id: Long): ResponseEntity<User> {
-        val result = Users.select { Users.id eq id }.single().toUser()
+            @PathVariable id: String): ResponseEntity<User> {
+        val result = Users.select { Users.id eq id }.singleOrNull()?.toUser()
+                ?: throw HttpServiceException(HttpStatus.NOT_FOUND)
         return ResponseEntity.ok(result)
     }
 
@@ -49,23 +52,26 @@ class UserController(
     @RequestMapping(method = [RequestMethod.DELETE], path = ["/{id}"])
     override fun delete(
             @ApiParam(value = "id", required = true)
-            @PathVariable id: Long): ResponseEntity<Void> {
-        Users.deleteWhere { Users.id eq id }
-        return ResponseEntity.ok().build()
+            @PathVariable id: String): ResponseEntity<Void> {
+        val count = Users.deleteWhere { Users.id eq id }
+        return if (count > 0) {
+            ResponseEntity.ok().build()
+        } else {
+            throw HttpServiceException(HttpStatus.NOT_FOUND)
+        }
     }
 
     @ApiResponses(
             ApiResponse(code = 200, message = "OK"),
-            ApiResponse(code = 400, message = "Bad Request", response = APIError::class),
-            ApiResponse(code = 404, message = "Not Found", response = APIError::class)
+            ApiResponse(code = 400, message = "Bad Request", response = APIError::class)
     )
     @RequestMapping(method = [RequestMethod.POST])
     override fun create(@RequestBody model: User): ResponseEntity<User> {
         val result = Users.insert {
-            it[id] = idWorker.nextLong()
+            it[id] = idWorker.nextHex()
             it[username] = model.username!!
             it[name] = model.name
-        }.resultedValues!!.single().toUser()
+        }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR)
         return ResponseEntity.ok(result)
     }
 
@@ -76,9 +82,13 @@ class UserController(
     )
     @RequestMapping(method = [RequestMethod.PUT])
     override fun update(@RequestBody model: User): ResponseEntity<User> {
-        Users.update({ Users.id eq model.id!! }) {
+        val count = Users.update({ Users.id eq model.id!! }) {
             it[name] = model.name
         }
-        return ResponseEntity.ok(model)
+        return if (count > 0) {
+            ResponseEntity.ok(model)
+        } else {
+            throw HttpServiceException(HttpStatus.NOT_FOUND)
+        }
     }
 }
