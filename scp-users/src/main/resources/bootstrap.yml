@@ -10,5 +10,14 @@ spring:
     config:
       uri: ${CONFIG_SERVICE_URI:http://localhost:8888}
       fail-fast: true
+    stream:
+      bindings:
+        input:
+          destination: ${spring.application.name}
+          content-type: application/json
+          group: ${spring.application.name}
+        output:
+          destination: ${spring.application.name}
+          content-type: application/json
   exposed:
     generate-ddl: false

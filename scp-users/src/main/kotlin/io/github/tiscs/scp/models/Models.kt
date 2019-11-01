@@ -13,6 +13,11 @@ data class APIError(
         val description: Any? = null
 )
 
+data class Event<T>(
+        val event: String,
+        val model: T
+)
+
 data class Page<T>(val total: Int, val page: Int, val size: Int, val items: List<T>) {
     constructor(rows: SizedIterable<ResultRow>, page: Int, size: Int, mapper: (ResultRow) -> T, countOnly: Boolean = false) :
             this(rows.count(), page, size, if (countOnly) emptyList() else rows.limit(size, page * size).map(mapper))

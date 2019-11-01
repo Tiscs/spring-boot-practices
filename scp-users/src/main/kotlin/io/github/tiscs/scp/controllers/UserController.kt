@@ -9,17 +9,22 @@ import io.swagger.annotations.ApiParam
 import io.swagger.annotations.ApiResponse
 import io.swagger.annotations.ApiResponses
 import org.jetbrains.exposed.sql.*
+import org.springframework.cloud.stream.annotation.EnableBinding
+import org.springframework.cloud.stream.messaging.Source
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.messaging.support.MessageBuilder
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @Api(tags = ["Users"])
 @RestController
 @RequestMapping("/users")
+@EnableBinding(value = [Source::class])
 @Transactional
 class UserController(
-        private val idWorker: IdWorker
+        private val idWorker: IdWorker,
+        private val eventSource: Source
 ) : CurdController<User, String> {
     @ApiResponses(
             ApiResponse(code = 200, message = "OK"),
@@ -71,7 +76,11 @@ class UserController(
             it[id] = idWorker.nextHex()
             it[username] = model.username!!
             it[name] = model.name
+            it[avatar] = model.avatar
+            it[gender] = model.gender
+            it[birthdate] = model.birthdate?.toDateTimeAtStartOfDay()
         }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR)
+        eventSource.output().send(MessageBuilder.withPayload(Event("USER_CREATED", result)).build())
         return ResponseEntity.ok(result)
     }
 
@@ -84,8 +93,12 @@ class UserController(
     override fun update(@RequestBody model: User): ResponseEntity<User> {
         val count = Users.update({ Users.id eq model.id!! }) {
             it[name] = model.name
+            it[avatar] = model.avatar
+            it[gender] = model.gender
+            it[birthdate] = model.birthdate?.toDateTimeAtStartOfDay()
         }
         return if (count > 0) {
+            eventSource.output().send(MessageBuilder.withPayload(Event("USER_UPDATED", model)).build())
             ResponseEntity.ok(model)
         } else {
             throw HttpServiceException(HttpStatus.NOT_FOUND)
