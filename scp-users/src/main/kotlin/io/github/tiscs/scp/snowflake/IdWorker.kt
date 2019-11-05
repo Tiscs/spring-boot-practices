@@ -42,8 +42,8 @@ class IdWorker(
         require(sequenceBits > 0) {
             "Value of \"sequenceBits\" must be greater than 0."
         }
-        require(clusterIdBits + workerIdBits + sequenceBits < 63) {
-            "Sum of \"clusterIdBits\" \"workerIdBits\" and \"sequenceBits\" must be less than 63"
+        require(clusterIdBits + workerIdBits + sequenceBits < 23) {
+            "Sum of \"clusterIdBits\" \"workerIdBits\" and \"sequenceBits\" must be less than 23"
         }
     }
 
