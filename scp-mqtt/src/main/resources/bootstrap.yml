@@ -1,3 +1,5 @@
+server:
+  port: 8083
 spring:
   main:
     banner-mode: 'off'

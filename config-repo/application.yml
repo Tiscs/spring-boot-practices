@@ -16,6 +16,14 @@ spring:
     add-properties: false
     livereload:
       enabled: false
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: ${spring.application.name}-input
+          group: ${spring.application.name}
+        output:
+          destination: ${spring.application.name}-output
 mybatis:
   type-aliases-package: io.github.tiscs.scp.models
   type-handlers-package: io.github.tiscs.scp.mybatis.handlers
