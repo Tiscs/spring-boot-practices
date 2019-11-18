@@ -3,10 +3,9 @@ package io.github.tiscs.scp.webmvc
 import io.github.tiscs.scp.models.APIError
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.RestControllerAdvice
 
 class HttpServiceException(
         val status: HttpStatus,
@@ -17,8 +16,8 @@ class HttpServiceException(
     constructor(status: HttpStatus, wse: WebServiceException) : this(status, wse.error, wse.description, wse.message, wse.cause)
 }
 
-@ControllerAdvice(annotations = [RestController::class])
-class GlobalControllerAdvice {
+@RestControllerAdvice
+class GlobalRestControllerAdvice {
     @ExceptionHandler(value = [HttpServiceException::class])
     @ResponseBody
     fun handleHttpServiceException(ex: HttpServiceException): ResponseEntity<APIError> =
