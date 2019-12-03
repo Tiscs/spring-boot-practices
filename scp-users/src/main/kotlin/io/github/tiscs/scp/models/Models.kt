@@ -3,8 +3,8 @@ package io.github.tiscs.scp.models
 import com.fasterxml.jackson.annotation.JsonProperty
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SizedIterable
-import org.joda.time.DateTime
-import org.joda.time.LocalDate
+import java.time.LocalDate
+import java.time.LocalDateTime
 
 data class APIError(
         @JsonProperty("error")
@@ -31,8 +31,8 @@ enum class Gender {
 
 data class User(
         val id: String? = null,
-        val createdAt: DateTime? = null,
-        val expiresAt: DateTime? = null,
+        val createdAt: LocalDateTime? = null,
+        val expiresAt: LocalDateTime? = null,
         val disabled: Boolean? = null,
         val username: String? = null,
         var name: String? = null,
@@ -50,13 +50,13 @@ fun ResultRow.toUser() = User(
         name = this.getOrNull(Users.name),
         avatar = this.getOrNull(Users.avatar),
         gender = this.getOrNull(Users.gender),
-        birthdate = this.getOrNull(Users.birthdate)?.toLocalDate()
+        birthdate = this.getOrNull(Users.birthdate)
 )
 
 data class Client(
         val id: String? = null,
-        val createdAt: DateTime? = null,
-        val expiresAt: DateTime? = null,
+        val createdAt: LocalDateTime? = null,
+        val expiresAt: LocalDateTime? = null,
         val disabled: Boolean? = null,
         val accepted: Boolean? = null,
         val username: String? = null,

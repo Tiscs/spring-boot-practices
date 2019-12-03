@@ -8,6 +8,8 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Component
 import org.springframework.transaction.annotation.Transactional
+import java.time.Clock
+import java.time.LocalDateTime
 
 @Component
 class DbUserDetailsService : UserDetailsService {
@@ -19,7 +21,7 @@ class DbUserDetailsService : UserDetailsService {
                 row[Users.username],
                 row[Users.password] ?: "",
                 !row[Users.disabled] && row[Users.accepted],
-                row[Users.expiresAt]?.isBeforeNow ?: true,
+                row[Users.expiresAt]?.isBefore(LocalDateTime.now(Clock.systemUTC())) ?: true,
                 true,
                 true,
                 emptyList()

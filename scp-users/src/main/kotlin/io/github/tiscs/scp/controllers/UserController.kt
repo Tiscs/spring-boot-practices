@@ -78,7 +78,7 @@ class UserController(
             it[name] = model.name
             it[avatar] = model.avatar
             it[gender] = model.gender
-            it[birthdate] = model.birthdate?.toDateTimeAtStartOfDay()
+            it[birthdate] = model.birthdate
         }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR)
         eventSource.output().send(MessageBuilder.withPayload(Event("USER_CREATED", result)).build())
         return ResponseEntity.ok(result)
@@ -95,7 +95,7 @@ class UserController(
             it[name] = model.name
             it[avatar] = model.avatar
             it[gender] = model.gender
-            it[birthdate] = model.birthdate?.toDateTimeAtStartOfDay()
+            it[birthdate] = model.birthdate
         }
         return if (count > 0) {
             eventSource.output().send(MessageBuilder.withPayload(Event("USER_UPDATED", model)).build())

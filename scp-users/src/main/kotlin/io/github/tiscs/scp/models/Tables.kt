@@ -1,12 +1,14 @@
 package io.github.tiscs.scp.models
 
 import org.jetbrains.exposed.sql.Table
-import org.joda.time.DateTime
-import org.joda.time.DateTimeZone
+import org.jetbrains.exposed.sql.date
+import org.jetbrains.exposed.sql.datetime
+import java.time.Clock
+import java.time.LocalDateTime
 
 object Users : Table("users") {
     val id = varchar("id", 16).primaryKey()
-    val createdAt = datetime("created_at").clientDefault { DateTime.now(DateTimeZone.UTC) }
+    val createdAt = datetime("created_at").clientDefault { LocalDateTime.now(Clock.systemUTC()) }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
     val accepted = bool("accepted").clientDefault { false }
@@ -20,7 +22,7 @@ object Users : Table("users") {
 
 object Clients : Table("clients") {
     val id = varchar("id", 16).primaryKey()
-    val createdAt = datetime("created_at").clientDefault { DateTime.now(DateTimeZone.UTC) }
+    val createdAt = datetime("created_at").clientDefault { LocalDateTime.now(Clock.systemUTC()) }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
     val accepted = bool("accepted").clientDefault { false }
