@@ -1,8 +1,8 @@
 package io.github.tiscs.scp.models
 
 import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.date
-import org.jetbrains.exposed.sql.datetime
+import org.jetbrains.exposed.sql.`java-time`.date
+import org.jetbrains.exposed.sql.`java-time`.datetime
 import java.time.Clock
 import java.time.LocalDateTime
 
