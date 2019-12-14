@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.github.tiscs</groupId>
         <artifactId>scp-parent</artifactId>
-        <version>1.0.19-RELEASE</version>
+        <version>1.1.0-RELEASE</version>
     </parent>
 
     <repositories>
@@ -24,8 +24,8 @@
             <url>https://dl.bintray.com/kotlin/exposed/</url>
         </repository>
         <repository>
-            <id>choral</id>
-            <url>https://www.myget.org/F/choral/maven/</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/tiscs/spring-cloud-practices</url>
         </repository>
     </repositories>
 
@@ -43,12 +43,35 @@
             <artifactId>jackson-module-kotlin</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.jackson.datatype</groupId>
-            <artifactId>jackson-datatype-joda</artifactId>
-        </dependency>
-        <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -67,40 +90,13 @@
             <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-stream-test-support</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-            <optional>true</optional>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.exposed</groupId>
@@ -117,6 +113,11 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>

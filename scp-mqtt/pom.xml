@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.github.tiscs</groupId>
         <artifactId>scp-parent</artifactId>
-        <version>1.0.19-RELEASE</version>
+        <version>1.1.0-RELEASE</version>
     </parent>
 
     <repositories>
@@ -24,8 +24,8 @@
             <url>https://dl.bintray.com/kotlin/exposed/</url>
         </repository>
         <repository>
-            <id>choral</id>
-            <url>https://www.myget.org/F/choral/maven/</url>
+            <id>github</id>
+            <url>https://maven.pkg.github.com/tiscs/spring-cloud-practices</url>
         </repository>
     </repositories>
 
@@ -39,12 +39,8 @@
             <artifactId>kotlin-stdlib-jdk8</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+            <groupId>com.fasterxml.jackson.module</groupId>
+            <artifactId>jackson-module-kotlin</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -55,11 +51,6 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-test-support</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
@@ -68,6 +59,19 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-stream-test-support</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.netty</groupId>
