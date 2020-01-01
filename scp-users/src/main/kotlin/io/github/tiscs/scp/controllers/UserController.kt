@@ -14,12 +14,14 @@ import org.springframework.cloud.stream.messaging.Source
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.messaging.support.MessageBuilder
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @Api(tags = ["Users"])
 @RestController
 @RequestMapping("/users")
+@PreAuthorize("isAuthenticated()")
 @EnableBinding(value = [Source::class])
 @Transactional
 class UserController(

@@ -1,6 +1,5 @@
 package io.github.tiscs.scp.services
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.connection.RedisConnection
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.security.oauth2.provider.OAuth2Authentication
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component
 
 @Component
 class RedisAuthCodeService(
-        @Autowired
         private val redisConnectionFactory: RedisConnectionFactory
 ) : RandomValueAuthorizationCodeServices() {
     private val serializationStrategy = JdkSerializationStrategy()

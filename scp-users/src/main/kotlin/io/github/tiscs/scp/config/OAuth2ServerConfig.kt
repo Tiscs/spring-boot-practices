@@ -1,10 +1,13 @@
 package io.github.tiscs.scp.config
 
 import io.github.tiscs.scp.services.DbClientDetailsService
-import io.github.tiscs.scp.services.DbUserDetailsService
 import io.github.tiscs.scp.services.RedisAuthCodeService
-import org.springframework.context.annotation.Bean
+import org.springframework.beans.factory.ObjectProvider
+import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties
+import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerTokenServicesConfiguration
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
+import org.springframework.context.annotation.Import
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
@@ -12,21 +15,22 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer
+import org.springframework.security.oauth2.provider.token.AccessTokenConverter
 import org.springframework.security.oauth2.provider.token.TokenStore
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore
 
 @Configuration
 @EnableAuthorizationServer
+@EnableConfigurationProperties(AuthorizationServerProperties::class)
+@Import(AuthorizationServerTokenServicesConfiguration::class)
 class OAuth2ServerConfig(
         private val passwordEncoder: PasswordEncoder,
         private val authenticationManager: AuthenticationManager,
-        private val userDetailsService: DbUserDetailsService,
         private val clientDetailsService: DbClientDetailsService,
-        private val authCodeService: RedisAuthCodeService
+        private val authCodeService: RedisAuthCodeService,
+        private val tokenStore: ObjectProvider<TokenStore>,
+        private val tokenConverter: ObjectProvider<AccessTokenConverter>
 ) : AuthorizationServerConfigurer {
-    @Bean
-    fun tokenStore(): TokenStore = InMemoryTokenStore()
-
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
         security.tokenKeyAccess("isAuthenticated()")
                 .checkTokenAccess("isAuthenticated()")
@@ -41,8 +45,8 @@ class OAuth2ServerConfig(
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         endpoints.authenticationManager(authenticationManager)
                 .authorizationCodeServices(authCodeService)
-                .userDetailsService(userDetailsService)
-                .tokenStore(tokenStore())
+                .tokenStore(tokenStore.getIfAvailable { InMemoryTokenStore() })
+                .accessTokenConverter(tokenConverter.getIfAvailable { null })
                 .reuseRefreshTokens(false)
     }
 }

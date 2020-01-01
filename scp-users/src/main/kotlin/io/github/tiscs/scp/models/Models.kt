@@ -34,11 +34,12 @@ data class User(
         val createdAt: LocalDateTime? = null,
         val expiresAt: LocalDateTime? = null,
         val disabled: Boolean? = null,
+        val accepted: Boolean? = null,
         val username: String? = null,
-        var name: String? = null,
-        var avatar: String? = null,
-        var gender: Gender? = null,
-        var birthdate: LocalDate? = null
+        val name: String? = null,
+        val avatar: String? = null,
+        val gender: Gender? = null,
+        val birthdate: LocalDate? = null
 )
 
 fun ResultRow.toUser() = User(
@@ -46,6 +47,7 @@ fun ResultRow.toUser() = User(
         createdAt = this.getOrNull(Users.createdAt),
         expiresAt = this.getOrNull(Users.expiresAt),
         disabled = this.getOrNull(Users.disabled),
+        accepted = this.getOrNull(Users.accepted),
         username = this.getOrNull(Users.username),
         name = this.getOrNull(Users.name),
         avatar = this.getOrNull(Users.avatar),
@@ -55,24 +57,27 @@ fun ResultRow.toUser() = User(
 
 data class Client(
         val id: String? = null,
+        val vendorId: String? = null,
         val createdAt: LocalDateTime? = null,
         val expiresAt: LocalDateTime? = null,
         val disabled: Boolean? = null,
         val accepted: Boolean? = null,
         val username: String? = null,
-        var name: String? = null,
-        var grantTypes: Set<String>? = null,
-        var resourceIds: Set<String>? = null,
-        var redirectUris: Set<String>? = null
+        val name: String? = null,
+        val description: String? = null,
+        val grantTypes: Set<String>? = null,
+        val resourceIds: Set<String>? = null,
+        val redirectUris: Set<String>? = null
 )
 
 fun ResultRow.toClient() = Client(
         id = this.getOrNull(Clients.id),
+        vendorId = this.getOrNull(Clients.vendorId),
         createdAt = this.getOrNull(Clients.createdAt),
         expiresAt = this.getOrNull(Clients.expiresAt),
         disabled = this.getOrNull(Clients.disabled),
-        username = this.getOrNull(Clients.username),
         name = this.getOrNull(Clients.name),
+        description = this.getOrNull(Clients.description),
         grantTypes = this.getOrNull(Clients.grantTypes)?.split(',')?.toSet(),
         resourceIds = this.getOrNull(Clients.resourceIds)?.split(',')?.toSet(),
         redirectUris = this.getOrNull(Clients.redirectUris)?.split(',')?.toSet()
