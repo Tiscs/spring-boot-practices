@@ -24,8 +24,8 @@
             <url>https://dl.bintray.com/kotlin/exposed/</url>
         </repository>
         <repository>
-            <id>github</id>
-            <url>https://maven.pkg.github.com/tiscs/spring-cloud-practices</url>
+            <id>choral</id>
+            <url>https://www.myget.org/F/choral/maven/</url>
         </repository>
     </repositories>
 
