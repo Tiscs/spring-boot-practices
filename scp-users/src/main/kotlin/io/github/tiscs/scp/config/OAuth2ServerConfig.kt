@@ -3,11 +3,7 @@ package io.github.tiscs.scp.config
 import io.github.tiscs.scp.services.DbClientDetailsService
 import io.github.tiscs.scp.services.RedisAuthCodeService
 import org.springframework.beans.factory.ObjectProvider
-import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties
-import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerTokenServicesConfiguration
-import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration
-import org.springframework.context.annotation.Import
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer
@@ -21,8 +17,6 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 
 @Configuration
 @EnableAuthorizationServer
-@EnableConfigurationProperties(AuthorizationServerProperties::class)
-@Import(AuthorizationServerTokenServicesConfiguration::class)
 class OAuth2ServerConfig(
         private val passwordEncoder: PasswordEncoder,
         private val authenticationManager: AuthenticationManager,
