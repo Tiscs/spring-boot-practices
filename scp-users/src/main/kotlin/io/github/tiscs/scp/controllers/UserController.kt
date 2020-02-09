@@ -77,7 +77,7 @@ class UserController(
         val result = Users.insert {
             it[id] = idWorker.nextHex()
             it[username] = model.username!!
-            it[name] = model.name
+            it[displayName] = model.displayName
             it[avatar] = model.avatar
             it[gender] = model.gender
             it[birthdate] = model.birthdate
@@ -94,7 +94,7 @@ class UserController(
     @RequestMapping(method = [RequestMethod.PUT])
     override fun update(@RequestBody model: User): ResponseEntity<User> {
         val count = Users.update({ Users.id eq model.id!! }) {
-            it[name] = model.name
+            it[displayName] = model.displayName
             it[avatar] = model.avatar
             it[gender] = model.gender
             it[birthdate] = model.birthdate

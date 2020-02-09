@@ -1,4 +1,4 @@
-package io.github.tiscs.scp.crypto
+package io.github.tiscs.scp.security
 
 import org.bouncycastle.asn1.ASN1Sequence
 import org.bouncycastle.asn1.pkcs.RSAPrivateKey

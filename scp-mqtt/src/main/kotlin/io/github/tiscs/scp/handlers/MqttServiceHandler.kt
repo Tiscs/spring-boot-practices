@@ -53,11 +53,11 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
         ctx.pipeline().replace("timeout", "timeout", ReadTimeoutHandler(msg.variableHeader().keepAliveTimeSeconds() * 2))
     }
 
-    private fun onDisconnect(ctx: ChannelHandlerContext, msg: MqttMessage) {
+    private fun onDisconnect(ctx: ChannelHandlerContext, @Suppress("UNUSED_PARAMETER") msg: MqttMessage) {
         ctx.close()
     }
 
-    private fun onPing(ctx: ChannelHandlerContext, msg: MqttMessage) {
+    private fun onPing(ctx: ChannelHandlerContext, @Suppress("UNUSED_PARAMETER") msg: MqttMessage) {
         val fixedHeader = MqttFixedHeader(MqttMessageType.PINGRESP, false, MqttQoS.AT_MOST_ONCE, false, 0)
         ctx.writeAndFlush(MqttMessage(fixedHeader))
     }
@@ -99,7 +99,7 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
         ctx.writeAndFlush(MqttMessage(fixedHeader, variableHeader))
     }
 
-    private fun onPubAck(ctx: ChannelHandlerContext, msg: MqttPubAckMessage) {
+    private fun onPubAck(@Suppress("UNUSED_PARAMETER") ctx: ChannelHandlerContext, @Suppress("UNUSED_PARAMETER") msg: MqttPubAckMessage) {
         // TODO: Delete message
     }
 
@@ -117,7 +117,7 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
         ctx.writeAndFlush(MqttMessage(fixedHeader, variableHeader))
     }
 
-    private fun onPubComp(ctx: ChannelHandlerContext, msg: MqttMessage) {
+    private fun onPubComp(@Suppress("UNUSED_PARAMETER") ctx: ChannelHandlerContext, @Suppress("UNUSED_PARAMETER") msg: MqttMessage) {
         // TODO: Delete message
     }
 }

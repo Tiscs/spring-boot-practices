@@ -36,7 +36,7 @@ data class User(
         val disabled: Boolean? = null,
         val accepted: Boolean? = null,
         val username: String? = null,
-        val name: String? = null,
+        val displayName: String? = null,
         val avatar: String? = null,
         val gender: Gender? = null,
         val birthdate: LocalDate? = null
@@ -49,7 +49,7 @@ fun ResultRow.toUser() = User(
         disabled = this.getOrNull(Users.disabled),
         accepted = this.getOrNull(Users.accepted),
         username = this.getOrNull(Users.username),
-        name = this.getOrNull(Users.name),
+        displayName = this.getOrNull(Users.displayName),
         avatar = this.getOrNull(Users.avatar),
         gender = this.getOrNull(Users.gender),
         birthdate = this.getOrNull(Users.birthdate)

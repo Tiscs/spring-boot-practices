@@ -23,9 +23,8 @@ object Users : Table("users") {
     val disabled = bool("disabled").clientDefault { false }
     val accepted = bool("accepted").clientDefault { false }
     val username = varchar("username", 32).uniqueIndex()
-    val normalizedUsername = varchar("normalized_username", 32).uniqueIndex()
     val password = varchar("password", 128).nullable()
-    val name = varchar("name", 32).index().nullable()
+    val displayName = varchar("display_name", 32).index().nullable()
     val avatar = varchar("avatar", 128).nullable()
     val gender = enumerationByName("gender", 32, Gender::class).nullable()
     val birthdate = date("birthdate").nullable()
