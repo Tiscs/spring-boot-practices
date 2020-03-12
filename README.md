@@ -38,8 +38,8 @@ spring:
   profiles:
     include: dev
   datasource:
-    username: root
-    password: root@local
+    username: postgres
+    password: 
   cloud:
     config:
       uri: http://localhost:8888
