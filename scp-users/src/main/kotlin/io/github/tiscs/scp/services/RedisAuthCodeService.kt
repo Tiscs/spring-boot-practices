@@ -7,6 +7,8 @@ import org.springframework.security.oauth2.provider.code.RandomValueAuthorizatio
 import org.springframework.security.oauth2.provider.token.store.redis.JdkSerializationStrategy
 import org.springframework.stereotype.Component
 
+const val KEY_PREFIX = "OAUTH2_AUTHORIZATION_CODES_";
+
 @Component
 class RedisAuthCodeService(
         private val redisConnectionFactory: RedisConnectionFactory
@@ -16,11 +18,15 @@ class RedisAuthCodeService(
     private fun getConnection(): RedisConnection = redisConnectionFactory.connection
 
     override fun remove(code: String): OAuth2Authentication? {
-        val key = serializationStrategy.serialize(code)
+        val key = serializationStrategy.serialize(KEY_PREFIX + code)
         val data: ByteArray?
         val connection = getConnection()
         try {
-            data = connection.get(key)
+            connection.multi()
+            connection.get(key)
+            connection.del(key)
+            val results = connection.exec()
+            data = results.firstOrNull() as ByteArray?
         } finally {
             connection.close()
         }
@@ -32,11 +38,14 @@ class RedisAuthCodeService(
     }
 
     override fun store(code: String, authentication: OAuth2Authentication) {
-        val key = serializationStrategy.serialize(code)
+        val key = serializationStrategy.serialize(KEY_PREFIX + code)
         val data = serializationStrategy.serialize(authentication)
         val connection = getConnection()
         try {
+            connection.multi()
             connection.set(key, data)
+            connection.expire(key, 5 * 60)
+            connection.exec()
         } finally {
             connection.close()
         }
