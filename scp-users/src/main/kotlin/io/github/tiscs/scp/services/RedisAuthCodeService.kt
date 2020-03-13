@@ -2,12 +2,14 @@ package io.github.tiscs.scp.services
 
 import org.springframework.data.redis.connection.RedisConnection
 import org.springframework.data.redis.connection.RedisConnectionFactory
+import org.springframework.data.redis.connection.RedisStringCommands
+import org.springframework.data.redis.core.types.Expiration
 import org.springframework.security.oauth2.provider.OAuth2Authentication
 import org.springframework.security.oauth2.provider.code.RandomValueAuthorizationCodeServices
 import org.springframework.security.oauth2.provider.token.store.redis.JdkSerializationStrategy
 import org.springframework.stereotype.Component
 
-const val KEY_PREFIX = "OAUTH2_AUTHORIZATION_CODES_";
+const val KEY_PREFIX = "OAUTH2_AUTHORIZATION_CODES_"
 
 @Component
 class RedisAuthCodeService(
@@ -42,10 +44,7 @@ class RedisAuthCodeService(
         val data = serializationStrategy.serialize(authentication)
         val connection = getConnection()
         try {
-            connection.multi()
-            connection.set(key, data)
-            connection.expire(key, 5 * 60)
-            connection.exec()
+            connection.set(key, data, Expiration.seconds(5 * 60), RedisStringCommands.SetOption.UPSERT)
         } finally {
             connection.close()
         }
