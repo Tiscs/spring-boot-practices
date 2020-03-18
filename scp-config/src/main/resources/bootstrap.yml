@@ -2,7 +2,7 @@ server:
   port: 8888
 spring:
   main:
-    banner-mode: 'off'
+    banner-mode: off
   application:
     name: scp-config
   http:

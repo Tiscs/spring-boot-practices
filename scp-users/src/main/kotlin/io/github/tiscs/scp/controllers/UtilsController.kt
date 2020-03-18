@@ -23,7 +23,9 @@ class UtilsController(
         private val eventSource: Source,
         private val passwordEncoder: PasswordEncoder
 ) {
-    private val logger = LoggerFactory.getLogger(UtilsController::class.java)
+    companion object {
+        private val logger = LoggerFactory.getLogger(UtilsController::class.java)
+    }
 
     @RequestMapping(path = ["/snowflake/long"])
     fun nextLong(): ResponseEntity<Long> {

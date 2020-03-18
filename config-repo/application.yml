@@ -20,10 +20,17 @@ spring:
     stream:
       bindings:
         input:
+          content-type: application/json
           destination: ${spring.application.name}-input
           group: ${spring.application.name}
         output:
+          content-type: application/json
           destination: ${spring.application.name}-output
+      rabbit:
+        bindings:
+          default:
+            producer:
+              transacted: true
 mybatis:
   type-aliases-package: io.github.tiscs.scp.models
   type-handlers-package: io.github.tiscs.scp.mybatis.handlers
