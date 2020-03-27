@@ -10,6 +10,6 @@ import org.springframework.integration.redis.util.RedisLockRegistry
 class LockRegistryConfig {
     @Bean
     fun redisLockRegistry(connectionFactory: RedisConnectionFactory, @Value("\${spring.application.name}") registryKey: String): RedisLockRegistry {
-        return RedisLockRegistry(connectionFactory, registryKey)
+        return RedisLockRegistry(connectionFactory, "LOCK_REGISTRY.$registryKey")
     }
 }
