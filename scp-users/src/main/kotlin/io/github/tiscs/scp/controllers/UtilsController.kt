@@ -12,7 +12,6 @@ import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import java.time.Clock
 import java.time.LocalDateTime
-import java.util.*
 
 @Api(tags = ["Utils"])
 @EnableBinding(value = [Source::class])
@@ -49,7 +48,6 @@ class UtilsController(
 
     @RequestMapping(path = ["/datetime/local"])
     fun datetimeLocalNow(): ResponseEntity<String> {
-        logger.debug(TimeZone.getDefault().id)
         return ResponseEntity.ok(LocalDateTime.now().toString())
     }
 

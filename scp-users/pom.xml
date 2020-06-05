@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.github.tiscs</groupId>
         <artifactId>scp-parent</artifactId>
-        <version>1.1.11-RELEASE</version>
+        <version>1.1.12-RELEASE</version>
     </parent>
 
     <repositories>
@@ -134,6 +134,10 @@
         <dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.opentracing.contrib</groupId>
+            <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>org.webjars.npm</groupId>

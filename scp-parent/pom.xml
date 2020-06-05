@@ -6,7 +6,7 @@
 
     <groupId>io.github.tiscs</groupId>
     <artifactId>scp-parent</artifactId>
-    <version>1.1.11-RELEASE</version>
+    <version>1.1.12-RELEASE</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -35,6 +35,11 @@
                 <version>Hoxton.SR5</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.opentracing.contrib</groupId>
+                <artifactId>opentracing-spring-jaeger-cloud-starter</artifactId>
+                <version>3.1.1</version>
             </dependency>
             <dependency>
                 <groupId>org.jetbrains.exposed</groupId>

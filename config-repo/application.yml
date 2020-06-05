@@ -31,6 +31,9 @@ spring:
           default:
             producer:
               transacted: true
+opentracing:
+  jaeger:
+    enabled: false
 mybatis:
   type-aliases-package: io.github.tiscs.scp.models
   type-handlers-package: io.github.tiscs.scp.mybatis.handlers

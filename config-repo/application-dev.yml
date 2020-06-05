@@ -27,6 +27,11 @@ feign:
     config:
       default:
         loggerLevel: full
+opentracing:
+  jaeger:
+    enabled: true
+    http-sender:
+      url: http://localhost:14268/api/traces
 security:
   oauth2:
     resource:
