@@ -18,6 +18,7 @@ spring:
       enabled: false
   cloud:
     stream:
+      default-binder: rabbit
       bindings:
         input:
           content-type: application/json
