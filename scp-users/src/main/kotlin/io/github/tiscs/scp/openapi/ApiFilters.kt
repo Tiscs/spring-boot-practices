@@ -1,4 +1,4 @@
-package io.github.tiscs.scp.swagger
+package io.github.tiscs.scp.openapi
 
 @Target(AnnotationTarget.FUNCTION)
 @Retention(AnnotationRetention.RUNTIME)

@@ -2,8 +2,6 @@ logging:
   level:
     io.github.tiscs.scp: info
     Exposed: warn
-    # Fix https://github.com/springfox/springfox/issues/1100, https://github.com/swagger-api/swagger-core/issues/1568
-    io.swagger.models.parameters.AbstractSerializableParameter: error
 server:
   use-forward-headers: true
   tomcat:
@@ -41,3 +39,7 @@ mybatis:
   mapper-locations: classpath:mappers/*.xml
   configuration:
     map-underscore-to-camel-case: true
+springdoc:
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  packages-to-scan: io.github.tiscs.scp.controllers

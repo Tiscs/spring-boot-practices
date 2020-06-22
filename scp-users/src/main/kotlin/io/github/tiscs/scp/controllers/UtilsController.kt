@@ -2,7 +2,6 @@ package io.github.tiscs.scp.controllers
 
 import io.github.tiscs.scp.models.Event
 import io.github.tiscs.scp.snowflake.IdWorker
-import io.swagger.annotations.Api
 import org.slf4j.LoggerFactory
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.messaging.Source
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.*
 import java.time.Clock
 import java.time.LocalDateTime
 
-@Api(tags = ["Utils"])
 @EnableBinding(value = [Source::class])
 @RestController
 @RequestMapping(method = [RequestMethod.POST], path = ["/utils"])

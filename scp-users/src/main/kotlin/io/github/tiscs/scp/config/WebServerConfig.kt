@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 class WebServerConfig : WebServerFactoryCustomizer<TomcatServletWebServerFactory> {
     override fun customize(factory: TomcatServletWebServerFactory) {
         factory.addConnectorCustomizers(TomcatConnectorCustomizer {
-            it.setAttribute("relaxedQueryChars", "[]")
+            it.setProperty("relaxedQueryChars", "[]")
         })
     }
 }
