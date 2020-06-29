@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" data-th-href="@{/webjars/swagger-ui-dist/swagger-ui.css}">
+    <link rel="icon" type="image/png" data-th-href="@{/webjars/swagger-ui-dist/favicon-32x32.png}" sizes="32x32"/>
+    <link rel="icon" type="image/png" data-th-href="@{/webjars/swagger-ui-dist/favicon-16x16.png}" sizes="16x16"/>
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+    </style>
+    <title>Swagger UI</title>
+</head>
+
+<body>
+<div id="swagger-ui"></div>
+<script data-th-src="@{/webjars/swagger-ui-dist/swagger-ui-bundle.js}"></script>
+<script data-th-src="@{/webjars/swagger-ui-dist/swagger-ui-standalone-preset.js}"></script>
+<script data-th-inline="javascript">
+    window.onload = function () {
+        window.ui = SwaggerUIBundle({
+            url: "[(@{/v3/api-docs})]",
+            dom_id: '#swagger-ui',
+            deepLinking: true,
+            presets: [
+                SwaggerUIBundle.presets.apis,
+                SwaggerUIStandalonePreset
+            ],
+            plugins: [
+                SwaggerUIBundle.plugins.DownloadUrl
+            ],
+            layout: "StandaloneLayout"
+        })
+    }
+</script>
+</body>
+
+</html>

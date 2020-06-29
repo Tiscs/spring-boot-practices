@@ -17,5 +17,6 @@ class WebMvcConfig : WebMvcConfigurer {
         registry.addViewController("/login").setViewName("login")
         registry.addViewController("/logout").setViewName("logout")
         registry.addViewController("/oauth/confirm_access").setViewName("authorize")
+        registry.addViewController("/swagger").setViewName("swagger")
     }
 }

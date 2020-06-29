@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" data-th-href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}"/>
     <title>Login</title>
 </head>
 
@@ -14,17 +14,17 @@
     <div class="page-header">
         <h1>Login</h1>
     </div>
-    <div th:if="${#request.getParameter('error')}">
+    <div data-th-if="${#request.getParameter('error')}">
         <div class="alert alert-danger">
             Login error.
         </div>
     </div>
-    <div th:if="${#request.getParameter('logout')}">
+    <div data-th-if="${#request.getParameter('logout')}">
         <div class="alert alert-info">
             Logged out.
         </div>
     </div>
-    <form role="form" th:action="@{/login}" method="POST">
+    <form role="form" data-th-action="@{/login}" method="POST">
         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="username" name="username"/>
