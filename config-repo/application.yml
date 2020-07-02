@@ -35,7 +35,6 @@ opentracing:
     enabled: false
 mybatis:
   type-aliases-package: io.github.tiscs.scp.models
-  type-handlers-package: io.github.tiscs.scp.mybatis.handlers
   mapper-locations: classpath:mappers/*.xml
   configuration:
     map-underscore-to-camel-case: true

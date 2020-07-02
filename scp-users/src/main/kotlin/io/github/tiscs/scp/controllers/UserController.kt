@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.security.access.prepost.PreAuthorize
+import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
@@ -26,14 +27,22 @@ class UserController(
         private val eventSource: Source
 ) : CurdController<User, String> {
     @ApiFilters(
-            ApiFilter("name_like", "% von Ulrich",
+            ApiFilter("name_like", "'% von Ulrich'",
                     "The percentage ( `_` ) wildcard matches any single character,  \n" +
                             "The underscore ( `%` ) wildcard matches any string of zero or more characters."
             )
     )
     @RequestMapping(method = [RequestMethod.GET])
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
     override fun fetch(query: Query): ResponseEntity<Page<User>> {
-        return ResponseEntity.ok(Page(Users.selectAll(), 0, 10, ResultRow::toUser))
+        var users = Users.selectAll()
+        if (query.filter?.name == "name_like") {
+            val ps = query.filter.mapParams("pattern")
+            val np = ps["pattern"]?.toString()
+                    ?: throw HttpServiceException(HttpStatus.BAD_REQUEST, description = "Invalid filter parameters.")
+            users = users.andWhere { Users.displayName like np }
+        }
+        return ResponseEntity.ok(Page(users, 0, 10, ResultRow::toUser, query.countOnly))
     }
 
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
