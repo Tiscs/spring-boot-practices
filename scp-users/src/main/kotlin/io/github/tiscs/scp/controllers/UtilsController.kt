@@ -49,12 +49,12 @@ class UtilsController(
         return ResponseEntity.ok(LocalDateTime.now().toString())
     }
 
-    @RequestMapping(path = ["/password/encode"], consumes = ["application/x-www-form-urlencoded"])
+    @RequestMapping(path = ["/password/encode"])
     fun encodePassword(@RequestParam password: String): ResponseEntity<String> {
         return ResponseEntity.ok(passwordEncoder.encode(password))
     }
 
-    @RequestMapping(path = ["/events/publish"], consumes = ["application/json"])
+    @RequestMapping(path = ["/events/publish"])
     fun publishEvent(@RequestBody event: Event<Any>): ResponseEntity<Boolean> {
         return ResponseEntity.ok(eventSource.output().send(MessageBuilder.withPayload(event).build()))
     }

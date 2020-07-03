@@ -39,6 +39,4 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
 springdoc:
-  default-consumes-media-type: application/json
-  default-produces-media-type: application/json
   packages-to-scan: io.github.tiscs.scp.controllers
