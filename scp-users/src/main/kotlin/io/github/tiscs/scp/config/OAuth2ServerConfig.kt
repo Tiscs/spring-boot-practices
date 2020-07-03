@@ -1,6 +1,7 @@
 package io.github.tiscs.scp.config
 
 import io.github.tiscs.scp.services.DbClientDetailsService
+import io.github.tiscs.scp.services.DbUserDetailsService
 import io.github.tiscs.scp.services.RedisAuthCodeService
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.authentication.AuthenticationManager
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore
 @Configuration
 @EnableAuthorizationServer
 class OAuth2ServerConfig(
+        private val userDetailsService: DbUserDetailsService,
         private val passwordEncoder: PasswordEncoder,
         private val authenticationManager: AuthenticationManager,
         private val clientDetailsService: DbClientDetailsService,
@@ -39,6 +41,7 @@ class OAuth2ServerConfig(
                 .authorizationCodeServices(authCodeService)
                 .tokenStore(tokenStore)
                 .tokenEnhancer(tokenEnhancer)
+                .userDetailsService(userDetailsService)
                 .reuseRefreshTokens(false)
     }
 }

@@ -56,7 +56,7 @@ object Clients : Table("clients") {
     val name = varchar("name", 32).nullable()
     val description = varchar("description", 128).nullable()
     val scope = varchar("scope", 2048)
-    val grantTypes = varchar("grant_types", 128).nullable() // code,refresh_token,implicit,password,client_credentials
+    val grantTypes = varchar("grant_types", 128).nullable() // authorization_code,refresh_token,implicit,password,client_credentials
     val resourceIds = varchar("resource_ids", 128).nullable()
     val redirectUris = varchar("redirect_uris", 128).nullable()
 
