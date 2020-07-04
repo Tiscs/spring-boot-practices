@@ -4,20 +4,24 @@
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" data-th-href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" data-th-href="@{/webjars/bulma/css/bulma.min.css}"/>
     <title>Logout</title>
 </head>
 
 <body>
-<div class="container">
-    <div class="page-header">
-        <h1>Logout</h1>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Logout</h1>
+        <form role="form" data-th-action="@{/logout}" method="POST">
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-danger">Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <form role="form" data-th-action="@{/logout}" method="POST">
-        <button type="submit" class="btn btn-primary">Logout</button>
-    </form>
-</div>
+</section>
 </body>
 
 </html>

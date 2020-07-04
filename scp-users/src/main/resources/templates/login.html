@@ -4,38 +4,46 @@
 <head>
     <meta charset="UTF-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" data-th-href="@{/webjars/bootstrap/dist/css/bootstrap.min.css}"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <link rel="stylesheet" data-th-href="@{/webjars/bulma/css/bulma.min.css}"/>
     <title>Login</title>
 </head>
 
 <body>
-<div class="container">
-    <div class="page-header">
-        <h1>Login</h1>
+<section class="section">
+    <div class="container">
+        <h1 class="title">Login</h1>
+        <article class="message is-danger" data-th-if="${#request.getParameter('error')}">
+            <div class="message-body">
+                Login error.
+            </div>
+        </article>
+        <article class="message is-info" data-th-if="${#request.getParameter('logout')}">
+            <div class="message-body">
+                Logged out.
+            </div>
+        </article>
+        <form role="form" data-th-action="@{/login}" method="POST">
+            <div class="field">
+                <label class="label" for="username">Login Name:</label>
+                <div class="control">
+                    <input type="text" id="username" name="username" class="input" placeholder="Login Name"/>
+                </div>
+            </div>
+            <div class="field">
+                <label class="label" for="password">Password:</label>
+                <div class="control">
+                    <input type="password" id="password" name="password" class="input" placeholder="Password"/>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <button type="submit" class="button is-link">Submit</button>
+                </div>
+            </div>
+        </form>
     </div>
-    <div data-th-if="${#request.getParameter('error')}">
-        <div class="alert alert-danger">
-            Login error.
-        </div>
-    </div>
-    <div data-th-if="${#request.getParameter('logout')}">
-        <div class="alert alert-info">
-            Logged out.
-        </div>
-    </div>
-    <form role="form" data-th-action="@{/login}" method="POST">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username"/>
-        </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input type="password" class="form-control" id="password" name="password"/>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
-</div>
+</section>
 </body>
 
 </html>
