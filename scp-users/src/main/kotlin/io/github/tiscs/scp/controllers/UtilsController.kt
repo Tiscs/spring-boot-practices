@@ -1,6 +1,7 @@
 package io.github.tiscs.scp.controllers
 
 import io.github.tiscs.scp.models.Event
+import io.github.tiscs.scp.models.User
 import io.github.tiscs.scp.snowflake.IdWorker
 import org.slf4j.LoggerFactory
 import org.springframework.cloud.stream.annotation.EnableBinding
@@ -55,7 +56,7 @@ class UtilsController(
     }
 
     @RequestMapping(path = ["/events/publish"])
-    fun publishEvent(@RequestBody event: Event<Any>): ResponseEntity<Boolean> {
+    fun publishEvent(@RequestBody event: Event<User>): ResponseEntity<Boolean> {
         return ResponseEntity.ok(eventSource.output().send(MessageBuilder.withPayload(event).build()))
     }
 }
