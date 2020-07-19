@@ -6,6 +6,7 @@ import io.github.tiscs.scp.openapi.ApiFilter
 import io.github.tiscs.scp.openapi.ApiFilters
 import io.github.tiscs.scp.snowflake.IdWorker
 import io.github.tiscs.scp.webmvc.HttpServiceException
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.*
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.messaging.Source
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/users")
 @PreAuthorize("isAuthenticated()")
 @EnableBinding(value = [Source::class])
-@Transactional
+@Tag(name = "Users")
 class UserController(
         private val idWorker: IdWorker,
         private val eventSource: Source

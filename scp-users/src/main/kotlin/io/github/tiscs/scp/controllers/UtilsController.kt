@@ -3,6 +3,7 @@ package io.github.tiscs.scp.controllers
 import io.github.tiscs.scp.models.Event
 import io.github.tiscs.scp.models.User
 import io.github.tiscs.scp.snowflake.IdWorker
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.slf4j.LoggerFactory
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.messaging.Source
@@ -16,6 +17,7 @@ import java.time.LocalDateTime
 @EnableBinding(value = [Source::class])
 @RestController
 @RequestMapping(method = [RequestMethod.POST], path = ["/utils"])
+@Tag(name = "Utils")
 class UtilsController(
         private val idWorker: IdWorker,
         private val eventSource: Source,
