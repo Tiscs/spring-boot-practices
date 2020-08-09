@@ -18,7 +18,7 @@
 $ docker build --rm -f scp-{module}/Dockerfile .
 ```
 
-## Development:
+## Development
 
 ``` yaml
 # scp-config/src/main/resources/bootstrap-local.yml
