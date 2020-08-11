@@ -1,13 +1,13 @@
 server:
   port: 8888
+  servlet:
+    encoding:
+      force: true
 spring:
   main:
     banner-mode: off
   application:
     name: scp-config
-  http:
-    encoding:
-      force: true
   cloud:
     config:
       server:
@@ -21,3 +21,8 @@ spring:
     add-properties: false
     livereload:
       enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus

@@ -3,10 +3,7 @@ logging:
     io.github.tiscs.scp: info
     Exposed: warn
 server:
-  use-forward-headers: true
-  tomcat:
-    protocol-header: x-forwarded-proto
-    remote-ip-header: x-forwarded-for
+  forward-headers-strategy: framework
 spring:
   datasource:
     driverClassName: org.postgresql.Driver
@@ -30,6 +27,11 @@ spring:
           default:
             producer:
               transacted: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
 opentracing:
   jaeger:
     enabled: false

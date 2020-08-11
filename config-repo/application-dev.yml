@@ -3,7 +3,7 @@ logging:
     io.github.tiscs.scp: debug
     Exposed: debug
 server:
-  forward-headers-strategy: framework
+  forward-headers-strategy: none
 management:
   health:
     redis:
