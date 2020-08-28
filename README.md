@@ -30,6 +30,8 @@ spring:
       server:
         native:
           search-locations: {PATH_TO_LOCAL_CONFIG_REPO} # file:///${user.home}/config-repo
+encrypt:
+  key: kbpfrIaimS5AJG4rQPvNEGeX # encrypt symmetric key
 ```
 
 ``` yaml

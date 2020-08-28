@@ -4,7 +4,6 @@ import io.github.tiscs.scp.models.Event
 import io.github.tiscs.scp.models.User
 import io.github.tiscs.scp.snowflake.IdWorker
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.slf4j.LoggerFactory
 import org.springframework.cloud.stream.annotation.EnableBinding
 import org.springframework.cloud.stream.messaging.Source
 import org.springframework.http.ResponseEntity
@@ -23,10 +22,6 @@ class UtilsController(
         private val eventSource: Source,
         private val passwordEncoder: PasswordEncoder
 ) {
-    companion object {
-        private val logger = LoggerFactory.getLogger(UtilsController::class.java)
-    }
-
     @RequestMapping(path = ["/snowflake/long"])
     fun nextLong(): ResponseEntity<Long> {
         return ResponseEntity.ok(idWorker.nextLong())

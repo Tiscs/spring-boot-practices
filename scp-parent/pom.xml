@@ -6,7 +6,7 @@
 
     <groupId>io.github.tiscs</groupId>
     <artifactId>scp-parent</artifactId>
-    <version>1.2.0-RELEASE</version>
+    <version>1.2.1-RELEASE</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -23,7 +23,8 @@
     <properties>
         <java.version>11</java.version>
         <kotlin.version>1.4.0</kotlin.version>
-        <exposed.version>0.26.2</exposed.version>
+        <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
+        <exposed.version>0.27.1</exposed.version>
         <springdoc.version>1.4.4</springdoc.version>
     </properties>
 
@@ -66,7 +67,7 @@
             <dependency>
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
-                <version>42.2.15</version>
+                <version>42.2.16</version>
             </dependency>
             <dependency>
                 <groupId>org.springdoc</groupId>
@@ -96,7 +97,7 @@
             <dependency>
                 <groupId>org.webjars.npm</groupId>
                 <artifactId>swagger-ui-dist</artifactId>
-                <version>3.32.1</version>
+                <version>3.32.4</version>
             </dependency>
             <dependency>
                 <groupId>org.webjars.npm</groupId>
@@ -116,7 +117,6 @@
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <configuration>
-                        <jvmTarget>1.8</jvmTarget>
                         <args>
                             <arg>-Xjsr305=strict</arg>
                         </args>
