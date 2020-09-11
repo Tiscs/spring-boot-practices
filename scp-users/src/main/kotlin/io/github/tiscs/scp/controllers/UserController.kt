@@ -29,7 +29,7 @@ class UserController(
 ) : CurdController<User, String> {
     @ApiFilters(
             ApiFilter("name_like", "'% von Ulrich'",
-                    "The percentage ( `_` ) wildcard matches any single character,  \n" +
+                    "The percentage ( `_` ) wildcard matches any single character, \n" +
                             "The underscore ( `%` ) wildcard matches any string of zero or more characters."
             )
     )
@@ -47,16 +47,14 @@ class UserController(
     }
 
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
-    override fun fetch(
-            @PathVariable id: String): ResponseEntity<User> {
+    override fun fetch(@PathVariable id: String): ResponseEntity<User> {
         val result = Users.select { Users.id eq id }.singleOrNull()?.toUser()
                 ?: throw HttpServiceException(HttpStatus.NOT_FOUND)
         return ResponseEntity.ok(result)
     }
 
     @RequestMapping(method = [RequestMethod.DELETE], path = ["/{id}"])
-    override fun delete(
-            @PathVariable id: String): ResponseEntity<Void> {
+    override fun delete(@PathVariable id: String): ResponseEntity<Void> {
         val count = Users.deleteWhere { Users.id eq id }
         return if (count > 0) {
             ResponseEntity.ok().build()

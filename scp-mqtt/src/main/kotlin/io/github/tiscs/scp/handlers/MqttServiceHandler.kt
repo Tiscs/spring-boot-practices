@@ -12,7 +12,7 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
         private val logger = LoggerFactory.getLogger(MqttServiceHandler::class.java)
     }
 
-    override fun channelRead(ctx: ChannelHandlerContext, msg: Any?) {
+    override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
         if (msg is MqttMessage) {
             when (msg.fixedHeader().messageType()) {
                 MqttMessageType.CONNECT -> onConnect(ctx, msg as MqttConnectMessage)
@@ -30,8 +30,7 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
                 }
             }
         } else {
-            ctx.close(ChannelPipelineException("Invalid message type: ${msg?.javaClass?.name
-                    ?: "null"}, channel closed"))
+            ctx.close(ChannelPipelineException("Invalid message type: ${msg::class.simpleName ?: "UNKNOWN"}, channel closed"))
         }
     }
 

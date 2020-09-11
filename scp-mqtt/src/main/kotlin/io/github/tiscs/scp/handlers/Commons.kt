@@ -20,9 +20,9 @@ internal fun MqttMessage.toLog(): String {
     return "[fixedHeader: ${fixedHeader()}" +
             ", variableHeader: ${variableHeader()}" +
             ", payload: ${
-            if (payload() is ByteBuf)
-                ByteBufUtil.hexDump(payload() as ByteBuf)
-            else
-                payload()
+                if (payload() is ByteBuf)
+                    ByteBufUtil.hexDump(payload() as ByteBuf)
+                else
+                    payload()
             }]"
 }
