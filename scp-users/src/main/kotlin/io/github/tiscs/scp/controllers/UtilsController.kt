@@ -32,11 +32,6 @@ class UtilsController(
         return ResponseEntity.ok(idWorker.nextHex())
     }
 
-    @RequestMapping(path = ["/snowflake/base64"])
-    fun nextBase64(): ResponseEntity<String> {
-        return ResponseEntity.ok(idWorker.nextBase64())
-    }
-
     @RequestMapping(path = ["/datetime/utc"])
     fun datetimeUTCNow(): ResponseEntity<String> {
         return ResponseEntity.ok(LocalDateTime.now(Clock.systemUTC()).toString())

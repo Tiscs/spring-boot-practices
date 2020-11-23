@@ -1,6 +1,5 @@
 package io.github.tiscs.scp.services
 
-import org.springframework.data.redis.connection.RedisConnection
 import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.data.redis.connection.RedisStringCommands
 import org.springframework.data.redis.core.types.Expiration
@@ -17,20 +16,13 @@ class RedisAuthCodeService(
 ) : RandomValueAuthorizationCodeServices() {
     private val serializationStrategy = JdkSerializationStrategy()
 
-    private fun getConnection(): RedisConnection = redisConnectionFactory.connection
-
     override fun remove(code: String): OAuth2Authentication? {
         val key = serializationStrategy.serialize(KEY_PREFIX + code)
-        val data: ByteArray?
-        val connection = getConnection()
-        try {
-            connection.multi()
-            connection.get(key)
-            connection.del(key)
-            val results = connection.exec()
-            data = results.firstOrNull() as ByteArray?
-        } finally {
-            connection.close()
+        val data = redisConnectionFactory.connection.use {
+            it.multi()
+            it.get(key)
+            it.del(key)
+            it.exec().firstOrNull() as ByteArray?
         }
         return if (data == null) {
             null
@@ -42,11 +34,8 @@ class RedisAuthCodeService(
     override fun store(code: String, authentication: OAuth2Authentication) {
         val key = serializationStrategy.serialize(KEY_PREFIX + code)
         val data = serializationStrategy.serialize(authentication)
-        val connection = getConnection()
-        try {
-            connection.set(key, data, Expiration.seconds(5 * 60), RedisStringCommands.SetOption.UPSERT)
-        } finally {
-            connection.close()
+        redisConnectionFactory.connection.use {
+            it.set(key, data, Expiration.seconds(5 * 60), RedisStringCommands.SetOption.UPSERT)
         }
     }
 }

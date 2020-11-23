@@ -17,7 +17,7 @@ class SnowflakeConfig {
                 properties.clusterIdBits,
                 properties.workerIdBits,
                 properties.sequenceBits,
-                properties.twepoch
+                properties.idEpoch
         )
     }
 }

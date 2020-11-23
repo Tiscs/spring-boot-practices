@@ -9,5 +9,5 @@ class ConfigProperties {
     var clusterIdBits: Int = 5
     var workerIdBits: Int = 5
     var sequenceBits: Int = 12
-    var twepoch = DEFAULT_TWEPOCH
+    var idEpoch = DEFAULT_ID_EPOCH
 }

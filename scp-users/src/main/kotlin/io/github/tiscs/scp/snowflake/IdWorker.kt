@@ -1,11 +1,9 @@
 package io.github.tiscs.scp.snowflake
 
-import org.apache.commons.codec.binary.Base64
-import org.apache.commons.codec.binary.Hex
-import java.nio.ByteBuffer
-
-// 2019-10-01T10:00:00+08
-const val DEFAULT_TWEPOCH = 1569895200000L
+// 2020-01-01T00:00:00.000Z
+const val DEFAULT_ID_EPOCH = 1577836800000L
+const val LOWER_HEX_FORMAT = "%02x%02x%02x%02x%02x%02x%02x%02x"
+const val UPPER_HEX_FORMAT = "%02X%02X%02X%02X%02X%02X%02X%02X"
 
 class IdWorker(
         private val clusterId: Long,
@@ -13,7 +11,7 @@ class IdWorker(
         private val clusterIdBits: Int = 5,
         private val workerIdBits: Int = 5,
         private val sequenceBits: Int = 12,
-        private val twepoch: Long = DEFAULT_TWEPOCH
+        private val idEpoch: Long = DEFAULT_ID_EPOCH
 ) {
     private val sequenceMask: Long = (-1L shl sequenceBits).inv()
 
@@ -30,8 +28,8 @@ class IdWorker(
         require(workerId in 0..maxWorkerId) {
             "Value of \"workerId\" must be in the range 0 to $maxWorkerId."
         }
-        require(twepoch > 0) {
-            "Value of \"twepoch\" must be greater than 0."
+        require(idEpoch > 0) {
+            "Value of \"idEpoch\" must be greater than 0."
         }
         require(clusterIdBits > 0) {
             "Value of \"clusterIdBits\" must be greater than 0."
@@ -63,21 +61,24 @@ class IdWorker(
             sequence = 0L
         }
         lastMillis = timestamp
-        return (timestamp - twepoch shl clusterIdBits + workerIdBits + sequenceBits) or
+        return (timestamp - idEpoch shl clusterIdBits + workerIdBits + sequenceBits) or
                 (clusterId shl workerIdBits + sequenceBits) or
                 (workerId shl sequenceBits) or
                 sequence
     }
 
-    fun nextBytes(): ByteArray {
-        return ByteBuffer.allocate(Long.SIZE_BYTES).putLong(nextLong()).array()
-    }
-
-    fun nextHex(): String {
-        return Hex.encodeHexString(nextBytes())
-    }
-
-    fun nextBase64(): String {
-        return Base64.encodeBase64String(nextBytes())
+    fun nextHex(lowerCase: Boolean = false): String {
+        return nextLong().let {
+            (if (lowerCase) LOWER_HEX_FORMAT else UPPER_HEX_FORMAT).format(
+                    it.shr(7 * 8).toByte(),
+                    it.shr(6 * 8).toByte(),
+                    it.shr(5 * 8).toByte(),
+                    it.shr(4 * 8).toByte(),
+                    it.shr(3 * 8).toByte(),
+                    it.shr(2 * 8).toByte(),
+                    it.shr(1 * 8).toByte(),
+                    it.shr(0 * 8).toByte(),
+            )
+        }
     }
 }
