@@ -43,7 +43,7 @@ class UserController(
                     ?: throw HttpServiceException(HttpStatus.BAD_REQUEST, description = "Invalid filter parameters.")
             users = users.andWhere { Users.displayName like np }
         }
-        return ResponseEntity.ok(Page(users, 0, 10, ResultRow::toUser, query.countOnly))
+        return ResponseEntity.ok(users.toPage(0, 10, ResultRow::toUser, query.countOnly))
     }
 
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])

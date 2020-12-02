@@ -18,10 +18,11 @@ data class Event<T>(
         val model: T
 )
 
-data class Page<T>(val total: Long, val page: Int, val size: Int, val items: List<T>) {
-    constructor(rows: SizedIterable<ResultRow>, page: Int, size: Int, mapper: (ResultRow) -> T, countOnly: Boolean = false) :
-            this(rows.count(), page, size, if (countOnly) emptyList() else rows.limit(size, page.toLong() * size).map(mapper))
-}
+data class Page<T>(val total: Long, val page: Int, val size: Int, val items: List<T>)
+
+fun <T> SizedIterable<ResultRow>.toPage(index: Int, size: Int, mapper: (ResultRow) -> T, countOnly: Boolean = false): Page<T> =
+        Page(this.count(), index, size, if (countOnly) emptyList() else this.limit(size, index.toLong() * size).map(mapper))
+
 
 enum class Gender {
     MALE,
