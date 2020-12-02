@@ -18,9 +18,9 @@ import java.time.LocalDateTime
 @RequestMapping(method = [RequestMethod.POST], path = ["/utils"])
 @Tag(name = "Utils")
 class UtilsController(
-        private val idWorker: IdWorker,
-        private val eventSource: Source,
-        private val passwordEncoder: PasswordEncoder
+    private val idWorker: IdWorker,
+    private val eventSource: Source,
+    private val passwordEncoder: PasswordEncoder
 ) {
     @RequestMapping(path = ["/snowflake/long"])
     fun nextLong(): ResponseEntity<Long> {

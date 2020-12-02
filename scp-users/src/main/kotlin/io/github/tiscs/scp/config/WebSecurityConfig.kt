@@ -12,7 +12,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class WebSecurityConfig(
-        private val userDetailsService: DbUserDetailsService
+    private val userDetailsService: DbUserDetailsService,
 ) : WebSecurityConfigurerAdapter() {
     @Bean
     fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
@@ -26,10 +26,18 @@ class WebSecurityConfig(
 
     override fun configure(http: HttpSecurity) {
         http.csrf()
-                .and().formLogin().loginPage("/login").permitAll()
-                .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll()
-                .and().authorizeRequests().antMatchers("/", "/actuator/**", "/favicon.ico", "/webjars/**", "/swagger", "/v3/api-docs/**", "/v3/api-docs.yaml").permitAll()
-                .and().authorizeRequests().anyRequest().authenticated()
+            .and().formLogin().loginPage("/login").permitAll()
+            .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login?logout").permitAll()
+            .and().authorizeRequests().antMatchers(
+                "/",
+                "/actuator/**",
+                "/favicon.ico",
+                "/webjars/**",
+                "/swagger",
+                "/v3/api-docs/**",
+                "/v3/api-docs.yaml",
+            ).permitAll()
+            .and().authorizeRequests().anyRequest().authenticated()
 
     }
 }

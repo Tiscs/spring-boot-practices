@@ -10,7 +10,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 class ResourceServerConfig : ResourceServerConfigurerAdapter() {
     override fun configure(http: HttpSecurity) {
         http.requestMatchers()
-                .antMatchers("/users/**", "/clients/**", "/groups/**", "/utils/**")
-                .and().authorizeRequests().anyRequest().permitAll()
+            .antMatchers("/users/**", "/clients/**", "/groups/**", "/utils/**")
+            .and().authorizeRequests().anyRequest().permitAll()
     }
 }

@@ -16,32 +16,36 @@ class QueryParamsCustomizer : OperationCustomizer {
         if (method.methodParameters.any { it.parameterType == Query::class.java }) {
             val filters = method.getMethodAnnotation(ApiFilters::class.java)
             operation
-                    .addParametersItem(
-                            QueryParameter().name(FilterNameParameter)
-                                    .schema(StringSchema()._enum(filters?.value?.map { it.name }))
-                                    .required(filters?.required ?: false)
-                    )
-                    .addParametersItem(
-                            QueryParameter().name(FilterParamsParameter)
-                                    .examples(filters?.value?.map { it.name to Example().value(it.example.ifEmpty { null }).description(it.description.ifEmpty { null }) }?.toMap())
-                                    .schema(StringSchema())
-                    )
-                    .addParametersItem(
-                            QueryParameter().name(PagingPageParameter)
-                                    .schema(IntegerSchema()._default(DefaultPagingPage))
-                    )
-                    .addParametersItem(
-                            QueryParameter().name(PagingSizeParameter)
-                                    .schema(IntegerSchema()._default(DefaultPagingSize))
-                    )
-                    .addParametersItem(
-                            QueryParameter().name(OrderByParameter)
-                                    .schema(StringSchema())
-                    )
-                    .addParametersItem(
-                            QueryParameter().name(CountOnlyParameter)
-                                    .schema(BooleanSchema()._default(false))
-                    )
+                .addParametersItem(
+                    QueryParameter().name(FilterNameParameter)
+                        .schema(StringSchema()._enum(filters?.value?.map { it.name }))
+                        .required(filters?.required ?: false)
+                )
+                .addParametersItem(
+                    QueryParameter().name(FilterParamsParameter)
+                        .examples(filters?.value?.map {
+                            it.name to Example()
+                                .value(it.example.ifEmpty { null })
+                                .description(it.description.ifEmpty { null })
+                        }?.toMap())
+                        .schema(StringSchema())
+                )
+                .addParametersItem(
+                    QueryParameter().name(PagingPageParameter)
+                        .schema(IntegerSchema()._default(DefaultPagingPage))
+                )
+                .addParametersItem(
+                    QueryParameter().name(PagingSizeParameter)
+                        .schema(IntegerSchema()._default(DefaultPagingSize))
+                )
+                .addParametersItem(
+                    QueryParameter().name(OrderByParameter)
+                        .schema(StringSchema())
+                )
+                .addParametersItem(
+                    QueryParameter().name(CountOnlyParameter)
+                        .schema(BooleanSchema()._default(false))
+                )
         }
         return operation
     }

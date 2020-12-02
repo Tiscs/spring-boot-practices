@@ -17,19 +17,19 @@ import org.springframework.security.oauth2.provider.token.TokenStore
 @Configuration
 @EnableAuthorizationServer
 class OAuth2ServerConfig(
-        private val userDetailsService: DbUserDetailsService,
-        private val passwordEncoder: PasswordEncoder,
-        private val authenticationManager: AuthenticationManager,
-        private val clientDetailsService: DbClientDetailsService,
-        private val authCodeService: RedisAuthCodeService,
-        private val tokenStore: TokenStore,
-        private val tokenEnhancer: TokenEnhancer
+    private val userDetailsService: DbUserDetailsService,
+    private val passwordEncoder: PasswordEncoder,
+    private val authenticationManager: AuthenticationManager,
+    private val clientDetailsService: DbClientDetailsService,
+    private val authCodeService: RedisAuthCodeService,
+    private val tokenStore: TokenStore,
+    private val tokenEnhancer: TokenEnhancer,
 ) : AuthorizationServerConfigurer {
     override fun configure(security: AuthorizationServerSecurityConfigurer) {
         security.tokenKeyAccess("isAuthenticated()")
-                .checkTokenAccess("isAuthenticated()")
-                .allowFormAuthenticationForClients()
-                .passwordEncoder(passwordEncoder)
+            .checkTokenAccess("isAuthenticated()")
+            .allowFormAuthenticationForClients()
+            .passwordEncoder(passwordEncoder)
     }
 
     override fun configure(clients: ClientDetailsServiceConfigurer) {
@@ -38,10 +38,10 @@ class OAuth2ServerConfig(
 
     override fun configure(endpoints: AuthorizationServerEndpointsConfigurer) {
         endpoints.authenticationManager(authenticationManager)
-                .authorizationCodeServices(authCodeService)
-                .tokenStore(tokenStore)
-                .tokenEnhancer(tokenEnhancer)
-                .userDetailsService(userDetailsService)
-                .reuseRefreshTokens(false)
+            .authorizationCodeServices(authCodeService)
+            .tokenStore(tokenStore)
+            .tokenEnhancer(tokenEnhancer)
+            .userDetailsService(userDetailsService)
+            .reuseRefreshTokens(false)
     }
 }

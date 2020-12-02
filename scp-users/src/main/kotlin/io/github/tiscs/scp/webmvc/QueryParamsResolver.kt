@@ -25,11 +25,22 @@ private val objectMapper = ObjectMapper(YAMLFactory())
 class QueryParamsResolver : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean = parameter.parameterType == Query::class.java
 
-    override fun resolveArgument(parameter: MethodParameter, mavContainer: ModelAndViewContainer?, webRequest: NativeWebRequest, binderFactory: WebDataBinderFactory?): Any? {
+    override fun resolveArgument(
+        parameter: MethodParameter,
+        mavContainer: ModelAndViewContainer?,
+        webRequest: NativeWebRequest,
+        binderFactory: WebDataBinderFactory?,
+    ): Any {
         val filterName = webRequest.getParameter(FilterNameParameter)
         val filterParams = webRequest.getParameter(FilterParamsParameter)
         val filter = if (filterName != null) {
-            Filter(filterName, if (filterParams.isNullOrEmpty()) emptyList() else objectMapper.readValue("[$filterParams]", List::class.java))
+            Filter(
+                filterName,
+                if (filterParams.isNullOrEmpty()) emptyList() else objectMapper.readValue(
+                    "[$filterParams]",
+                    List::class.java,
+                )
+            )
         } else {
             null
         }
@@ -37,6 +48,11 @@ class QueryParamsResolver : HandlerMethodArgumentResolver {
         val pagingSize = webRequest.getParameter(PagingSizeParameter) ?: DefaultPagingSize.toString()
         val orderby = webRequest.getParameter(OrderByParameter)
         val countOnly = webRequest.getParameter(CountOnlyParameter) ?: "false"
-        return Query(Paging(pagingPage.toInt(), pagingSize.toInt()), filter, orderby, countOnly == "true" || countOnly == "")
+        return Query(
+            Paging(pagingPage.toInt(), pagingSize.toInt()),
+            filter,
+            orderby,
+            countOnly == "true" || countOnly == "",
+        )
     }
 }

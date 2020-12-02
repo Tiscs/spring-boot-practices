@@ -39,8 +39,12 @@ fun parseKeyPair(pem: String): KeyPair {
                 }
                 val key = RSAPrivateKey.getInstance(seq)
                 val publicKey = factory.generatePublic(RSAPublicKeySpec(key.modulus, key.publicExponent))
-                val privateKey = factory.generatePrivate(RSAPrivateCrtKeySpec(key.modulus, key.publicExponent,
-                        key.privateExponent, key.prime1, key.prime2, key.exponent1, key.exponent2, key.coefficient))
+                val privateKey = factory.generatePrivate(
+                    RSAPrivateCrtKeySpec(
+                        key.modulus, key.publicExponent, key.privateExponent,
+                        key.prime1, key.prime2, key.exponent1, key.exponent2, key.coefficient
+                    )
+                )
                 KeyPair(publicKey, privateKey)
             }
             "PUBLIC KEY" -> {

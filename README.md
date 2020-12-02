@@ -3,14 +3,13 @@
 ## Modules
 
 - **scp-parent**:
-    Parent Project
+  Parent Project
 - **scp-config**:
-    Config Server
+  Config Server
 - **scp-users**:
-    OAuth2 Server
+  OAuth2 Server
 - **scp-mqtt**:
-    MQTT Server
-
+  MQTT Server
 
 ## Docker Images
 

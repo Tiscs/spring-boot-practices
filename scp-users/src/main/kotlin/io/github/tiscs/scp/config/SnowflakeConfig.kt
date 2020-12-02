@@ -12,12 +12,12 @@ class SnowflakeConfig {
     @Bean
     fun idWorker(properties: ConfigProperties): IdWorker {
         return IdWorker(
-                properties.clusterId,
-                properties.workerId,
-                properties.clusterIdBits,
-                properties.workerIdBits,
-                properties.sequenceBits,
-                properties.idEpoch
+            properties.clusterId,
+            properties.workerId,
+            properties.clusterIdBits,
+            properties.workerIdBits,
+            properties.sequenceBits,
+            properties.idEpoch,
         )
     }
 }

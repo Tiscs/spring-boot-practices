@@ -10,11 +10,11 @@ class TokenClaimsParser : TokenEnhancer {
         val principal = authentication.principal
         if (accessToken is DefaultOAuth2AccessToken && principal is User) {
             accessToken.additionalInformation = mapOf(
-                    "user_id" to principal.getIdentity(),
-                    "display_name" to principal.getDisplayName(),
-                    "avatar" to principal.getAvatar(),
-                    "gender" to principal.getGender(),
-                    "birthdate" to principal.getBirthdate()?.toString()
+                "user_id" to principal.getIdentity(),
+                "display_name" to principal.getDisplayName(),
+                "avatar" to principal.getAvatar(),
+                "gender" to principal.getGender(),
+                "birthdate" to principal.getBirthdate()?.toString(),
             )
         }
         return accessToken

@@ -28,17 +28,17 @@ class NettyMqttService {
     fun start() {
         val bootstrap = ServerBootstrap()
         bootstrap.group(parentGroup, workerGroup)
-                .channel(NioServerSocketChannel::class.java)
-                .childHandler(object : ChannelInitializer<SocketChannel>() {
-                    override fun initChannel(channel: SocketChannel) {
-                        channel.pipeline()
-                                .addLast("timeout", ReadTimeoutHandler(30))
-                                .addLast("decoder", MqttDecoder(4 * 1024))
-                                .addLast("encoder", MqttEncoder.INSTANCE)
-                                .addLast("logging", MqttLoggingHandler())
-                                .addLast("service", MqttServiceHandler())
-                    }
-                })
+            .channel(NioServerSocketChannel::class.java)
+            .childHandler(object : ChannelInitializer<SocketChannel>() {
+                override fun initChannel(channel: SocketChannel) {
+                    channel.pipeline()
+                        .addLast("timeout", ReadTimeoutHandler(30))
+                        .addLast("decoder", MqttDecoder(4 * 1024))
+                        .addLast("encoder", MqttEncoder.INSTANCE)
+                        .addLast("logging", MqttLoggingHandler())
+                        .addLast("service", MqttServiceHandler())
+                }
+            })
         bootstrap.bind(1883).sync()
         logger.info("MQTT server listening on 1883")
     }

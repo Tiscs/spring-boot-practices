@@ -6,12 +6,12 @@ const val LOWER_HEX_FORMAT = "%02x%02x%02x%02x%02x%02x%02x%02x"
 const val UPPER_HEX_FORMAT = "%02X%02X%02X%02X%02X%02X%02X%02X"
 
 class IdWorker(
-        private val clusterId: Long,
-        private val workerId: Long,
-        private val clusterIdBits: Int = 5,
-        private val workerIdBits: Int = 5,
-        private val sequenceBits: Int = 12,
-        private val idEpoch: Long = DEFAULT_ID_EPOCH
+    private val clusterId: Long,
+    private val workerId: Long,
+    private val clusterIdBits: Int = 5,
+    private val workerIdBits: Int = 5,
+    private val sequenceBits: Int = 12,
+    private val idEpoch: Long = DEFAULT_ID_EPOCH,
 ) {
     private val sequenceMask: Long = (-1L shl sequenceBits).inv()
 
@@ -70,14 +70,14 @@ class IdWorker(
     fun nextHex(lowerCase: Boolean = false): String {
         return nextLong().let {
             (if (lowerCase) LOWER_HEX_FORMAT else UPPER_HEX_FORMAT).format(
-                    it.shr(7 * 8).toByte(),
-                    it.shr(6 * 8).toByte(),
-                    it.shr(5 * 8).toByte(),
-                    it.shr(4 * 8).toByte(),
-                    it.shr(3 * 8).toByte(),
-                    it.shr(2 * 8).toByte(),
-                    it.shr(1 * 8).toByte(),
-                    it.shr(0 * 8).toByte(),
+                it.shr(7 * 8).toByte(),
+                it.shr(6 * 8).toByte(),
+                it.shr(5 * 8).toByte(),
+                it.shr(4 * 8).toByte(),
+                it.shr(3 * 8).toByte(),
+                it.shr(2 * 8).toByte(),
+                it.shr(1 * 8).toByte(),
+                it.shr(0 * 8).toByte(),
             )
         }
     }

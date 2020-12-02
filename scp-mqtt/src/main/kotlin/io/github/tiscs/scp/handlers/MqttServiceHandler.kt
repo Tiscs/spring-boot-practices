@@ -26,7 +26,13 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
                 MqttMessageType.PUBREL -> onPubRel(ctx, msg)
                 MqttMessageType.PUBCOMP -> onPubComp(ctx, msg)
                 else -> run {
-                    ctx.close(ChannelPipelineException("Unknown MQTT packet type: ${msg.fixedHeader().messageType()}, channel closed"))
+                    ctx.close(
+                        ChannelPipelineException(
+                            "Unknown MQTT packet type: ${
+                                msg.fixedHeader().messageType()
+                            }, channel closed"
+                        )
+                    )
                 }
             }
         } else {
@@ -98,7 +104,10 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
         ctx.writeAndFlush(MqttMessage(fixedHeader, variableHeader))
     }
 
-    private fun onPubAck(@Suppress("UNUSED_PARAMETER") ctx: ChannelHandlerContext, @Suppress("UNUSED_PARAMETER") msg: MqttPubAckMessage) {
+    private fun onPubAck(
+        @Suppress("UNUSED_PARAMETER") ctx: ChannelHandlerContext,
+        @Suppress("UNUSED_PARAMETER") msg: MqttPubAckMessage,
+    ) {
         // TODO: Delete message
     }
 
@@ -116,7 +125,10 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
         ctx.writeAndFlush(MqttMessage(fixedHeader, variableHeader))
     }
 
-    private fun onPubComp(@Suppress("UNUSED_PARAMETER") ctx: ChannelHandlerContext, @Suppress("UNUSED_PARAMETER") msg: MqttMessage) {
+    private fun onPubComp(
+        @Suppress("UNUSED_PARAMETER") ctx: ChannelHandlerContext,
+        @Suppress("UNUSED_PARAMETER") msg: MqttMessage,
+    ) {
         // TODO: Delete message
     }
 }

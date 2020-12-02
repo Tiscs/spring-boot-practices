@@ -20,15 +20,15 @@ class OpenApiConfig {
     companion object {
         init {
             SpringDocUtils.getConfig()
-                    .addRequestWrapperToIgnore(Query::class.java)
-                    .replaceWithClass(ObjectNode::class.java, Map::class.java)
-                    .replaceWithClass(ArrayNode::class.java, List::class.java)
+                .addRequestWrapperToIgnore(Query::class.java)
+                .replaceWithClass(ObjectNode::class.java, Map::class.java)
+                .replaceWithClass(ArrayNode::class.java, List::class.java)
         }
     }
 
     @Bean
     fun openApi(): OpenAPI = OpenAPI().info(
-            Info().title("SCP-Users").version("v1.0.0")
+        Info().title("SCP-Users").version("v1.0.0")
     )
 
     @Bean

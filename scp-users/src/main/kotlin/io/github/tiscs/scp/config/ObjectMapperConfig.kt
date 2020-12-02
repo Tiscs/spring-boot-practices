@@ -13,9 +13,9 @@ class ObjectMapperConfig {
     fun jacksonBuilderCustomizer(): Jackson2ObjectMapperBuilderCustomizer {
         return Jackson2ObjectMapperBuilderCustomizer {
             it.findModulesViaServiceLoader(true)
-                    .serializationInclusion(JsonInclude.Include.NON_NULL)
-                    .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
-                    .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .serializationInclusion(JsonInclude.Include.NON_NULL)
+                .propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+                .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
         }
     }
 }

@@ -12,7 +12,7 @@ const val KEY_PREFIX = "OAUTH2_AUTHORIZATION_CODES_"
 
 @Component
 class RedisAuthCodeService(
-        private val redisConnectionFactory: RedisConnectionFactory
+    private val redisConnectionFactory: RedisConnectionFactory,
 ) : RandomValueAuthorizationCodeServices() {
     private val serializationStrategy = JdkSerializationStrategy()
 

@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore
 @Configuration
 @EnableConfigurationProperties(AuthorizationServerProperties::class)
 class OAuth2TokenConfig(
-        private val authorization: AuthorizationServerProperties
+    private val authorization: AuthorizationServerProperties,
 ) {
     @Bean
     fun tokenStore() = JwtTokenStore(tokenConverter())
