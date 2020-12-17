@@ -1,7 +1,7 @@
 package io.github.tiscs.scp.config
 
+import io.github.tiscs.scp.security.RsaKeyHelper
 import io.github.tiscs.scp.security.TokenClaimsParser
-import io.github.tiscs.scp.security.parseKeyPair
 import org.springframework.boot.autoconfigure.security.oauth2.authserver.AuthorizationServerProperties
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -31,8 +31,8 @@ class OAuth2TokenConfig(
         val converter = JwtAccessTokenConverter()
         val keyValue = authorization.jwt.keyValue
         if (keyValue != null) {
-            if (keyValue.startsWith("-----BEGIN")) {
-                converter.setKeyPair(parseKeyPair(keyValue))
+            if (RsaKeyHelper.isPEMKeyPair(keyValue)) {
+                converter.setKeyPair(RsaKeyHelper.parseKeyPair(keyValue))
             } else {
                 converter.setSigningKey(keyValue)
             }

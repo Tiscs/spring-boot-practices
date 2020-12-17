@@ -10,3 +10,5 @@
 /scp-*/.factorypath
 /scp-*/src/main/resources/bootstrap-local.yml
 /scp-*/src/test/resources/bootstrap-local.yml
+/scp-*/src/main/resources/application-local.yml
+/scp-*/src/test/resources/application-local.yml
