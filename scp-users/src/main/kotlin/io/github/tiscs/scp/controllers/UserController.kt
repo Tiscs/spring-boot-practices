@@ -8,24 +8,18 @@ import io.github.tiscs.scp.snowflake.IdWorker
 import io.github.tiscs.scp.webmvc.HttpServiceException
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.*
-import org.springframework.cloud.stream.annotation.EnableBinding
-import org.springframework.cloud.stream.messaging.Source
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
-import org.springframework.messaging.support.MessageBuilder
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
 @RestController
+@Transactional
 @RequestMapping("/users")
-@PreAuthorize("isAuthenticated()")
-@EnableBinding(value = [Source::class])
 @Tag(name = "Users")
 class UserController(
     private val idWorker: IdWorker,
-    private val eventSource: Source
 ) : CurdController<User, String> {
     @ApiFilters(
         ApiFilter(
@@ -74,7 +68,6 @@ class UserController(
             it[gender] = model.gender
             it[birthdate] = model.birthdate
         }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR)
-        eventSource.output().send(MessageBuilder.withPayload(Event("USER_CREATED", result)).build())
         return ResponseEntity.ok(result)
     }
 
@@ -87,7 +80,6 @@ class UserController(
             it[birthdate] = model.birthdate
         }
         return if (count > 0) {
-            eventSource.output().send(MessageBuilder.withPayload(Event("USER_UPDATED", model)).build())
             ResponseEntity.ok(model)
         } else {
             throw HttpServiceException(HttpStatus.NOT_FOUND)

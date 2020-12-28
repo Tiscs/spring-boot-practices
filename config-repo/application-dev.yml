@@ -22,11 +22,6 @@ spring:
       allow-override: true
       override-system-properties: false
       override-none: true
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: full
 opentracing:
   jaeger:
     enabled: true

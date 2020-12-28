@@ -1,26 +1,22 @@
 package io.github.tiscs.scp.controllers
 
-import io.github.tiscs.scp.models.Event
-import io.github.tiscs.scp.models.User
 import io.github.tiscs.scp.snowflake.IdWorker
 import io.swagger.v3.oas.annotations.tags.Tag
-import org.springframework.cloud.stream.annotation.EnableBinding
-import org.springframework.cloud.stream.messaging.Source
 import org.springframework.http.ResponseEntity
-import org.springframework.messaging.support.MessageBuilder
 import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.web.bind.annotation.*
+import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.bind.annotation.RestController
 import java.time.Clock
 import java.time.LocalDateTime
 
-@EnableBinding(value = [Source::class])
 @RestController
 @RequestMapping(method = [RequestMethod.POST], path = ["/utils"])
 @Tag(name = "Utils")
 class UtilsController(
     private val idWorker: IdWorker,
-    private val eventSource: Source,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: PasswordEncoder,
 ) {
     @RequestMapping(path = ["/snowflake/long"])
     fun nextLong(): ResponseEntity<Long> {
@@ -45,10 +41,5 @@ class UtilsController(
     @RequestMapping(path = ["/password/encode"])
     fun encodePassword(@RequestParam password: String): ResponseEntity<String> {
         return ResponseEntity.ok(passwordEncoder.encode(password))
-    }
-
-    @RequestMapping(path = ["/events/publish"])
-    fun publishEvent(@RequestBody event: Event<User>): ResponseEntity<Boolean> {
-        return ResponseEntity.ok(eventSource.output().send(MessageBuilder.withPayload(event).build()))
     }
 }

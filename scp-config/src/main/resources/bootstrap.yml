@@ -3,6 +3,11 @@ server:
   servlet:
     encoding:
       force: true
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
 spring:
   main:
     banner-mode: off
@@ -16,13 +21,8 @@ spring:
           uri: ${CONFIG_REPO_GIT_URI:https://github.com/tiscs/spring-cloud-practices.git}
           username: ${CONFIG_REPO_GIT_USERNAME}
           password: ${CONFIG_REPO_GIT_PASSWORD}
-          searchPaths: ${CONFIG_REPO_GIT_PATHS:config-repo}
+          search-paths: ${CONFIG_REPO_GIT_PATHS:config-repo}
   devtools:
     add-properties: false
     livereload:
       enabled: false
-management:
-  endpoints:
-    web:
-      exposure:
-        include: health, info, prometheus

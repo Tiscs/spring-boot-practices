@@ -2,8 +2,8 @@ package io.github.tiscs.scp.snowflake
 
 // 2020-01-01T00:00:00.000Z
 const val DEFAULT_ID_EPOCH = 1577836800000L
-const val LOWER_HEX_FORMAT = "%02x%02x%02x%02x%02x%02x%02x%02x"
-const val UPPER_HEX_FORMAT = "%02X%02X%02X%02X%02X%02X%02X%02X"
+const val LOWER_HEX_FORMAT = "%016x"
+const val UPPER_HEX_FORMAT = "%016X"
 
 class IdWorker(
     private val clusterId: Long,
@@ -67,18 +67,7 @@ class IdWorker(
                 sequence
     }
 
-    fun nextHex(lowerCase: Boolean = false): String {
-        return nextLong().let {
-            (if (lowerCase) LOWER_HEX_FORMAT else UPPER_HEX_FORMAT).format(
-                it.shr(7 * 8).toByte(),
-                it.shr(6 * 8).toByte(),
-                it.shr(5 * 8).toByte(),
-                it.shr(4 * 8).toByte(),
-                it.shr(3 * 8).toByte(),
-                it.shr(2 * 8).toByte(),
-                it.shr(1 * 8).toByte(),
-                it.shr(0 * 8).toByte(),
-            )
-        }
+    fun nextHex(lowerCase: Boolean = true): String {
+        return (if (lowerCase) LOWER_HEX_FORMAT else UPPER_HEX_FORMAT).format(nextLong())
     }
 }
