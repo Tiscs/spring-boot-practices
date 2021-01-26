@@ -13,6 +13,8 @@ import org.springdoc.core.SpringDocUtils
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.web.servlet.function.ServerResponse
+import org.springframework.web.servlet.function.router
 
 @Configuration
 @ConditionalOnProperty(name = [SPRINGDOC_ENABLED], matchIfMissing = true)
@@ -36,4 +38,18 @@ class OpenApiConfig {
 
     @Bean
     fun queryParamsCustomizer() = QueryParamsCustomizer()
+
+    @Bean
+    fun swaggerRouter() = router {
+        GET("/swagger") {
+            ServerResponse.ok().render("swagger")
+        }
+    }
+
+    @Bean
+    fun apiDocsRouter() = router {
+        GET("/api-docs") {
+            ServerResponse.ok().render("api-docs")
+        }
+    }
 }

@@ -2,8 +2,9 @@ spring:
   main:
     banner-mode: off
   application:
-    name: scp-mqtt
+    name: scp-users
   cloud:
     config:
-      uri: ${CONFIG_SERVICE_URI:http://localhost:8888}
       fail-fast: true
+  exposed:
+    generate-ddl: false

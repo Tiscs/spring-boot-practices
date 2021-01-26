@@ -1,0 +1,8 @@
+spring:
+  main:
+    banner-mode: off
+  application:
+    name: scp-mqtt
+  cloud:
+    config:
+      fail-fast: true

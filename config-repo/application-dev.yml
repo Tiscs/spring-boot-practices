@@ -11,20 +11,25 @@ management:
 spring:
   session:
     store-type: none
-  datasource:
-    url: '{cipher}cf32be07535bd8613a6d6c689fd7db6f1f596558685a872ac00774a2182ff08ef7d5a4207559fb51bda3623df1e39dac25db1528c1bfd4a148638854878e2f17850deef5fa01fb83f1e12bf121ec9952b6cb3f517df01591ae0b8fb71077c2c44891496c75644e236a875f9f92d2ff68'
   devtools:
     add-properties: true
-    livereload:
-      enabled: true
-  cloud:
-    config:
-      allow-override: true
-      override-system-properties: false
-      override-none: true
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          key-value: |
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+oumjNay3mIfPWNfYnp
+            uwO2FqI6E9oxDOXm9GVqHGFs7KwYuynbjKYYVPWREr7qHRTvgR7s8T4Jpj8xej+3
+            sCuZpDF++3+9dceobSS7bsBOuagzU8g8C0Zkp8dkjGZUQlk2vdascc9qtaUfSfT2
+            pOiOTHb8xHClJ2T2Bu2re5kNgtPVHaBeKww9+dp4ls3Imb20hl6fa0WcNap6cELW
+            gZtBAD5AZ0GLoY2tKBisxC19j0SCDuYtQw7Jk3WFeUAxrkoru7gcgMEKBR6HA9Sa
+            mvqUG9trTaBdk3WLirdi8M5f5FfpuS3VAulc2RXKDJzul2cWYu3kVLGU3DYC7K7/
+            5wIDAQAB
+            -----END PUBLIC KEY-----
 opentracing:
   jaeger:
-    enabled: true
+    enabled: false
     http-sender:
       url: http://localhost:14268/api/traces
 security:

@@ -33,9 +33,11 @@ class WebSecurityConfig(
                 "/actuator/**",
                 "/favicon.ico",
                 "/webjars/**",
-                "/swagger",
                 "/v3/api-docs/**",
                 "/v3/api-docs.yaml",
+                "/swagger",
+                "/api-docs",
+                "/redoc-32x32.png",
             ).permitAll()
             .and().authorizeRequests().anyRequest().authenticated()
 
