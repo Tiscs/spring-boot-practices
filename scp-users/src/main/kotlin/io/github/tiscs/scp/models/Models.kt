@@ -1,22 +1,9 @@
 package io.github.tiscs.scp.models
 
-import com.fasterxml.jackson.annotation.JsonProperty
 import org.jetbrains.exposed.sql.ResultRow
 import org.jetbrains.exposed.sql.SizedIterable
 import java.time.LocalDate
 import java.time.LocalDateTime
-
-data class APIError(
-    @JsonProperty("error")
-    val error: String,
-    @JsonProperty("error_description")
-    val description: Any? = null,
-)
-
-data class Event<T>(
-    val event: String,
-    val model: T,
-)
 
 data class Page<T>(val total: Long, val page: Int, val size: Int, val items: List<T>)
 
