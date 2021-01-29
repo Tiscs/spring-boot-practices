@@ -8,6 +8,10 @@ management:
   health:
     redis:
       enabled: false
+  endpoints:
+    web:
+      exposure:
+        include: health, info, env
 spring:
   session:
     store-type: none
