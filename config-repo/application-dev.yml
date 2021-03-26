@@ -23,13 +23,18 @@ spring:
         jwt:
           key-value: |
             -----BEGIN PUBLIC KEY-----
-            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAr+oumjNay3mIfPWNfYnp
-            uwO2FqI6E9oxDOXm9GVqHGFs7KwYuynbjKYYVPWREr7qHRTvgR7s8T4Jpj8xej+3
-            sCuZpDF++3+9dceobSS7bsBOuagzU8g8C0Zkp8dkjGZUQlk2vdascc9qtaUfSfT2
-            pOiOTHb8xHClJ2T2Bu2re5kNgtPVHaBeKww9+dp4ls3Imb20hl6fa0WcNap6cELW
-            gZtBAD5AZ0GLoY2tKBisxC19j0SCDuYtQw7Jk3WFeUAxrkoru7gcgMEKBR6HA9Sa
-            mvqUG9trTaBdk3WLirdi8M5f5FfpuS3VAulc2RXKDJzul2cWYu3kVLGU3DYC7K7/
-            5wIDAQAB
+            MIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEA5hg2+KdJY82M+akmW6J2
+            kKFghmJ7tk32r5s4B+5jIHSrX5YvS5FR3lkbMAzvI1yY5qkAxQTU7NmVclVjymd/
+            BoT2gBzKhmXUmpevDnAUUDuGVXy9UIj/v86KKtPXPV2l5WpJuMX/xIrc/OT+Hbqk
+            0QVkQSqG1MHNcbosmO6ONPvWioQkfY4HTnTshGizdhTUX7c4jnRY6fFYPFb9U1a8
+            Zn+kECnnevV7yL87+/T4X8ch0tns7NlOKh7qoFsDlfJvGEPfCgIavEQbV6Bs4Gph
+            6fwktoqGfdykO0lTbX0+qE/MnV65idkrbCENJNQHqnt8FPSTkIYYEdNKl2NQ/vQU
+            XuSb/KlEEc/0xN+Jo3/O9MFWVQXiPKam3skdy8ciXYKKKR5t6tlRxlDXyGVHPpdF
+            84Ci8l84dSnMea8sxiKwCytaDbhB8qWKz7Zpbx6DmW1DBDRxFxJsHKGw+t756RHD
+            SrcwEyfP4O0G9GG4huUFNytBYxytdiKQo91PhJGk3vkRPNJiqDr9Pd3Rz+Kih3fO
+            CKAdUmCuu6uxl3Te5swr0K4tTpfJ9d20omaFyVD+S4s9lwIb5GGhsStBUdwTeUpM
+            VGbM/K9YcFbvdBEmr4GFepHk8g0Q9fXWjGqACAda4QVhl26k2EJw5vs2zFYO0H0N
+            MHp19TQh759MFvW/ZQan+psCAwEAAQ==
             -----END PUBLIC KEY-----
 opentracing:
   jaeger:

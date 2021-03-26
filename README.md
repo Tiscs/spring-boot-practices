@@ -32,7 +32,7 @@ spring:
 ```
 
 ``` sh
-$ mvn spring-boot:run -Dspring-boot.run.profiles=local,native -Dspring-boot.run.arguments="--server.port=8888 --encrypt.key=kbpfrIaimS5AJG4rQPvNEGeX"
+$ ./mvnw -f ./scp-config spring-boot:run -Dspring-boot.run.profiles=local,native -Dspring-boot.run.arguments="--server.port=8888 --encrypt.key=kbpfrIaimS5AJG4rQPvNEGeX"
 ```
 
 - **scp-{module}**
@@ -47,5 +47,5 @@ spring:
 ```
 
 ``` sh
-$ mvn spring-boot:run -Dspring-boot.run.profiles=local,dev -Dspring-boot.run.arguments="--server.port=8080 --spring.config.import=configserver:http://localhost:8888/"
+$ ./mvnw -f ./scp-{module} spring-boot:run -Dspring-boot.run.profiles=local,dev -Dspring-boot.run.arguments="--server.port=8080 --spring.config.import=configserver:http://localhost:8888/"
 ```
