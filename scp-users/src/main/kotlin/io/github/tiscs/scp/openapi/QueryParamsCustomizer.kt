@@ -23,11 +23,11 @@ class QueryParamsCustomizer : OperationCustomizer {
                 )
                 .addParametersItem(
                     QueryParameter().name(FilterParamsParameter)
-                        .examples(filters?.value?.map {
+                        .examples(filters?.value?.associate {
                             it.name to Example()
                                 .value(it.example.ifEmpty { null })
                                 .description(it.description.ifEmpty { null })
-                        }?.toMap())
+                        })
                         .schema(StringSchema())
                 )
                 .addParametersItem(
