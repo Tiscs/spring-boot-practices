@@ -18,7 +18,7 @@ import java.time.LocalDateTime
 class DbUserDetailsService : UserDetailsService {
     @Transactional
     override fun loadUserByUsername(username: String): UserDetails {
-        val row = Users.select { Users.username.lowerCase() eq username.toLowerCase() }.singleOrNull()
+        val row = Users.select { Users.username.lowerCase() eq username.lowercase() }.singleOrNull()
             ?: throw UsernameNotFoundException("Unknown user: $username")
         val roles = (Roles innerJoin RoleUsers).slice(Roles.name).select { RoleUsers.userId eq row[Users.id] }.map {
             GrantedAuthority { "ROLE_${it[Roles.name]}" }

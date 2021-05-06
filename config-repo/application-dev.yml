@@ -36,11 +36,6 @@ spring:
             VGbM/K9YcFbvdBEmr4GFepHk8g0Q9fXWjGqACAda4QVhl26k2EJw5vs2zFYO0H0N
             MHp19TQh759MFvW/ZQan+psCAwEAAQ==
             -----END PUBLIC KEY-----
-opentracing:
-  jaeger:
-    enabled: false
-    http-sender:
-      url: http://localhost:14268/api/traces
 security:
   oauth2:
     resource:
