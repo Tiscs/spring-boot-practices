@@ -1,9 +1,9 @@
-FROM maven:3.6.3-jdk-11 as build
+FROM maven:3-adoptopenjdk-11-openj9 as build
 COPY ./scp-users/ /src/scp-users
 WORKDIR /src/scp-users
-RUN mvn package -q -U -DskipTests
+RUN mvn package -q -B -U -DskipTests
 
-FROM openjdk:11-jdk
+FROM adoptopenjdk:11-jre-openj9
 COPY --from=build /src/scp-users/target/scp-users.jar /app/bundle.jar
 ENV TIMEZONE=GMT
 EXPOSE 8080
