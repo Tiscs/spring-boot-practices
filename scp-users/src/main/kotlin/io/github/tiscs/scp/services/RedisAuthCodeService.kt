@@ -35,7 +35,7 @@ class RedisAuthCodeService(
         val key = serializationStrategy.serialize(KEY_PREFIX + code)
         val data = serializationStrategy.serialize(authentication)
         redisConnectionFactory.connection.use {
-            it.set(key, data, Expiration.seconds(5 * 60), RedisStringCommands.SetOption.UPSERT)
+            it.set(key, data, Expiration.seconds(300), RedisStringCommands.SetOption.UPSERT)
         }
     }
 }
