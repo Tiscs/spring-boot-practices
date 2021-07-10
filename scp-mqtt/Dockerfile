@@ -1,7 +1,7 @@
 FROM maven:3-adoptopenjdk-11-openj9 as build
 COPY ./scp-mqtt/ /src/scp-mqtt
 WORKDIR /src/scp-mqtt
-RUN mvn package -B -DskipTests
+RUN mvn package -B -U -DskipTests
 
 FROM adoptopenjdk:11-jre-openj9
 COPY --from=build /src/scp-mqtt/target/scp-mqtt.jar /app/bundle.jar

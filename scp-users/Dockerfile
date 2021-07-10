@@ -1,7 +1,7 @@
 FROM maven:3-adoptopenjdk-11-openj9 as build
 COPY ./scp-users/ /src/scp-users
 WORKDIR /src/scp-users
-RUN mvn package -B -DskipTests
+RUN mvn package -B -U -DskipTests
 
 FROM adoptopenjdk:11-jre-openj9
 COPY --from=build /src/scp-users/target/scp-users.jar /app/bundle.jar
