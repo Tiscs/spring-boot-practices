@@ -1,5 +1,7 @@
 # Spring Cloud Practices
 
+[![Deploy Parent Status](https://github.com/tiscs/spring-cloud-practices/actions/workflows/deploy-parent.yml/badge.svg)](https://github.com/tiscs/spring-cloud-practices/actions/workflows/deploy-parent.yml)
+
 ## Modules
 
 - **scp-parent**:
