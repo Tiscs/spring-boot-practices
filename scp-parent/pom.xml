@@ -6,7 +6,7 @@
 
     <groupId>io.github.tiscs</groupId>
     <artifactId>scp-parent</artifactId>
-    <version>1.4.7</version>
+    <version>1.4.8</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -17,14 +17,13 @@
 
     <properties>
         <java.version>11</java.version>
-        <kotlin.version>1.5.30</kotlin.version>
+        <kotlin.version>1.5.31</kotlin.version>
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
         <spring-cloud.version>2020.0.3</spring-cloud.version>
-        <graphql-spring.version>2.0</graphql-spring.version>
         <mybatis-spring.version>2.2.0</mybatis-spring.version>
         <springdoc.version>1.5.10</springdoc.version>
         <swagger-core.version>2.1.10</swagger-core.version>
-        <exposed.version>0.33.1</exposed.version>
+        <exposed.version>0.34.2</exposed.version>
         <postgresql-driver.version>42.2.23</postgresql-driver.version>
     </properties>
 
@@ -84,16 +83,6 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql-driver.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.graphql-java</groupId>
-                <artifactId>graphql-java-spring-boot-starter-webmvc</artifactId>
-                <version>${graphql-spring.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.graphql-java</groupId>
-                <artifactId>graphql-java-spring-boot-starter-webflux</artifactId>
-                <version>${graphql-spring.version}</version>
             </dependency>
             <dependency>
                 <groupId>io.swagger.core.v3</groupId>
