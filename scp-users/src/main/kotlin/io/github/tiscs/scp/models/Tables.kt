@@ -1,8 +1,8 @@
 package io.github.tiscs.scp.models
 
 import org.jetbrains.exposed.sql.Table
-import org.jetbrains.exposed.sql.`java-time`.date
-import org.jetbrains.exposed.sql.`java-time`.datetime
+import org.jetbrains.exposed.sql.javatime.date
+import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
 object Roles : Table("roles") {

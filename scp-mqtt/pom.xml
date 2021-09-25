@@ -11,7 +11,7 @@
     <parent>
         <groupId>io.github.tiscs</groupId>
         <artifactId>scp-parent</artifactId>
-        <version>1.4.8</version>
+        <version>1.4.9</version>
     </parent>
 
     <properties>
