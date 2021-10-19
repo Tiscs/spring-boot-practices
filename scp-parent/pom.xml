@@ -6,7 +6,7 @@
 
     <groupId>io.github.tiscs</groupId>
     <artifactId>scp-parent</artifactId>
-    <version>1.4.9</version>
+    <version>1.4.10</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -21,9 +21,9 @@
         <kotlin.compiler.jvmTarget>11</kotlin.compiler.jvmTarget>
         <spring-cloud.version>2020.0.4</spring-cloud.version>
         <mybatis-spring.version>2.2.0</mybatis-spring.version>
-        <springdoc.version>1.5.10</springdoc.version>
-        <swagger-core.version>2.1.10</swagger-core.version>
-        <exposed.version>0.35.1</exposed.version>
+        <springdoc.version>1.5.11</springdoc.version>
+        <swagger-core.version>2.1.11</swagger-core.version>
+        <exposed.version>0.35.2</exposed.version>
         <postgresql-driver.version>42.2.24</postgresql-driver.version>
     </properties>
 
