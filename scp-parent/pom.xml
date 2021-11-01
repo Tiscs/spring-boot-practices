@@ -6,7 +6,7 @@
 
     <groupId>io.github.tiscs</groupId>
     <artifactId>scp-parent</artifactId>
-    <version>1.4.11</version>
+    <version>1.4.12</version>
     <packaging>pom</packaging>
 
     <parent>
@@ -23,8 +23,8 @@
         <mybatis-spring.version>2.2.0</mybatis-spring.version>
         <springdoc.version>1.5.12</springdoc.version>
         <swagger-core.version>2.1.11</swagger-core.version>
-        <exposed.version>0.35.3</exposed.version>
-        <postgresql-driver.version>42.3.0</postgresql-driver.version>
+        <exposed.version>0.36.1</exposed.version>
+        <postgresql-driver.version>42.3.1</postgresql-driver.version>
     </properties>
 
     <scm>
@@ -126,6 +126,7 @@
                 <plugin>
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin.version}</version>
                     <configuration>
                         <args>
                             <arg>-Xjsr305=strict</arg>
