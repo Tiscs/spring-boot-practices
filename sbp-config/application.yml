@@ -1,0 +1,25 @@
+logging:
+  level:
+    io.github.tiscs.sbp: info
+    Exposed: warn
+server:
+  forward-headers-strategy: framework
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, prometheus
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+  devtools:
+    add-properties: false
+    livereload:
+      enabled: false
+mybatis:
+  type-aliases-package: io.github.tiscs.sbp.models
+  mapper-locations: classpath:mappers/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+springdoc:
+  packages-to-scan: io.github.tiscs.sbp.controllers

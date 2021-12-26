@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "spring.security.oauth2.authorization.jwt.private-key-value",
+      "type": "java.lang.String",
+      "description": "Value of the private key used to sign a JWT."
+    },
+    {
+      "name": "spring.security.oauth2.resourceserver.jwt.public-key-value",
+      "type": "java.lang.String",
+      "description": "Value of the public key used to verify a JWT."
+    }
+  ]
+}

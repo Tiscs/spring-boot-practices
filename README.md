@@ -1,60 +1,37 @@
-# Spring Cloud Practices
-
-[![Deploy Parent Status](https://github.com/tiscs/spring-cloud-practices/actions/workflows/deploy-parent.yml/badge.svg)](https://github.com/tiscs/spring-cloud-practices/actions/workflows/deploy-parent.yml)
+# Spring Boot Practices
 
 ## Modules
 
-- **scp-parent**:
-  Parent Project
-- **scp-config**:
-  Config Server
-- **scp-users**:
-  OAuth2 Server
-- **scp-mqtt**:
-  MQTT Server
+- **sbp-build**:
+  Gradle plugins
+- **sbp-config**:
+  Config files
+- **sbp-users**:
+  Users service
+- **sbp-mqtt**:
+  MQTT server
 
 ## Docker Images
 
 ``` sh
-$ docker build --rm -f scp-{module}/Dockerfile .
+$ docker build --build-arg SBP_MODULE=sbp-{module} .
 ```
 
 ## Development
 
-- **scp-config**
-
 ``` yaml
-# scp-config/src/main/resources/application-local.yml
-spring:
-  cloud:
-    config:
-      server:
-        native:
-          search-locations: file:./config-repo
-```
-
-``` sh
-$ ./mvnw -f ./scp-config spring-boot:run -Dspring-boot.run.profiles=local,native -Dspring-boot.run.workingDirectory=../ -Dspring-boot.run.arguments="--server.port=8888 --encrypt.key=kbpfrIaimS5AJG4rQPvNEGeX"
-```
-
-- **scp-{module}**
-
-``` yaml
-# scp-{module}/src/main/resources/application-local.yml
+# sbp-{module}/src/main/resources/application-local.yml
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/${spring.application.name}?currentSchema=public
-    username: 
-    password: 
+    username:
+    password:
   config:
     import:
-      - file:./config-repo/
-      - optional:configserver:http://localhost:8888/
-  cloud:
-    config:
-      enabled: false
+      - file:../sbp-config/
 ```
 
 ``` sh
-$ ./mvnw -f ./scp-{module} spring-boot:run -Dspring-boot.run.profiles=local,dev -Dspring-boot.run.workingDirectory=../ -Dspring-boot.run.arguments="--server.port=8080"
+# https://docs.spring.io/spring-boot/docs/2.6.0/gradle-plugin/reference/htmlsingle/#running-your-application
+$ ./gradlew :sbp-{module}:bootRun --args="--spring.profiles.active=local,dev --server.port=8080"
 ```
