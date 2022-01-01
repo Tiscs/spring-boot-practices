@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.jetbrains.kotlin.jvm")
@@ -18,11 +19,11 @@ repositories {
 }
 
 private object Versions {
-    const val springdoc = "1.6.2"
-    const val exposed = "0.36.2"
-    const val mybatisBoot = "2.2.0"
+    const val springdoc = "1.6.3"
+    const val exposed = "0.37.3"
+    const val mybatisSpringBoot = "2.2.1"
     const val pgsqlDriver = "42.3.1"
-    const val swaggerCore = "2.1.11"
+    const val swaggerCore = "2.1.12"
 }
 
 dependencies {
@@ -34,7 +35,7 @@ dependencies {
         implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
         implementation("org.jetbrains.exposed:exposed-java-time:${Versions.exposed}")
         implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${Versions.exposed}")
-        implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${Versions.mybatisBoot}")
+        implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${Versions.mybatisSpringBoot}")
         implementation("org.postgresql:postgresql:${Versions.pgsqlDriver}")
         implementation("io.swagger.core.v3:swagger-annotations:${Versions.swaggerCore}")
     }
@@ -54,4 +55,8 @@ tasks.withType<KotlinCompile> {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+tasks.getByName<BootJar>("bootJar") {
+    archiveClassifier.set("boot")
 }

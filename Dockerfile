@@ -2,7 +2,7 @@ FROM eclipse-temurin:11-jdk-alpine as build
 ARG SBP_MODULE
 COPY ./ /src
 WORKDIR /src
-RUN test -d ./$SBP_MODULE && echo "Building module \"$SBP_MODULE\"" && ./gradlew :$SBP_MODULE:bootJar && mkdir /dst && mv /src/$SBP_MODULE/build/libs/$SBP_MODULE-*.jar /dst/bundle.jar
+RUN test -d ./$SBP_MODULE && echo "Building module \"$SBP_MODULE\"" && ./gradlew :$SBP_MODULE:bootJar -x test && mkdir /dst && mv /src/$SBP_MODULE/build/libs/$SBP_MODULE-*-boot.jar /dst/bundle.jar
 
 FROM eclipse-temurin:11-jre-alpine
 COPY --from=build /dst/bundle.jar /app/bundle.jar
