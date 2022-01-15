@@ -32,6 +32,6 @@ spring:
 ```
 
 ``` sh
-# https://docs.spring.io/spring-boot/docs/2.6.0/gradle-plugin/reference/htmlsingle/#running-your-application
+# https://docs.spring.io/spring-boot/docs/2.6.2/gradle-plugin/reference/htmlsingle/#running-your-application
 $ ./gradlew :sbp-{module}:bootRun --args="--spring.profiles.active=local,dev --server.port=8080"
 ```

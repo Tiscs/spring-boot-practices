@@ -39,8 +39,12 @@ class QueryParamsCustomizer : OperationCustomizer {
                         .schema(IntegerSchema()._default(DefaultPagingSize))
                 )
                 .addParametersItem(
-                    QueryParameter().name(OrderByParameter)
-                        .schema(StringSchema())
+                    QueryParameter().name(SortingKeysParameter)
+                        .schema(StringSchema()._default(null))
+                )
+                .addParametersItem(
+                    QueryParameter().name(SortingModesParameter)
+                        .schema(StringSchema()._default(null))
                 )
                 .addParametersItem(
                     QueryParameter().name(CountOnlyParameter)
