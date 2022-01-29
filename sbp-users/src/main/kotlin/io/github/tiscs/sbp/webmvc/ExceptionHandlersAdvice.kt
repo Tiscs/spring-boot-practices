@@ -20,6 +20,7 @@ class ExceptionHandlersAdvice {
         }
         return ResponseEntity.status(status).contentType(MediaType.APPLICATION_PROBLEM_JSON).body(
             ProblemDetails.builder()
+                .type(ex.type)
                 .title(ex.error)
                 .detail(ex.message)
                 .status(status.value())

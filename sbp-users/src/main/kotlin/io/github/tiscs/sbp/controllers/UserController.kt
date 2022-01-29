@@ -27,7 +27,7 @@ class UserController(
     @RequestMapping(method = [RequestMethod.GET], path = ["/me"])
     fun fetch(user: Authentication): ResponseEntity<User> {
         val result = Users.select { Users.username eq user.name }.singleOrNull()?.toUser()
-            ?: throw HttpServiceException(HttpStatus.UNAUTHORIZED)
+            ?: throw HttpServiceException(HttpStatus.UNAUTHORIZED, ProblemTypes.USER_NOT_FOUND)
         return ResponseEntity.ok(result)
     }
 
@@ -45,7 +45,7 @@ class UserController(
         if (query.filter?.name == "name_like") {
             val ps = query.filter.mapParams("pattern")
             val np = ps["pattern"]?.toString()
-                ?: throw HttpServiceException(HttpStatus.BAD_REQUEST, description = "Invalid filter parameters.")
+                ?: throw HttpServiceException(HttpStatus.BAD_REQUEST, ProblemTypes.INVALID_FILTER_PARAMS)
             users = users.andWhere { Users.displayName like np }
         }
         return ResponseEntity.ok(users.toPage(0, 10, ResultRow::toUser, query.countOnly))
@@ -54,7 +54,7 @@ class UserController(
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
     override fun fetch(@PathVariable id: String): ResponseEntity<User> {
         val result = Users.select { Users.id eq id }.singleOrNull()?.toUser()
-            ?: throw HttpServiceException(HttpStatus.NOT_FOUND)
+            ?: throw HttpServiceException(HttpStatus.NOT_FOUND, ProblemTypes.USER_NOT_FOUND)
         return ResponseEntity.ok(result)
     }
 
@@ -64,7 +64,7 @@ class UserController(
         return if (count > 0) {
             ResponseEntity.ok().build()
         } else {
-            throw HttpServiceException(HttpStatus.NOT_FOUND)
+            throw HttpServiceException(HttpStatus.NOT_FOUND, ProblemTypes.USER_NOT_FOUND)
         }
     }
 
@@ -77,7 +77,7 @@ class UserController(
             it[avatar] = model.avatar
             it[gender] = model.gender
             it[birthdate] = model.birthdate
-        }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR)
+        }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR, ProblemTypes.UNKNOWN_ERROR)
         return ResponseEntity.ok(result)
     }
 
@@ -92,7 +92,7 @@ class UserController(
         return if (count > 0) {
             ResponseEntity.ok(model)
         } else {
-            throw HttpServiceException(HttpStatus.NOT_FOUND)
+            throw HttpServiceException(HttpStatus.NOT_FOUND, ProblemTypes.USER_NOT_FOUND)
         }
     }
 }
