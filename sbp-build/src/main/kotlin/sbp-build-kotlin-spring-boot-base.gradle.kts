@@ -22,7 +22,7 @@ private object Versions {
     const val springdoc = "1.6.6"
     const val exposed = "0.37.3"
     const val mybatisSpringBoot = "2.2.2"
-    const val pgsqlDriver = "42.3.2"
+    const val pgsqlDriver = "42.3.3"
     const val swaggerCore = "2.1.12"
 }
 
