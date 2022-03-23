@@ -23,7 +23,7 @@ private object Versions {
     const val exposed = "0.37.3"
     const val mybatisSpringBoot = "2.2.2"
     const val pgsqlDriver = "42.3.3"
-    const val swaggerCore = "2.1.12"
+    const val swaggerCore = "2.1.13"
 }
 
 dependencies {

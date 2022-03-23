@@ -8,6 +8,7 @@ dependencies {
     implementation("org.jetbrains.exposed:exposed-spring-boot-starter")
     implementation("org.postgresql:postgresql")
     implementation("io.swagger.core.v3:swagger-annotations")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-integration")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
