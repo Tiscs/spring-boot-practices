@@ -18,26 +18,24 @@ repositories {
     mavenCentral()
 }
 
-private object Versions {
-    const val springdoc = "1.6.6"
-    const val exposed = "0.37.3"
-    const val mybatisSpringBoot = "2.2.2"
-    const val pgsqlDriver = "42.3.3"
-    const val swaggerCore = "2.1.13"
-}
+val springDocVersion: String by project
+val exposedVersion: String by project
+val mybatisSpringVersion: String by project
+val postgresqlDriverVersion: String by project
+val swaggerCoreVersion: String by project
 
 dependencies {
     constraints {
-        implementation("org.springdoc:springdoc-openapi-webmvc-core:${Versions.springdoc}")
-        implementation("org.springdoc:springdoc-openapi-webflux-core:${Versions.springdoc}")
-        implementation("org.springdoc:springdoc-openapi-security:${Versions.springdoc}")
-        implementation("org.springdoc:springdoc-openapi-kotlin:${Versions.springdoc}")
-        implementation("org.jetbrains.exposed:exposed-core:${Versions.exposed}")
-        implementation("org.jetbrains.exposed:exposed-java-time:${Versions.exposed}")
-        implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${Versions.exposed}")
-        implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${Versions.mybatisSpringBoot}")
-        implementation("org.postgresql:postgresql:${Versions.pgsqlDriver}")
-        implementation("io.swagger.core.v3:swagger-annotations:${Versions.swaggerCore}")
+        implementation("org.springdoc:springdoc-openapi-webmvc-core:${springDocVersion}")
+        implementation("org.springdoc:springdoc-openapi-webflux-core:${springDocVersion}")
+        implementation("org.springdoc:springdoc-openapi-security:${springDocVersion}")
+        implementation("org.springdoc:springdoc-openapi-kotlin:${springDocVersion}")
+        implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
+        implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
+        implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${exposedVersion}")
+        implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}")
+        implementation("org.postgresql:postgresql:${postgresqlDriverVersion}")
+        implementation("io.swagger.core.v3:swagger-annotations:${swaggerCoreVersion}")
     }
 
     implementation("org.springframework.boot:spring-boot-starter")
