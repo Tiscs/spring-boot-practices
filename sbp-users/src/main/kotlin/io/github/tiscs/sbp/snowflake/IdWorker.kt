@@ -46,22 +46,27 @@ class IdWorker(
     }
 
     @Synchronized
-    fun nextLong(): Long {
-        var timestamp = System.currentTimeMillis()
-        if (timestamp == lastMillis) {
+    fun timeMillis(): Long {
+        var timeMillis = System.currentTimeMillis()
+        if (timeMillis == lastMillis) {
             sequence = sequence + 1 and sequenceMask
             if (sequence == 0L) {
                 var nextMillis = System.currentTimeMillis()
                 while (nextMillis <= lastMillis) {
                     nextMillis = System.currentTimeMillis()
                 }
-                timestamp = nextMillis
+                timeMillis = nextMillis
             }
         } else {
             sequence = 0L
         }
-        lastMillis = timestamp
-        return (timestamp - idEpoch shl clusterIdBits + workerIdBits + sequenceBits) or
+        lastMillis = timeMillis
+        return timeMillis
+    }
+
+    @Synchronized
+    fun nextLong(): Long {
+        return (timeMillis() - idEpoch shl clusterIdBits + workerIdBits + sequenceBits) or
                 (clusterId shl workerIdBits + sequenceBits) or
                 (workerId shl sequenceBits) or
                 sequence
