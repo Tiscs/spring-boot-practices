@@ -7,7 +7,9 @@ import io.github.tiscs.sbp.models.Filter
 import io.github.tiscs.sbp.models.Paging
 import io.github.tiscs.sbp.models.Query
 import io.github.tiscs.sbp.models.Sorting
+import io.github.tiscs.sbp.openapi.ApiFilters
 import org.springframework.core.MethodParameter
+import org.springframework.core.annotation.AnnotatedElementUtils
 import org.springframework.web.bind.support.WebDataBinderFactory
 import org.springframework.web.context.request.NativeWebRequest
 import org.springframework.web.method.support.HandlerMethodArgumentResolver
@@ -42,12 +44,15 @@ class QueryParamsResolver : HandlerMethodArgumentResolver {
 
         val filterName = webRequest.getParameter(FilterNameParameter)
         val filterParams = webRequest.getParameter(FilterParamsParameter)
+        val filterParamsTypes = AnnotatedElementUtils.findMergedAnnotation(parameter.method!!, ApiFilters::class.java)?.value?.singleOrNull { it.name == filterName }?.params
         val filter = if (filterName != null) {
             Filter(
                 filterName,
-                if (filterParams.isNullOrEmpty()) emptyList() else objectMapper.readValue(
-                    "[$filterParams]", List::class.java
-                ),
+                if (filterParams.isNullOrEmpty()) emptyList() else objectMapper.readTree(
+                    "[$filterParams]"
+                ).mapIndexed { i, n ->
+                    objectMapper.readValue(n.toString(), filterParamsTypes?.getOrNull(i)?.java ?: Any::class.java)
+                },
             )
         } else {
             null

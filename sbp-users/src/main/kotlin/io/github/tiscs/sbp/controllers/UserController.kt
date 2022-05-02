@@ -35,7 +35,8 @@ class UserController(
         ApiFilter(
             "name_like", "'% von Ulrich'",
             "The underscore ( `_` ) wildcard matches any single character,  \n" +
-                    "The percentage ( `%` ) wildcard matches any string of zero or more characters."
+                "The percentage ( `%` ) wildcard matches any string of zero or more characters.",
+            [String::class]
         )
     )
     @RequestMapping(method = [RequestMethod.GET])
