@@ -26,7 +26,7 @@ object Users : Table("users") {
     val password = varchar("password", 128).nullable()
     val displayName = varchar("display_name", 32).index().nullable()
     val avatar = varchar("avatar", 128).nullable()
-    val gender = enumerationByName("gender", 32, Gender::class).nullable()
+    val gender = enumerationByName("gender", 32, Gender::class).clientDefault { Gender.UNKNOWN }
     val birthdate = date("birthdate").nullable()
 
     override val primaryKey = PrimaryKey(id)

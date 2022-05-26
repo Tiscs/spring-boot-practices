@@ -76,7 +76,7 @@ class UserController(
             it[username] = model.username!!
             it[displayName] = model.displayName
             it[avatar] = model.avatar
-            it[gender] = model.gender
+            it[gender] = model.gender ?: Gender.UNKNOWN
             it[birthdate] = model.birthdate
         }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR, ProblemTypes.UNKNOWN_ERROR)
         return ResponseEntity.ok(result)
@@ -87,7 +87,7 @@ class UserController(
         val count = Users.update({ Users.id eq model.id!! }) {
             it[displayName] = model.displayName
             it[avatar] = model.avatar
-            it[gender] = model.gender
+            it[gender] = model.gender ?: Gender.UNKNOWN
             it[birthdate] = model.birthdate
         }
         return if (count > 0) {

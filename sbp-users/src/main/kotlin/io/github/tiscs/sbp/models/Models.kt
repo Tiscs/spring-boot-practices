@@ -19,6 +19,7 @@ fun <T> SizedIterable<ResultRow>.toPage(
 enum class Gender {
     MALE,
     FEMALE,
+    OTHER,
     UNKNOWN,
 }
 
