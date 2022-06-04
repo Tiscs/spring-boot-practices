@@ -1,4 +1,4 @@
-package io.github.tiscs.sbp.webmvc
+package io.github.tiscs.sbp.server
 
 import io.github.tiscs.sbp.models.ProblemDetails
 import org.springframework.http.HttpStatus

@@ -21,8 +21,8 @@ class UtilsController(
     private val passwordEncoder: PasswordEncoder,
 ) {
     @RequestMapping(path = ["/snowflake/long"], produces = [MediaType.TEXT_PLAIN_VALUE])
-    fun nextLong(): ResponseEntity<Long> {
-        return ResponseEntity.ok(idWorker.nextLong())
+    fun nextLong(): ResponseEntity<String> {
+        return ResponseEntity.ok(idWorker.nextLong().toString())
     }
 
     @RequestMapping(path = ["/snowflake/hex"], produces = [MediaType.TEXT_PLAIN_VALUE])

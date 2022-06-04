@@ -7,12 +7,10 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize
 import io.swagger.v3.oas.annotations.media.Schema
 import java.net.URI
 
-class ProblemTypes {
-    companion object {
-        const val UNKNOWN_ERROR = "urn:sbp-projects:problem-type:unknown_error"
-        const val USER_NOT_FOUND = "urn:sbp-projects:problem-type:users:not_found"
-        const val INVALID_FILTER_PARAMS = "urn:sbp-projects:problem-type:query:invalid_filter_params"
-    }
+object ProblemTypes {
+    const val UNKNOWN_ERROR = "urn:sbp-projects:problem-type:unknown_error"
+    const val USER_NOT_FOUND = "urn:sbp-projects:problem-type:users:not_found"
+    const val INVALID_FILTER_PARAMS = "urn:sbp-projects:problem-type:query:invalid_filter_params"
 }
 
 /**

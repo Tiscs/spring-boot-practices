@@ -13,12 +13,12 @@
 <section class="section">
     <div class="container">
         <h1 class="title">Login</h1>
-        <article class="message is-danger" data-th-if="${#request.getParameter('error')}">
+        <article class="message is-danger" data-th-if="${param.error}">
             <div class="message-body">
                 Login error.
             </div>
         </article>
-        <article class="message is-info" data-th-if="${#request.getParameter('logout')}">
+        <article class="message is-info" data-th-if="${param.logout}">
             <div class="message-body">
                 Logged out.
             </div>

@@ -46,7 +46,7 @@ class IdWorker(
     }
 
     @Synchronized
-    fun timeMillis(): Long {
+    private fun timeMillis(): Long {
         var timeMillis = System.currentTimeMillis()
         if (timeMillis == lastMillis) {
             sequence = sequence + 1 and sequenceMask
@@ -64,7 +64,6 @@ class IdWorker(
         return timeMillis
     }
 
-    @Synchronized
     fun nextLong(): Long {
         return (timeMillis() - idEpoch shl clusterIdBits + workerIdBits + sequenceBits) or
                 (clusterId shl workerIdBits + sequenceBits) or

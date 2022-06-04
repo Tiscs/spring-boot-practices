@@ -5,16 +5,19 @@ import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import io.github.tiscs.sbp.models.Query
 import io.github.tiscs.sbp.openapi.QueryParamsCustomizer
+import io.github.tiscs.sbp.security.SecuritySchemeKeys
 import io.swagger.v3.core.jackson.ModelResolver
+import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
+import io.swagger.v3.oas.models.security.SecurityScheme
 import org.springdoc.core.Constants.SPRINGDOC_ENABLED
 import org.springdoc.core.SpringDocUtils
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.servlet.function.ServerResponse
-import org.springframework.web.servlet.function.router
+import org.springframework.web.reactive.function.server.ServerResponse
+import org.springframework.web.reactive.function.server.router
 
 @Configuration
 @ConditionalOnProperty(name = [SPRINGDOC_ENABLED], matchIfMissing = true)
@@ -31,7 +34,11 @@ class OpenApiConfig {
     @Bean
     fun openApi(): OpenAPI = OpenAPI().info(
         Info().title("SBP-Users").version("v1.0.0")
+    ).components(Components()
+        .addSecuritySchemes(SecuritySchemeKeys.CLIENT_BASIC, SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("basic"))
+        .addSecuritySchemes(SecuritySchemeKeys.BEARER_TOKEN, SecurityScheme().type(SecurityScheme.Type.HTTP).scheme("bearer").bearerFormat("JWT"))
     )
+
 
     @Bean
     fun modelResolver(objectMapper: ObjectMapper) = ModelResolver(objectMapper)
@@ -40,14 +47,10 @@ class OpenApiConfig {
     fun queryParamsCustomizer() = QueryParamsCustomizer()
 
     @Bean
-    fun swaggerRouter() = router {
+    fun openApiRouter() = router {
         GET("/swagger") {
             ServerResponse.ok().render("swagger")
         }
-    }
-
-    @Bean
-    fun apiDocsRouter() = router {
         GET("/api-docs") {
             ServerResponse.ok().render("api-docs")
         }

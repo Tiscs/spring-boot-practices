@@ -1,5 +1,5 @@
 plugins {
-    id("sbp-build-kotlin-spring-boot-webmvc")
+    id("sbp-build-kotlin-spring-boot-webflux")
 }
 
 dependencies {
@@ -11,13 +11,14 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-integration")
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity5")
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-oauth2-resource-server")
     implementation("org.springframework.session:spring-session-data-redis")
     implementation("org.springframework.integration:spring-integration-redis")
     implementation("io.lettuce:lettuce-core")
     implementation("org.springdoc:springdoc-openapi-kotlin")
-    implementation("org.springdoc:springdoc-openapi-webmvc-core")
+    implementation("org.springdoc:springdoc-openapi-webflux-core")
     implementation("org.springdoc:springdoc-openapi-security")
     testImplementation("com.h2database:h2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

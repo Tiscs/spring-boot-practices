@@ -1,7 +1,7 @@
 package io.github.tiscs.sbp.openapi
 
 import io.github.tiscs.sbp.models.Query
-import io.github.tiscs.sbp.webmvc.*
+import io.github.tiscs.sbp.server.*
 import io.swagger.v3.oas.models.Operation
 import io.swagger.v3.oas.models.examples.Example
 import io.swagger.v3.oas.models.media.BooleanSchema

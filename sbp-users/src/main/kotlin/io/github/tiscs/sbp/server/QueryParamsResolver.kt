@@ -1,4 +1,4 @@
-package io.github.tiscs.sbp.webmvc
+package io.github.tiscs.sbp.server
 
 import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.MapperFeature
@@ -10,10 +10,10 @@ import io.github.tiscs.sbp.models.Sorting
 import io.github.tiscs.sbp.openapi.ApiFilters
 import org.springframework.core.MethodParameter
 import org.springframework.core.annotation.AnnotatedElementUtils
-import org.springframework.web.bind.support.WebDataBinderFactory
-import org.springframework.web.context.request.NativeWebRequest
-import org.springframework.web.method.support.HandlerMethodArgumentResolver
-import org.springframework.web.method.support.ModelAndViewContainer
+import org.springframework.web.reactive.BindingContext
+import org.springframework.web.reactive.result.method.HandlerMethodArgumentResolver
+import org.springframework.web.server.ServerWebExchange
+import reactor.core.publisher.Mono
 
 const val FilterNameParameter = "\$filter.name"
 const val FilterParamsParameter = "\$filter.params"
@@ -32,18 +32,13 @@ private val sortingModesArrayType = object : TypeReference<List<Sorting.Mode>>()
 class QueryParamsResolver : HandlerMethodArgumentResolver {
     override fun supportsParameter(parameter: MethodParameter): Boolean = parameter.parameterType == Query::class.java
 
-    override fun resolveArgument(
-        parameter: MethodParameter,
-        mavContainer: ModelAndViewContainer?,
-        webRequest: NativeWebRequest,
-        binderFactory: WebDataBinderFactory?,
-    ): Any {
-        val pagingPage = webRequest.getParameter(PagingPageParameter) ?: DefaultPagingPage.toString()
-        val pagingSize = webRequest.getParameter(PagingSizeParameter) ?: DefaultPagingSize.toString()
+    override fun resolveArgument(parameter: MethodParameter, bindingContext: BindingContext, exchange: ServerWebExchange ): Mono<Any> {
+        val pagingPage = exchange.request.queryParams.getFirst(PagingPageParameter) ?: DefaultPagingPage.toString()
+        val pagingSize = exchange.request.queryParams.getFirst(PagingSizeParameter) ?: DefaultPagingSize.toString()
         val paging = Paging(pagingPage.toInt(), pagingSize.toInt())
 
-        val filterName = webRequest.getParameter(FilterNameParameter)
-        val filterParams = webRequest.getParameter(FilterParamsParameter)
+        val filterName = exchange.request.queryParams.getFirst(FilterNameParameter)
+        val filterParams = exchange.request.queryParams.getFirst(FilterParamsParameter)
         val filterParamsTypes = AnnotatedElementUtils.findMergedAnnotation(parameter.method!!, ApiFilters::class.java)?.value?.singleOrNull { it.name == filterName }?.params
         val filter = if (filterName != null) {
             Filter(
@@ -58,26 +53,19 @@ class QueryParamsResolver : HandlerMethodArgumentResolver {
             null
         }
 
-        val sortingKeys = webRequest.getParameter(SortingKeysParameter)
-        val sortingModes = webRequest.getParameter(SortingModesParameter)
+        val sortingKeys = exchange.request.queryParams.getFirst(SortingKeysParameter)
+        val sortingModes = exchange.request.queryParams.getFirst(SortingModesParameter)
         val sorting = if (sortingKeys != null && sortingKeys.isNotEmpty()) {
             Sorting(
                 objectMapper.readValue("[$sortingKeys]", sortingKeysArrayType),
-                if (sortingModes.isNullOrEmpty()) emptyList() else objectMapper.readValue(
-                    "[$sortingModes]", sortingModesArrayType
-                ),
+                if (sortingModes.isNullOrEmpty()) emptyList() else objectMapper.readValue("[$sortingModes]", sortingModesArrayType),
             )
         } else {
             null
         }
 
-        val countOnly = webRequest.getParameter(CountOnlyParameter) ?: "false"
+        val countOnly = exchange.request.queryParams.getFirst(CountOnlyParameter) ?: "false"
 
-        return Query(
-            paging,
-            filter,
-            sorting,
-            countOnly == "true" || countOnly == "",
-        )
+        return Mono.just(Query(paging, filter, sorting, countOnly == "true" || countOnly == ""))
     }
 }

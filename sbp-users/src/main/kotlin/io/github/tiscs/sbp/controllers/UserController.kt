@@ -4,8 +4,10 @@ import io.github.tiscs.sbp.models.*
 import io.github.tiscs.sbp.models.Query
 import io.github.tiscs.sbp.openapi.ApiFilter
 import io.github.tiscs.sbp.openapi.ApiFilters
+import io.github.tiscs.sbp.security.SecuritySchemeKeys
+import io.github.tiscs.sbp.server.HttpServiceException
 import io.github.tiscs.sbp.snowflake.IdWorker
-import io.github.tiscs.sbp.webmvc.HttpServiceException
+import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.*
 import org.springframework.http.HttpStatus
@@ -16,13 +18,14 @@ import org.springframework.transaction.annotation.Isolation
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.*
 
-@RestController
-@Transactional
-@RequestMapping("/users")
 @Tag(name = "Users")
+@Transactional
+@RestController
+@RequestMapping("/users")
 class UserController(
     private val idWorker: IdWorker,
 ) : CurdController<User, String> {
+    @SecurityRequirement(name = SecuritySchemeKeys.BEARER_TOKEN)
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = [RequestMethod.GET], path = ["/me"])
     fun fetch(user: Authentication): ResponseEntity<User> {
