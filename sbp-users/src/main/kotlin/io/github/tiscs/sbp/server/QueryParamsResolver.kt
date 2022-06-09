@@ -15,13 +15,13 @@ import org.springframework.web.reactive.result.method.HandlerMethodArgumentResol
 import org.springframework.web.server.ServerWebExchange
 import reactor.core.publisher.Mono
 
-const val FilterNameParameter = "\$filter.name"
-const val FilterParamsParameter = "\$filter.params"
-const val SortingKeysParameter = "\$sorting.keys"
-const val SortingModesParameter = "\$sorting.modes"
-const val PagingPageParameter = "\$paging.page"
-const val PagingSizeParameter = "\$paging.size"
-const val CountOnlyParameter = "\$count"
+const val FilterNameParameter = "filter.name"
+const val FilterParamsParameter = "filter.params"
+const val SortingKeysParameter = "sorting.keys"
+const val SortingModesParameter = "sorting.modes"
+const val PagingPageParameter = "paging.page"
+const val PagingSizeParameter = "paging.size"
+const val CountOnlyParameter = "count"
 const val DefaultPagingPage = 0
 const val DefaultPagingSize = 10
 

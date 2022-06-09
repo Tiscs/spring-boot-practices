@@ -7,6 +7,9 @@ import io.github.tiscs.sbp.openapi.ApiFilters
 import io.github.tiscs.sbp.security.SecuritySchemeKeys
 import io.github.tiscs.sbp.server.HttpServiceException
 import io.github.tiscs.sbp.snowflake.IdWorker
+import io.github.tiscs.sbp.tables.Users
+import io.github.tiscs.sbp.tables.toPage
+import io.github.tiscs.sbp.tables.toUser
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.*
@@ -45,14 +48,21 @@ class UserController(
     @RequestMapping(method = [RequestMethod.GET])
     @Transactional(isolation = Isolation.REPEATABLE_READ)
     override fun fetch(query: Query): ResponseEntity<Page<User>> {
-        var users = Users.selectAll()
-        if (query.filter?.name == "name_like") {
-            val ps = query.filter.mapParams("pattern")
-            val np = ps["pattern"]?.toString()
-                ?: throw HttpServiceException(HttpStatus.BAD_REQUEST, ProblemTypes.INVALID_FILTER_PARAMS)
-            users = users.andWhere { Users.displayName like np }
-        }
-        return ResponseEntity.ok(users.toPage(0, 10, ResultRow::toUser, query.countOnly))
+        return ResponseEntity.ok(
+            Users.selectAll().let { base ->
+                when (query.filter?.name) {
+                    "name_like" -> {
+                        val pattern = query.filter.getParam<String>(0)
+                            ?: throw HttpServiceException(HttpStatus.BAD_REQUEST, ProblemTypes.INVALID_FILTER_PARAMS)
+                        base.andWhere {
+                            Users.displayName like pattern
+                        }
+                    }
+                    null -> base
+                    else -> throw HttpServiceException(HttpStatus.BAD_REQUEST, ProblemTypes.INVALID_FILTER_NAME)
+                }
+            }.toPage(query.paging, ResultRow::toUser, query.countOnly)
+        )
     }
 
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
@@ -74,15 +84,17 @@ class UserController(
 
     @RequestMapping(method = [RequestMethod.POST])
     override fun create(@RequestBody model: User): ResponseEntity<User> {
-        val result = Users.insert {
-            it[id] = idWorker.nextHex()
-            it[username] = model.username!!
-            it[displayName] = model.displayName
-            it[avatar] = model.avatar
-            it[gender] = model.gender ?: Gender.UNKNOWN
-            it[birthdate] = model.birthdate
-        }.resultedValues?.singleOrNull()?.toUser() ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR, ProblemTypes.UNKNOWN_ERROR)
-        return ResponseEntity.ok(result)
+        return ResponseEntity.ok(
+            Users.insert {
+                it[id] = idWorker.nextHex()
+                it[username] = model.username!!
+                it[displayName] = model.displayName
+                it[avatar] = model.avatar
+                it[gender] = model.gender ?: Gender.UNKNOWN
+                it[birthdate] = model.birthdate
+            }.resultedValues?.singleOrNull()?.toUser()
+                ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR, ProblemTypes.UNKNOWN_ERROR)
+        )
     }
 
     @RequestMapping(method = [RequestMethod.PUT])

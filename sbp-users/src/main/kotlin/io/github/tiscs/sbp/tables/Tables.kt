@@ -1,12 +1,31 @@
-package io.github.tiscs.sbp.models
+@file:Suppress("unused", "MemberVisibilityCanBePrivate")
 
+package io.github.tiscs.sbp.tables
+
+import io.github.tiscs.sbp.models.*
+import org.jetbrains.exposed.sql.ResultRow
+import org.jetbrains.exposed.sql.SizedIterable
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.javatime.date
 import org.jetbrains.exposed.sql.javatime.datetime
 import java.time.LocalDateTime
 
+fun <T> SizedIterable<ResultRow>.toPage(
+    index: Int,
+    size: Int,
+    mapper: (ResultRow) -> T,
+    countOnly: Boolean = false,
+): Page<T> =
+    Page(this.count(), index, size, if (countOnly) emptyList() else this.limit(size, index.toLong() * size).map(mapper))
+
+fun <T> SizedIterable<ResultRow>.toPage(
+    paging: Paging,
+    mapper: (ResultRow) -> T,
+    countOnly: Boolean = false,
+): Page<T> = toPage(paging.page, paging.size, mapper, countOnly)
+
 object Roles : Table("roles") {
-    val id = varchar("id", 16)
+    val id = hexLong("id")
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val disabled = bool("disabled").clientDefault { false }
     val readonly = bool("readonly").clientDefault { false }
@@ -17,7 +36,7 @@ object Roles : Table("roles") {
 }
 
 object Users : Table("users") {
-    val id = varchar("id", 16)
+    val id = hexLong("id")
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
@@ -32,9 +51,22 @@ object Users : Table("users") {
     override val primaryKey = PrimaryKey(id)
 }
 
+fun ResultRow.toUser() = User(
+    id = this.getOrNull(Users.id),
+    createdAt = this.getOrNull(Users.createdAt),
+    expiresAt = this.getOrNull(Users.expiresAt),
+    disabled = this.getOrNull(Users.disabled),
+    accepted = this.getOrNull(Users.accepted),
+    username = this.getOrNull(Users.username),
+    displayName = this.getOrNull(Users.displayName),
+    avatar = this.getOrNull(Users.avatar),
+    gender = this.getOrNull(Users.gender),
+    birthdate = this.getOrNull(Users.birthdate),
+)
+
 object Vendors : Table("vendors") {
-    val id = varchar("id", 16)
-    val ownerId = varchar("owner_id", 16).references(Users.id)
+    val id = hexLong("id")
+    val ownerId = hexLong("owner_id").references(Users.id)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
@@ -46,8 +78,8 @@ object Vendors : Table("vendors") {
 }
 
 object Clients : Table("clients") {
-    val id = varchar("id", 16)
-    val vendorId = varchar("vendor_id", 16).references(Vendors.id)
+    val id = hexLong("id")
+    val vendorId = hexLong("vendor_id").references(Vendors.id)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
@@ -63,16 +95,29 @@ object Clients : Table("clients") {
     override val primaryKey = PrimaryKey(id)
 }
 
+fun ResultRow.toClient() = Client(
+    id = this.getOrNull(Clients.id),
+    vendorId = this.getOrNull(Clients.vendorId),
+    createdAt = this.getOrNull(Clients.createdAt),
+    expiresAt = this.getOrNull(Clients.expiresAt),
+    disabled = this.getOrNull(Clients.disabled),
+    name = this.getOrNull(Clients.name),
+    description = this.getOrNull(Clients.description),
+    grantTypes = this.getOrNull(Clients.grantTypes)?.split(',')?.toSet(),
+    resourceIds = this.getOrNull(Clients.resourceIds)?.split(',')?.toSet(),
+    redirectUris = this.getOrNull(Clients.redirectUris)?.split(',')?.toSet(),
+)
+
 object RoleUsers : Table("role_users") {
-    val roleId = varchar("role_id", 16).references(Roles.id)
-    val userId = varchar("user_id", 16).references(Users.id)
+    val roleId = hexLong("role_id").references(Roles.id)
+    val userId = hexLong("user_id").references(Users.id)
 
     override val primaryKey = PrimaryKey(roleId, userId)
 }
 
 object VendorUsers : Table("vendor_users") {
-    val vendorId = varchar("vendor_id", 16).references(Vendors.id)
-    val userId = varchar("user_id", 16).references(Users.id)
+    val vendorId = hexLong("vendor_id").references(Vendors.id)
+    val userId = hexLong("user_id").references(Users.id)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val unionId = varchar("union_id", 32).uniqueIndex()
 
@@ -80,8 +125,8 @@ object VendorUsers : Table("vendor_users") {
 }
 
 object ClientUsers : Table("client_users") {
-    val clientId = varchar("client_id", 16).references(Clients.id)
-    val userId = varchar("user_id", 16).references(Users.id)
+    val clientId = hexLong("client_id").references(Clients.id)
+    val userId = hexLong("user_id").references(Users.id)
     val createdAt = datetime("created_at").clientDefault { LocalDateTime.now() }
     val expiresAt = datetime("expires_at").nullable()
     val disabled = bool("disabled").clientDefault { false }
