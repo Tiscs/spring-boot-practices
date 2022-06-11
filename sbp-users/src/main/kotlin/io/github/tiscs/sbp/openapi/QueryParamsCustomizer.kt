@@ -23,11 +23,14 @@ class QueryParamsCustomizer : OperationCustomizer {
                 )
                 .addParametersItem(
                     QueryParameter().name(FilterParamsParameter)
-                        .examples(filters?.value?.associate {
-                            it.name to Example()
-                                .value(it.example.ifEmpty { null })
-                                .description(it.description.ifEmpty { null })
-                        })
+                        .also { p ->
+                            if (filters?.required == false) {
+                                p.addExample("--", Example().value(null))
+                            }
+                            filters?.value?.forEach {
+                                p.addExample(it.name, Example().value(it.example.ifEmpty { null }).description(it.description.ifEmpty { null }))
+                            }
+                        }
                         .schema(StringSchema())
                 )
                 .addParametersItem(

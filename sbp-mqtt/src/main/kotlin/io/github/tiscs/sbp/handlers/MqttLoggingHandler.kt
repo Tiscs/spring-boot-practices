@@ -13,7 +13,7 @@ class MqttLoggingHandler : ChannelDuplexHandler() {
         internal val logger = LoggerFactory.getLogger(MqttLoggingHandler::class.java)
     }
 
-    override fun channelRead(ctx: ChannelHandlerContext, msg: Any?) {
+    override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
         if (msg is MqttMessage) {
             if (msg is MqttConnectMessage) {
                 ctx.channel().attr(AttributeKeys.CLIENT_ID_KEY).set(msg.payload().clientIdentifier())
@@ -33,10 +33,5 @@ class MqttLoggingHandler : ChannelDuplexHandler() {
             logger.debug(" Writing into [${ctx.channel().attr(AttributeKeys.CLIENT_ID_KEY).get()}]: ${msg.toLog()}")
         }
         super.write(ctx, msg, promise)
-    }
-
-    @Suppress("OverridingDeprecatedMember")
-    override fun exceptionCaught(ctx: ChannelHandlerContext, cause: Throwable) {
-        ctx.close(cause)
     }
 }
