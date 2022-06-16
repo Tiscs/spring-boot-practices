@@ -23,6 +23,7 @@ val exposedVersion: String by project
 val mybatisSpringVersion: String by project
 val postgresqlDriverVersion: String by project
 val swaggerCoreVersion: String by project
+val openFeignVersion: String by project
 
 dependencies {
     constraints {
@@ -36,6 +37,9 @@ dependencies {
         implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}")
         implementation("org.postgresql:postgresql:${postgresqlDriverVersion}")
         implementation("io.swagger.core.v3:swagger-annotations:${swaggerCoreVersion}")
+        implementation("io.github.openfeign:feign-core:${openFeignVersion}")
+        implementation("io.github.openfeign:feign-jackson:${openFeignVersion}")
+        implementation("io.github.openfeign:feign-slf4j:${openFeignVersion}")
     }
 
     implementation("org.springframework.boot:spring-boot-starter")

@@ -1,5 +1,6 @@
 package io.github.tiscs.sbp.controllers
 
+import io.github.tiscs.sbp.clients.GitHubClient
 import io.github.tiscs.sbp.snowflake.IdWorker
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -19,6 +20,7 @@ import java.time.LocalDateTime
 class UtilsController(
     private val idWorker: IdWorker,
     private val passwordEncoder: PasswordEncoder,
+    private val gitHubClient: GitHubClient,
 ) {
     @RequestMapping(path = ["/snowflake/long"], produces = [MediaType.TEXT_PLAIN_VALUE])
     fun nextLong(): ResponseEntity<String> {
@@ -54,5 +56,10 @@ class UtilsController(
     @RequestMapping(path = ["/password/encode"], produces = [MediaType.TEXT_PLAIN_VALUE])
     fun encodePassword(@RequestParam password: String): ResponseEntity<String> {
         return ResponseEntity.ok(passwordEncoder.encode(password))
+    }
+
+    @RequestMapping(path = ["/github/zen"], produces = [MediaType.TEXT_PLAIN_VALUE])
+    fun fetchGitHubZen(): ResponseEntity<String> {
+        return ResponseEntity.ok(gitHubClient.fetchZen())
     }
 }
