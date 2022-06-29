@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController
 import java.time.Clock
 import java.time.LocalDateTime
 
-@RestController
-@RequestMapping(method = [RequestMethod.POST], path = ["/utils"])
 @Tag(name = "Utils")
+@RestController
+@RequestMapping(method = [RequestMethod.GET], path = ["/utils"])
 class UtilsController(
     private val idWorker: IdWorker,
     private val passwordEncoder: PasswordEncoder,
@@ -34,6 +34,7 @@ class UtilsController(
 
     @RequestMapping(path = ["/datetime/db"], produces = [MediaType.TEXT_PLAIN_VALUE])
     fun datetimeDBNow(): ResponseEntity<String> {
+        @Suppress("SqlNoDataSourceInspection", "SqlDialectInspection")
         val now = transaction {
             exec("SELECT NOW()") {
                 it.next()

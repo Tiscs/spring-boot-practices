@@ -12,9 +12,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
 import org.springframework.security.config.web.server.ServerHttpSecurity
 import org.springframework.security.config.web.server.invoke
-import org.springframework.security.core.userdetails.MapReactiveUserDetailsService
-import org.springframework.security.core.userdetails.ReactiveUserDetailsService
-import org.springframework.security.core.userdetails.User
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.oauth2.jwt.JwtEncoder
@@ -62,9 +59,9 @@ class WebSecurityConfig(
     @Bean
     fun formFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
         return http {
-            securityMatcher(ServerWebExchangeMatchers.pathMatchers("/", "/oauth/authorize", "/login", "/logout"))
+            securityMatcher(ServerWebExchangeMatchers.pathMatchers("/login", "/logout", "/oauth/authorize"))
             authorizeExchange {
-                authorize(ServerWebExchangeMatchers.pathMatchers("/", "/login"), permitAll)
+                authorize(ServerWebExchangeMatchers.pathMatchers("/login"), permitAll)
                 authorize(ServerWebExchangeMatchers.pathMatchers("/logout", "/oauth/authorize"), authenticated)
             }
             formLogin {
@@ -93,13 +90,6 @@ class WebSecurityConfig(
                 requestCache = NoOpServerRequestCache.getInstance()
             }
         }
-    }
-
-    @Bean
-    fun userDetailsService(): ReactiveUserDetailsService {
-        return MapReactiveUserDetailsService(
-            User.withUsername("admin").password(passwordEncoder().encode("admin")).roles("ADMIN_USER").build()
-        )
     }
 
     @Bean

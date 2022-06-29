@@ -13,6 +13,7 @@ import io.github.tiscs.sbp.tables.toUser
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.*
+import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*
 @RequestMapping("/users")
 class UserController(
     private val idWorker: IdWorker,
+    private val rabbitTemplate: RabbitTemplate,
 ) : CurdController<User, String> {
     @SecurityRequirement(name = SecuritySchemeKeys.BEARER_TOKEN)
     @PreAuthorize("isAuthenticated()")
@@ -51,11 +53,11 @@ class UserController(
         return ResponseEntity.ok(
             Users.selectAll().let { base ->
                 when (query.filter?.name) {
-                    "name_like" -> {
+                    "nickname_like" -> {
                         val pattern = query.filter.getParam<String>(0)
                             ?: throw HttpServiceException(HttpStatus.BAD_REQUEST, ProblemTypes.INVALID_FILTER_PARAMS)
                         base.andWhere {
-                            Users.displayName like pattern
+                            Users.nickname like pattern
                         }
                     }
                     null -> base
@@ -65,14 +67,14 @@ class UserController(
         )
     }
 
-    @RequestMapping(method = [RequestMethod.GET], path = ["/{id}"])
+    @RequestMapping(method = [RequestMethod.GET], path = ["/{id:$DEFAULT_ID_PATTERN}"])
     override fun fetch(@PathVariable id: String): ResponseEntity<User> {
         val result = Users.select { Users.id eq id }.singleOrNull()?.toUser()
             ?: throw HttpServiceException(HttpStatus.NOT_FOUND, ProblemTypes.USER_NOT_FOUND)
         return ResponseEntity.ok(result)
     }
 
-    @RequestMapping(method = [RequestMethod.DELETE], path = ["/{id}"])
+    @RequestMapping(method = [RequestMethod.DELETE], path = ["/{id:$DEFAULT_ID_PATTERN}"])
     override fun delete(@PathVariable id: String): ResponseEntity<Void> {
         val count = Users.deleteWhere { Users.id eq id }
         return if (count > 0) {
@@ -87,20 +89,22 @@ class UserController(
         return ResponseEntity.ok(
             Users.insert {
                 it[id] = idWorker.nextHex()
+                it[realmId] = model.realmId!!
                 it[username] = model.username!!
-                it[displayName] = model.displayName
+                it[nickname] = model.nickname
                 it[avatar] = model.avatar
                 it[gender] = model.gender ?: Gender.UNKNOWN
                 it[birthdate] = model.birthdate
-            }.resultedValues?.singleOrNull()?.toUser()
-                ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR, ProblemTypes.UNKNOWN_ERROR)
+            }.resultedValues?.singleOrNull()?.toUser()?.also {
+                rabbitTemplate.convertAndSend("users.events", Event("USER_CREATED", it))
+            } ?: throw HttpServiceException(HttpStatus.INTERNAL_SERVER_ERROR, ProblemTypes.UNKNOWN_ERROR)
         )
     }
 
     @RequestMapping(method = [RequestMethod.PUT])
     override fun update(@RequestBody model: User): ResponseEntity<User> {
         val count = Users.update({ Users.id eq model.id!! }) {
-            it[displayName] = model.displayName
+            it[nickname] = model.nickname
             it[avatar] = model.avatar
             it[gender] = model.gender ?: Gender.UNKNOWN
             it[birthdate] = model.birthdate
