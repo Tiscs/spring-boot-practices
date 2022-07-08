@@ -1,7 +1,10 @@
 package io.github.tiscs.sbp.controllers
 
 import io.github.tiscs.sbp.clients.GitHubClient
+import io.github.tiscs.sbp.security.SecretGenerator
 import io.github.tiscs.sbp.snowflake.IdWorker
+import io.swagger.v3.oas.annotations.Parameter
+import io.swagger.v3.oas.annotations.media.ExampleObject
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.transactions.transaction
 import org.springframework.http.MediaType
@@ -52,6 +55,21 @@ class UtilsController(
     @RequestMapping(path = ["/datetime/local"], produces = [MediaType.TEXT_PLAIN_VALUE])
     fun datetimeLocalNow(): ResponseEntity<String> {
         return ResponseEntity.ok(LocalDateTime.now().toString())
+    }
+
+    @RequestMapping(path = ["/password/random"], produces = [MediaType.TEXT_PLAIN_VALUE])
+    fun randomPassword(
+        @RequestParam size: Int,
+        @Parameter(examples = [
+            ExampleObject(name = "ALPHANUM", value = SecretGenerator.ALPHANUM, description = SecretGenerator.ALPHANUM),
+            ExampleObject(name = "BASE58", value = SecretGenerator.BASE58, description = SecretGenerator.BASE58),
+            ExampleObject(name = "UPPER", value = SecretGenerator.UPPER, description = SecretGenerator.UPPER),
+            ExampleObject(name = "LOWER", value = SecretGenerator.LOWER, description = SecretGenerator.LOWER),
+            ExampleObject(name = "DIGITS", value = SecretGenerator.DIGITS, description = SecretGenerator.DIGITS),
+        ])
+        @RequestParam symbols: String,
+    ): ResponseEntity<String> {
+        return ResponseEntity.ok(SecretGenerator.randomCode(size, symbols))
     }
 
     @RequestMapping(path = ["/password/encode"], produces = [MediaType.TEXT_PLAIN_VALUE])
