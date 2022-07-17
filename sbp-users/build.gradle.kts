@@ -23,6 +23,7 @@ dependencies {
     implementation("io.github.openfeign:feign-core")
     implementation("io.github.openfeign:feign-jackson")
     implementation("io.github.openfeign:feign-slf4j")
+    implementation("co.elastic.logging:logback-ecs-encoder")
     testImplementation("com.h2database:h2")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
