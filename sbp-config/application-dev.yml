@@ -5,13 +5,10 @@ logging:
 server:
   forward-headers-strategy: none
 management:
-  health:
-    redis:
-      enabled: false
   endpoints:
     web:
       exposure:
-        include: health, info, prometheus, env
+        include: health, env, prometheus
 spring:
   session:
     store-type: none
