@@ -1,14 +1,17 @@
 package io.github.tiscs.sbp.snowflake
 
 import org.springframework.boot.context.properties.ConfigurationProperties
+import org.springframework.boot.context.properties.ConstructorBinding
 
+@ConstructorBinding
 @ConfigurationProperties("snowflake")
-class ConfigProperties {
-    var clusterId: Long = 0
-    var workerId: Long = 0
-    var workerSequence: String? = null
-    var clusterIdBits: Int = 5
-    var workerIdBits: Int = 5
-    var sequenceBits: Int = 12
-    var idEpoch = DEFAULT_ID_EPOCH
-}
+data class ConfigProperties(
+    val enabled: Boolean? = null,
+    val clusterId: Long = 0,
+    val workerId: Long = 0,
+    val workerSequence: String? = null,
+    val clusterIdBits: Int = 5,
+    val workerIdBits: Int = 5,
+    val sequenceBits: Int = 12,
+    val idEpoch: Long = DEFAULT_ID_EPOCH,
+)

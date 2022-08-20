@@ -24,3 +24,5 @@ mybatis:
 springdoc:
   packages-to-scan: io.github.tiscs.sbp.controllers
   default-produces-media-type: application/json
+snowflake:
+  enabled: true

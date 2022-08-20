@@ -17,7 +17,7 @@ class OpenFeignConfig(
 ) {
     @Bean
     fun githubClient(): GitHubClient = Feign.builder()
-        .logLevel(Logger.Level.FULL)
+        .logLevel(Logger.Level.BASIC)
         .logger(Slf4jLogger(GitHubClient::class.java))
         .options(properties.toRequestOptions())
         .requestInterceptor(AuthorizationRequestInterceptor())
