@@ -23,25 +23,25 @@ class IdWorker(
         val maxWorkerId = (-1L shl workerIdBits).inv()
         // Preconditions
         require(clusterId in 0..maxClusterId) {
-            "Value of \"clusterId\" must be in the range 0 to $maxClusterId."
+            """The value of "clusterId" must be in the range 0 to $maxClusterId."""
         }
         require(workerId in 0..maxWorkerId) {
-            "Value of \"workerId\" must be in the range 0 to $maxWorkerId."
+            """The value of "workerId" must be in the range 0 to $maxWorkerId."""
         }
         require(idEpoch > 0) {
-            "Value of \"idEpoch\" must be greater than 0."
+            """The value of "idEpoch" must be greater than 0."""
         }
         require(clusterIdBits > 0) {
-            "Value of \"clusterIdBits\" must be greater than 0."
+            """The value of "clusterIdBits" must be greater than 0."""
         }
         require(workerIdBits > 0) {
-            "Value of \"workerIdBits\" must be greater than 0."
+            """The value of "workerIdBits" must be greater than 0."""
         }
         require(sequenceBits > 0) {
-            "Value of \"sequenceBits\" must be greater than 0."
+            """The value of "sequenceBits" must be greater than 0."""
         }
         require(clusterIdBits + workerIdBits + sequenceBits < 23) {
-            "Sum of \"clusterIdBits\" \"workerIdBits\" and \"sequenceBits\" must be less than 23"
+            """The sum of "clusterIdBits" "workerIdBits" and "sequenceBits" must be less than 23."""
         }
     }
 
@@ -49,7 +49,7 @@ class IdWorker(
     private fun timeMillis(): Long {
         var timeMillis = System.currentTimeMillis()
         if (timeMillis == lastMillis) {
-            sequence = sequence + 1 and sequenceMask
+            sequence = sequence + 1L and sequenceMask
             if (sequence == 0L) {
                 var nextMillis = System.currentTimeMillis()
                 while (nextMillis <= lastMillis) {
