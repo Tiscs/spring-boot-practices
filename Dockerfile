@@ -11,4 +11,4 @@ COPY --from=build /dst/bundle.jar /app/bundle.jar
 WORKDIR /app
 ENV SPRING_PROFILES_ACTIVE=prod
 EXPOSE 8080
-CMD [ "java", "-jar", "-Dfile.encoding=UTF-8", "-Djava.security.egd=file:/dev/./urandom", "/app/bundle.jar", "--server.port=8080" ]
+CMD [ "java", "-jar", "-Dfile.encoding=utf-8", "-Djava.security.egd=file:/dev/./urandom", "/app/bundle.jar", "--server.port=8080" ]
