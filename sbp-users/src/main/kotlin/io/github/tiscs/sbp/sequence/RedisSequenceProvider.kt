@@ -27,7 +27,7 @@ class RedisSequenceProvider(
     private val sequenceKeyParam = RedisSerializer.string().serialize(sequenceKey)!!
 
     override fun nextValue(): Long = connectionFactory.connection.use {
-        it.eval<Long>(
+        it.scriptingCommands().eval<Long>(
             redisScript, ReturnType.INTEGER, 1,
             sequenceKeyParam, minValueParam, maxValueParam,
         )!!

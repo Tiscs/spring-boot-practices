@@ -11,8 +11,8 @@ import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Info
 import io.swagger.v3.oas.models.security.SecurityScheme
-import org.springdoc.core.Constants.SPRINGDOC_ENABLED
-import org.springdoc.core.SpringDocUtils
+import org.springdoc.core.utils.Constants.SPRINGDOC_ENABLED
+import org.springdoc.core.utils.SpringDocUtils
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration

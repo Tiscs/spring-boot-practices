@@ -12,8 +12,8 @@ import io.netty.handler.codec.mqtt.MqttEncoder
 import io.netty.handler.timeout.ReadTimeoutHandler
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import javax.annotation.PostConstruct
-import javax.annotation.PreDestroy
+import jakarta.annotation.PostConstruct
+import jakarta.annotation.PreDestroy
 
 @Component
 class NettyMqttService {

@@ -1,9 +1,7 @@
 package io.github.tiscs.sbp.snowflake
 
 import org.springframework.boot.context.properties.ConfigurationProperties
-import org.springframework.boot.context.properties.ConstructorBinding
 
-@ConstructorBinding
 @ConfigurationProperties("snowflake")
 data class ConfigProperties(
     val enabled: Boolean? = null,

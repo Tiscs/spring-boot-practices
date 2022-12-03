@@ -4,8 +4,7 @@ plugins {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
-    implementation("org.springdoc:springdoc-openapi-kotlin")
-    implementation("org.springdoc:springdoc-openapi-webflux-core")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-api")
     implementation("io.netty:netty-codec-mqtt")
     implementation("co.elastic.logging:logback-ecs-encoder")
     developmentOnly("org.springframework.boot:spring-boot-devtools")

@@ -3,9 +3,9 @@
 package io.github.tiscs.sbp.models
 
 import io.swagger.v3.oas.annotations.media.Schema
+import jakarta.validation.constraints.Pattern
 import java.time.LocalDate
 import java.time.LocalDateTime
-import javax.validation.constraints.Pattern
 
 const val DEFAULT_ID_PATTERN = "[a-fA-F\\d]{16}"
 

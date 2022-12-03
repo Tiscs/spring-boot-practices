@@ -23,16 +23,13 @@ val logbackECSEncoderVersion: String by project
 
 dependencies {
     constraints {
-        implementation("org.springdoc:springdoc-openapi-webmvc-core:${springDocVersion}")
-        implementation("org.springdoc:springdoc-openapi-webflux-core:${springDocVersion}")
-        implementation("org.springdoc:springdoc-openapi-security:${springDocVersion}")
-        implementation("org.springdoc:springdoc-openapi-kotlin:${springDocVersion}")
+        implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:${springDocVersion}")
+        implementation("org.springdoc:springdoc-openapi-starter-webflux-api:${springDocVersion}")
         implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${exposedVersion}")
         implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}")
         implementation("org.postgresql:postgresql:${postgresqlDriverVersion}")
-        implementation("io.swagger.core.v3:swagger-annotations:${swaggerCoreVersion}")
         implementation("io.github.openfeign:feign-core:${openFeignVersion}")
         implementation("io.github.openfeign:feign-jackson:${openFeignVersion}")
         implementation("io.github.openfeign:feign-slf4j:${openFeignVersion}")
