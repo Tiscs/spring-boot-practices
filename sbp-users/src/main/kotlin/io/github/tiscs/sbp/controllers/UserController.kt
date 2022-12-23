@@ -10,12 +10,17 @@ import io.github.tiscs.sbp.snowflake.IdWorker
 import io.github.tiscs.sbp.tables.Users
 import io.github.tiscs.sbp.tables.toPage
 import io.github.tiscs.sbp.tables.toUser
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
+import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.sql.*
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.http.HttpStatus
+import org.springframework.http.ProblemDetail
 import org.springframework.http.ResponseEntity
 import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.security.core.Authentication
@@ -31,6 +36,10 @@ class UserController(
     private val idWorker: IdWorker,
     private val rabbitTemplate: RabbitTemplate,
 ) : CurdController<User, String> {
+    @ApiResponses(
+        ApiResponse(responseCode = "200"),
+        ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+    )
     @SecurityRequirement(name = SecuritySchemeKeys.BEARER_TOKEN)
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = [RequestMethod.GET], path = ["/me"])
@@ -46,7 +55,11 @@ class UserController(
             "The underscore ( `_` ) wildcard matches any single character,  \n" +
                 "The percentage ( `%` ) wildcard matches any string of zero or more characters.",
             [String::class]
-        )
+        ),
+    )
+    @ApiResponses(
+        ApiResponse(responseCode = "200"),
+        ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
     )
     @RequestMapping(method = [RequestMethod.GET])
     @Transactional(isolation = Isolation.REPEATABLE_READ)
@@ -68,6 +81,11 @@ class UserController(
         )
     }
 
+    @ApiResponses(
+        ApiResponse(responseCode = "200"),
+        ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+        ApiResponse(responseCode = "404", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+    )
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id:$DEFAULT_ID_PATTERN}"])
     override fun fetch(@PathVariable id: String): ResponseEntity<User> {
         val result = Users.select { Users.id eq id }.singleOrNull()?.toUser()
@@ -75,6 +93,11 @@ class UserController(
         return ResponseEntity.ok(result)
     }
 
+    @ApiResponses(
+        ApiResponse(responseCode = "200"),
+        ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+        ApiResponse(responseCode = "404", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+    )
     @RequestMapping(method = [RequestMethod.DELETE], path = ["/{id:$DEFAULT_ID_PATTERN}"])
     override fun delete(@PathVariable id: String): ResponseEntity<Void> {
         val count = Users.deleteWhere { Users.id eq id }
@@ -85,6 +108,10 @@ class UserController(
         }
     }
 
+    @ApiResponses(
+        ApiResponse(responseCode = "200"),
+        ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+    )
     @RequestMapping(method = [RequestMethod.POST])
     override fun create(@RequestBody model: User): ResponseEntity<User> {
         return ResponseEntity.ok(
@@ -102,6 +129,11 @@ class UserController(
         )
     }
 
+    @ApiResponses(
+        ApiResponse(responseCode = "200"),
+        ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+        ApiResponse(responseCode = "404", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),
+    )
     @RequestMapping(method = [RequestMethod.PUT])
     override fun update(@RequestBody model: User): ResponseEntity<User> {
         val count = Users.update({ Users.id eq model.id!! }) {

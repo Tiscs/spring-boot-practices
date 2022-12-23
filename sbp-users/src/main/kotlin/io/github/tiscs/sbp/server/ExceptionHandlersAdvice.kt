@@ -1,32 +1,29 @@
 package io.github.tiscs.sbp.server
 
-import io.github.tiscs.sbp.models.ProblemDetails
+import io.github.tiscs.sbp.models.setProperty
 import org.springframework.http.HttpStatus
-import org.springframework.http.MediaType
-import org.springframework.http.ResponseEntity
+import org.springframework.http.ProblemDetail
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import java.net.URI
 
 @RestControllerAdvice
 class ExceptionHandlersAdvice {
     @ExceptionHandler(value = [WebServiceException::class])
     @ResponseBody
-    fun handleWebServiceException(ex: WebServiceException): ResponseEntity<ProblemDetails> {
+    fun handleWebServiceException(ex: WebServiceException): ProblemDetail {
         val status = if (ex is HttpServiceException) {
             ex.status
         } else {
             HttpStatus.INTERNAL_SERVER_ERROR
         }
-        return ResponseEntity.status(status).contentType(MediaType.APPLICATION_PROBLEM_JSON).body(
-            ProblemDetails.builder()
-                .type(ex.type)
-                .title(ex.error)
-                .detail(ex.message)
-                .status(status.value())
-                .extension("cause", ex.cause)
-                .extension("description", ex.description)
-                .build()
-        )
+        return ProblemDetail.forStatus(status).also {
+            it.type = URI.create(ex.type)
+            it.title = ex.error
+            it.detail = ex.message
+            it.setProperty("cause", ex.cause)
+            it.setProperty("description", ex.description)
+        }
     }
 }
