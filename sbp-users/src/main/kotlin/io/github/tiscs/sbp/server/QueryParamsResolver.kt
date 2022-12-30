@@ -55,13 +55,13 @@ class QueryParamsResolver : HandlerMethodArgumentResolver {
 
         val sortingKeys = exchange.request.queryParams.getFirst(SortingKeysParameter)
         val sortingModes = exchange.request.queryParams.getFirst(SortingModesParameter)
-        val sorting = if (sortingKeys != null && sortingKeys.isNotEmpty()) {
+        val sorting = if (sortingKeys.isNullOrEmpty()) {
+            null
+        } else {
             Sorting(
                 objectMapper.readValue("[$sortingKeys]", sortingKeysArrayType),
                 if (sortingModes.isNullOrEmpty()) emptyList() else objectMapper.readValue("[$sortingModes]", sortingModesArrayType),
             )
-        } else {
-            null
         }
 
         val countOnly = exchange.request.queryParams.getFirst(CountOnlyParameter) ?: "false"
