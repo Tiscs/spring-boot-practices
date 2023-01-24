@@ -14,6 +14,7 @@ configurations {
     }
 }
 
+val springOAuth2ServerVersion: String by project
 val springDocVersion: String by project
 val exposedVersion: String by project
 val mybatisSpringVersion: String by project
@@ -26,6 +27,7 @@ dependencies {
     constraints {
         implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:${springDocVersion}")
         implementation("org.springdoc:springdoc-openapi-starter-webflux-api:${springDocVersion}")
+        implementation("org.springframework.security:spring-security-oauth2-authorization-server:${springOAuth2ServerVersion}")
         implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${exposedVersion}")
