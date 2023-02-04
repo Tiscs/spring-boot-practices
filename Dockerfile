@@ -1,12 +1,12 @@
 ARG DOCKER_MIRROR=docker.io
-FROM $DOCKER_MIRROR/eclipse-temurin:17-jdk-alpine as build
+FROM $DOCKER_MIRROR/eclipse-temurin:17-jdk as build
 ARG SBP_MODULE
 COPY ./ /src
 WORKDIR /src
 RUN test -d ./$SBP_MODULE && echo "Building module \"$SBP_MODULE\"" && ./gradlew :$SBP_MODULE:bootJar -x test && mkdir /dst && mv /src/$SBP_MODULE/build/libs/$SBP_MODULE-*-boot.jar /dst/bundle.jar
 
 ARG DOCKER_MIRROR=docker.io
-FROM $DOCKER_MIRROR/eclipse-temurin:17-jre-alpine
+FROM $DOCKER_MIRROR/eclipse-temurin:17-jre
 COPY --from=build /dst/bundle.jar /app/bundle.jar
 WORKDIR /app
 ENV SPRING_PROFILES_ACTIVE=prod
