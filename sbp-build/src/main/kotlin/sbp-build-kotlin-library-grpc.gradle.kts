@@ -11,10 +11,12 @@ val grpcProtobufVersion: String by project
 val protocVersion: String by project
 val protocGenGrpcJavaVersion: String by project
 val protocGenGrpcKotlinVersion: String by project
+val grpcKotlinStubVersion: String by project
 
 dependencies {
     implementation("com.google.protobuf:protobuf-java:${protobufJavaVersion}")
     implementation("io.grpc:grpc-stub:${grpcStubVersion}")
+    implementation("io.grpc:grpc-kotlin-stub:${grpcKotlinStubVersion}")
     implementation("io.grpc:grpc-protobuf:${grpcProtobufVersion}")
 }
 
