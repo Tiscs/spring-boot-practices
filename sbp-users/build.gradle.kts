@@ -16,6 +16,7 @@ dependencies {
     implementation("org.springframework.session:spring-session-data-redis")
     implementation("org.springframework.integration:spring-integration-redis")
     implementation("io.lettuce:lettuce-core")
+    implementation("com.github.ben-manes.caffeine:caffeine")
     implementation("org.springdoc:springdoc-openapi-starter-webflux-api")
     implementation("io.github.openfeign:feign-core")
     implementation("io.github.openfeign:feign-jackson")

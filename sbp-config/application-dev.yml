@@ -10,10 +10,14 @@ management:
       exposure:
         include: health, env, prometheus
 spring:
-  session:
-    store-type: none
   devtools:
     add-properties: true
+  session:
+    store-type: none
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=1000,expireAfterAccess=1800s # 30 minutes
   security:
     oauth2:
       resourceserver:

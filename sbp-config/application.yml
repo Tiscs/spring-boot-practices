@@ -16,6 +16,11 @@ spring:
     add-properties: false
     livereload:
       enabled: false
+  cache:
+    type: redis
+    redis:
+      time-to-live: 1800000 # 30 minutes
+      key-prefix: '${spring.application.name}:caches:'
 mybatis:
   type-aliases-package: io.github.tiscs.sbp.models
   mapper-locations: classpath:mappers/*.xml
