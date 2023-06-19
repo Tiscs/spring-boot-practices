@@ -6,6 +6,7 @@ dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
     implementation("org.jetbrains.exposed:exposed-java-time")
     implementation("org.jetbrains.exposed:exposed-spring-boot-starter")
+    implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")
     implementation("org.postgresql:postgresql")
     implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-integration")
