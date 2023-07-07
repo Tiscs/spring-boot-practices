@@ -2,7 +2,7 @@ package io.github.tiscs.sbp.security
 
 import java.util.concurrent.ThreadLocalRandom
 
-@Suppress("unused", "SpellCheckingInspection", "MemberVisibilityCanBePrivate")
+@Suppress("SpellCheckingInspection")
 class SecretGenerator {
     companion object {
         const val DIGITS = "0123456789"

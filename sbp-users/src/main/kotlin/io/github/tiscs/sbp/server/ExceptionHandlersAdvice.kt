@@ -1,6 +1,5 @@
 package io.github.tiscs.sbp.server
 
-import io.github.tiscs.sbp.models.setProperty
 import org.springframework.http.HttpStatus
 import org.springframework.http.ProblemDetail
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -22,8 +21,12 @@ class ExceptionHandlersAdvice {
             it.type = URI.create(ex.type)
             it.title = ex.error
             it.detail = ex.message
-            it.setProperty("cause", ex.cause)
-            it.setProperty("description", ex.description)
+            if (ex.cause != null) {
+                it.setProperty("cause", ex.cause)
+            }
+            if (ex.description != null) {
+                it.setProperty("description", ex.description)
+            }
         }
     }
 }
