@@ -19,7 +19,6 @@ val springDocVersion: String by project
 val exposedVersion: String by project
 val mybatisSpringVersion: String by project
 val postgresqlDriverVersion: String by project
-val swaggerCoreVersion: String by project
 val openFeignVersion: String by project
 val logbackECSEncoderVersion: String by project
 
