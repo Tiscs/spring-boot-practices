@@ -44,7 +44,7 @@ class UserController(
     @PreAuthorize("isAuthenticated()")
     @RequestMapping(method = [RequestMethod.GET], path = ["/me"])
     fun fetch(user: Authentication): ResponseEntity<User> {
-        val result = Users.select { Users.username eq user.name }.singleOrNull()?.toUser()
+        val result = Users.selectAll().where { Users.username eq user.name }.singleOrNull()?.toUser()
             ?: throw HttpServiceException(HttpStatus.UNAUTHORIZED, ProblemTypes.USER_NOT_FOUND)
         return ResponseEntity.ok(result)
     }
@@ -88,7 +88,7 @@ class UserController(
     )
     @RequestMapping(method = [RequestMethod.GET], path = ["/{id:$DEFAULT_ID_PATTERN}"])
     override fun fetch(@PathVariable id: String): ResponseEntity<User> {
-        val result = Users.select { Users.id eq id }.singleOrNull()?.toUser()
+        val result = Users.selectAll().where { Users.id eq id }.singleOrNull()?.toUser()
             ?: throw HttpServiceException(HttpStatus.NOT_FOUND, ProblemTypes.USER_NOT_FOUND)
         return ResponseEntity.ok(result)
     }
