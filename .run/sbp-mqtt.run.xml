@@ -1,10 +1,10 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="sbp-mqtt" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
     <option name="ACTIVE_PROFILES" value="dev,local" />
-    <module name="sbp-projects.sbp-mqtt.main" />
     <envs>
       <env name="OTEL_METRICS_EXPORTER" value="none" />
     </envs>
+    <module name="sbp-projects.sbp-mqtt.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="io.github.tiscs.sbp.Application" />
     <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
     <method v="2">
