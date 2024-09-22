@@ -14,8 +14,9 @@ configurations {
     }
 }
 
-val springOAuth2ServerVersion: String by project
 val springDocVersion: String by project
+val springOAuth2ServerVersion: String by project
+val grpcSpringVersion: String by project
 val exposedVersion: String by project
 val mybatisSpringVersion: String by project
 val postgresqlDriverVersion: String by project
@@ -27,6 +28,9 @@ dependencies {
         implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:${springDocVersion}")
         implementation("org.springdoc:springdoc-openapi-starter-webflux-api:${springDocVersion}")
         implementation("org.springframework.security:spring-security-oauth2-authorization-server:${springOAuth2ServerVersion}")
+        implementation("net.devh:grpc-spring-boot-starter:${grpcSpringVersion}")
+        implementation("net.devh:grpc-server-spring-boot-starter:${grpcSpringVersion}")
+        implementation("net.devh:grpc-client-spring-boot-starter:${grpcSpringVersion}")
         implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${exposedVersion}")
@@ -39,6 +43,8 @@ dependencies {
     }
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.getByName<BootJar>("bootJar") {
