@@ -18,7 +18,7 @@ fun <T> SizedIterable<ResultRow>.toPage(
     mapper: (ResultRow) -> T,
     countOnly: Boolean = false,
 ): Page<T> =
-    Page(this.count(), index, size, if (countOnly) emptyList() else this.limit(size, index.toLong() * size).map(mapper))
+    Page(this.count(), index, size, if (countOnly) emptyList() else this.limit(size).offset(index.toLong() * size).map(mapper))
 
 fun <T> SizedIterable<ResultRow>.toPage(
     paging: Paging,
