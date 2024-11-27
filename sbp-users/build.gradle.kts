@@ -22,7 +22,6 @@ dependencies {
     implementation("io.github.openfeign:feign-core")
     implementation("io.github.openfeign:feign-jackson")
     implementation("io.github.openfeign:feign-slf4j")
-    implementation("co.elastic.logging:logback-ecs-encoder")
     implementation("io.netty:netty-resolver-dns-native-macos:4.1.114.Final:osx-x86_64")
     implementation("io.netty:netty-resolver-dns-native-macos:4.1.114.Final:osx-aarch_64")
     testImplementation("com.h2database:h2")

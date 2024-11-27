@@ -21,7 +21,6 @@ val exposedVersion: String by project
 val mybatisSpringVersion: String by project
 val postgresqlDriverVersion: String by project
 val openFeignVersion: String by project
-val logbackECSEncoderVersion: String by project
 
 dependencies {
     constraints {
@@ -39,7 +38,6 @@ dependencies {
         implementation("io.github.openfeign:feign-core:${openFeignVersion}")
         implementation("io.github.openfeign:feign-jackson:${openFeignVersion}")
         implementation("io.github.openfeign:feign-slf4j:${openFeignVersion}")
-        implementation("co.elastic.logging:logback-ecs-encoder:${logbackECSEncoderVersion}")
     }
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
