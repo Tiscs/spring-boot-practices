@@ -7,8 +7,8 @@ repositories {
 }
 
 dependencies {
-    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21")
-    implementation("org.jetbrains.kotlin:kotlin-allopen:2.0.21")
+    implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.1.0")
+    implementation("org.jetbrains.kotlin:kotlin-allopen:2.1.0")
     implementation("org.springframework.boot:spring-boot-gradle-plugin:3.4.0")
     implementation("io.spring.gradle:dependency-management-plugin:1.1.6")
     implementation("com.google.protobuf:protobuf-gradle-plugin:0.9.4")
