@@ -1,5 +1,6 @@
 .DS_Store
 .gradle
+.kotlin
 build/
 **/src/main/resources/application-local.yml
 **/src/test/resources/application-local.yml
