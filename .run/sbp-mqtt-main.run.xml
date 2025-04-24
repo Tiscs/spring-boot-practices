@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="sbp-mqtt-main" type="JetRunConfigurationType">
+    <envs>
+      <env name="OTEL_METRICS_EXPORTER" value="none" />
+      <env name="SPRING_PROFILES_ACTIVE" value="dev,local" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="io.github.tiscs.sbp.ApplicationKt" />
+    <module name="sbp-projects.sbp-mqtt.main" />
+    <shortenClasspath name="NONE" />
+    <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
