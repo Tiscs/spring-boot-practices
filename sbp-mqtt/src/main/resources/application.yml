@@ -5,3 +5,6 @@ spring:
     banner-mode: off
   application:
     name: sbp-mqtt
+springdoc:
+  api-docs:
+    enabled: false

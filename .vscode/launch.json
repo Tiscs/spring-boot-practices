@@ -1,0 +1,22 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "sbp-users-main",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/sbp-users",
+            "mainClass": "io.github.tiscs.sbp.ApplicationKt",
+            "projectName": "sbp-users",
+            "args": "--spring.profiles.active=dev,local"
+        },
+        {
+            "type": "java",
+            "name": "sbp-mqtt-main",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/sbp-mqtt",
+            "mainClass": "io.github.tiscs.sbp.ApplicationKt",
+            "projectName": "sbp-mqtt",
+            "args": "--spring.profiles.active=dev,local"
+        }
+    ]
+}

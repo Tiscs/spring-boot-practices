@@ -48,10 +48,10 @@ class OpenApiConfig {
 
     @Bean
     fun openApiRouter() = router {
-        GET("/swagger") {
+        GET("/swagger.html") {
             ServerResponse.ok().render("swagger")
         }
-        GET("/api-docs") {
+        GET("/api-docs.html") {
             ServerResponse.ok().render("api-docs")
         }
     }
