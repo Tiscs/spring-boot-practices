@@ -18,6 +18,7 @@ val springDocVersion: String by project
 val springOAuth2ServerVersion: String by project
 val grpcSpringVersion: String by project
 val exposedVersion: String by project
+val mybatisVersion: String by project
 val mybatisSpringVersion: String by project
 val postgresqlDriverVersion: String by project
 val openFeignVersion: String by project
@@ -33,6 +34,7 @@ dependencies {
         implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${exposedVersion}")
+        implementation("org.mybatis:mybatis:${mybatisVersion}")
         implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}")
         implementation("org.postgresql:postgresql:${postgresqlDriverVersion}")
         implementation("io.github.openfeign:feign-core:${openFeignVersion}")
