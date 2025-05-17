@@ -32,6 +32,7 @@ dependencies {
         implementation("net.devh:grpc-server-spring-boot-starter:${grpcSpringVersion}")
         implementation("net.devh:grpc-client-spring-boot-starter:${grpcSpringVersion}")
         implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
+        implementation("org.jetbrains.exposed:exposed-jdbc:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${exposedVersion}")
         implementation("org.mybatis:mybatis:${mybatisVersion}")
