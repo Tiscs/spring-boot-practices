@@ -48,6 +48,9 @@ class OpenApiConfig {
 
     @Bean
     fun openApiRouter() = router {
+        GET("/scalar.html") {
+            ServerResponse.ok().render("scalar")
+        }
         GET("/swagger.html") {
             ServerResponse.ok().render("swagger")
         }

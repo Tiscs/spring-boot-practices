@@ -4,6 +4,8 @@ plugins {
 
 dependencies {
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml")
+    implementation("org.jetbrains.exposed:exposed-core")
+    implementation("org.jetbrains.exposed:exposed-jdbc")
     implementation("org.jetbrains.exposed:exposed-java-time")
     implementation("org.jetbrains.exposed:exposed-spring-boot-starter")
     implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter")

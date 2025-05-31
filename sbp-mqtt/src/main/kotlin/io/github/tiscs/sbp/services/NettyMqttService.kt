@@ -10,10 +10,10 @@ import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.codec.mqtt.MqttDecoder
 import io.netty.handler.codec.mqtt.MqttEncoder
 import io.netty.handler.timeout.ReadTimeoutHandler
-import org.slf4j.LoggerFactory
-import org.springframework.stereotype.Component
 import jakarta.annotation.PostConstruct
 import jakarta.annotation.PreDestroy
+import org.slf4j.LoggerFactory
+import org.springframework.stereotype.Component
 
 @Component
 class NettyMqttService {

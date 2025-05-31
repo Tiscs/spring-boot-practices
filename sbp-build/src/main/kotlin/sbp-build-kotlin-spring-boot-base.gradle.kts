@@ -16,7 +16,7 @@ configurations {
 
 val springDocVersion: String by project
 val springOAuth2ServerVersion: String by project
-val grpcSpringVersion: String by project
+val springGrpcVersion: String by project
 val exposedVersion: String by project
 val mybatisVersion: String by project
 val mybatisSpringVersion: String by project
@@ -28,9 +28,9 @@ dependencies {
         implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:${springDocVersion}")
         implementation("org.springdoc:springdoc-openapi-starter-webflux-api:${springDocVersion}")
         implementation("org.springframework.security:spring-security-oauth2-authorization-server:${springOAuth2ServerVersion}")
-        implementation("net.devh:grpc-spring-boot-starter:${grpcSpringVersion}")
-        implementation("net.devh:grpc-server-spring-boot-starter:${grpcSpringVersion}")
-        implementation("net.devh:grpc-client-spring-boot-starter:${grpcSpringVersion}")
+        implementation("org.springframework.grpc:spring-grpc-spring-boot-starter:${springGrpcVersion}")
+        implementation("org.springframework.grpc:spring-grpc-client-spring-boot-starter:${springGrpcVersion}")
+        implementation("org.springframework.grpc:spring-grpc-server-spring-boot-starter:${springGrpcVersion}")
         implementation("org.jetbrains.exposed:exposed-core:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-jdbc:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
@@ -41,6 +41,7 @@ dependencies {
         implementation("io.github.openfeign:feign-core:${openFeignVersion}")
         implementation("io.github.openfeign:feign-jackson:${openFeignVersion}")
         implementation("io.github.openfeign:feign-slf4j:${openFeignVersion}")
+        testImplementation("org.springframework.grpc:spring-grpc-test:${springGrpcVersion}")
     }
     implementation("org.springframework.boot:spring-boot-starter")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

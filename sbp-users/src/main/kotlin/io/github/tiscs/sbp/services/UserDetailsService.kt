@@ -4,7 +4,8 @@ import io.github.tiscs.sbp.tables.RoleUsers
 import io.github.tiscs.sbp.tables.Roles
 import io.github.tiscs.sbp.tables.Users
 import io.github.tiscs.sbp.tables.toUserDetails
-import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.v1.jdbc.select
+import org.jetbrains.exposed.v1.jdbc.selectAll
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service

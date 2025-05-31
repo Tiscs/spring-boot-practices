@@ -25,6 +25,8 @@ dependencies {
     implementation("build.buf.protoc-gen-validate:pgv-java-stub:${protobufValidateVersion}")
     implementation("io.grpc:grpc-core:${grpcCoreVersion}")
     implementation("io.grpc:grpc-stub:${grpcStubVersion}")
+    implementation("io.grpc:grpc-netty:${grpcStubVersion}")
+    implementation("io.grpc:grpc-services:${grpcStubVersion}")
     implementation("io.grpc:grpc-protobuf:${grpcProtobufVersion}")
     implementation("io.grpc:grpc-kotlin-stub:${grpcKotlinStubVersion}")
 }
