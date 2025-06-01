@@ -6,7 +6,7 @@
     </envs>
     <module name="sbp-projects.sbp-users.main" />
     <option name="SPRING_BOOT_MAIN_CLASS" value="io.github.tiscs.sbp.Application" />
-    <option name="WORKING_DIRECTORY" value="$MODULE_DIR$" />
+    <option name="WORKING_DIRECTORY" value="file://$MODULE_DIR$" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

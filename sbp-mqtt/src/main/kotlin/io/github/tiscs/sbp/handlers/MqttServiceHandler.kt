@@ -7,11 +7,9 @@ import io.netty.handler.codec.mqtt.*
 import io.netty.handler.timeout.ReadTimeoutHandler
 import org.slf4j.LoggerFactory
 
-class MqttServiceHandler : ChannelInboundHandlerAdapter() {
-    companion object {
-        private val logger = LoggerFactory.getLogger(MqttServiceHandler::class.java)
-    }
+private val LOGGER = LoggerFactory.getLogger(MqttServiceHandler::class.java)
 
+class MqttServiceHandler : ChannelInboundHandlerAdapter() {
     override fun channelRead(ctx: ChannelHandlerContext, msg: Any) {
         if (msg is MqttMessage) {
             when (msg.fixedHeader().messageType()) {
@@ -82,7 +80,7 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
 
     private fun onPublish(ctx: ChannelHandlerContext, msg: MqttPublishMessage) {
         if (msg.variableHeader().topicName().length < 32) { // TODO: Verify publish topic name
-            logger.warn("Invalid publish topic name: ${msg.variableHeader().topicName()}, channel closed")
+            LOGGER.warn("Invalid publish topic name: ${msg.variableHeader().topicName()}, channel closed")
             ctx.close()
         }
         val messageType = when (msg.fixedHeader().qosLevel()) {
@@ -94,7 +92,7 @@ class MqttServiceHandler : ChannelInboundHandlerAdapter() {
             }
             else -> run {
                 ctx.close()
-                logger.warn("Invalid MQTT QoS level: ${msg.fixedHeader().qosLevel()}, channel closed")
+                LOGGER.warn("Invalid MQTT QoS level: ${msg.fixedHeader().qosLevel()}, channel closed")
                 return
             }
         }

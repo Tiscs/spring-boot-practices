@@ -15,12 +15,10 @@ import jakarta.annotation.PreDestroy
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 
+private val LOGGER = LoggerFactory.getLogger(NettyMqttService::class.java)
+
 @Component
 class NettyMqttService {
-    companion object {
-        val logger = LoggerFactory.getLogger(NettyMqttService::class.java)!!
-    }
-
     private val parentGroup: NioEventLoopGroup = NioEventLoopGroup(1)
     private val workerGroup: NioEventLoopGroup = NioEventLoopGroup()
 
@@ -40,12 +38,12 @@ class NettyMqttService {
                 }
             })
         bootstrap.bind(1883).sync()
-        logger.info("MQTT server listening on 1883")
+        LOGGER.info("MQTT server listening on 1883")
     }
 
     @PreDestroy
     fun close() {
-        logger.info("MQTT server shutting down")
+        LOGGER.info("MQTT server shutting down")
         workerGroup.shutdownGracefully().sync()
         parentGroup.shutdownGracefully().sync()
     }

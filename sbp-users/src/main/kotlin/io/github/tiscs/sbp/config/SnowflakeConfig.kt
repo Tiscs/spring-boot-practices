@@ -12,14 +12,12 @@ import org.springframework.data.redis.connection.RedisConnectionFactory
 import org.springframework.util.Assert
 import java.util.*
 
+private val LOGGER = LoggerFactory.getLogger(SnowflakeConfig::class.java)
+
 @Configuration
 @ConditionalOnProperty("snowflake.enabled", matchIfMissing = false)
 @EnableConfigurationProperties(ConfigProperties::class)
 class SnowflakeConfig {
-    companion object {
-        private val LOGGER = LoggerFactory.getLogger(SnowflakeConfig::class.java)
-    }
-
     @Bean
     fun idWorker(config: ConfigProperties, factory: Optional<RedisConnectionFactory>): IdWorker {
         val workerId = if (!config.workerSequence.isNullOrEmpty()) {
