@@ -10,24 +10,21 @@ val protocGenValidateVersion: String by project
 val protocGenGrpcJavaVersion: String by project
 val protocGenGrpcKotlinVersion: String by project
 val kotlinxCoroutinesVersion: String by project
-val protobufJavaVersion: String by project
-val protobufKotlinVersion: String by project
+val protobufLibraryVersion: String by project
 val protobufValidateVersion: String by project
-val grpcCoreVersion: String by project
-val grpcStubVersion: String by project
-val grpcProtobufVersion: String by project
+val grpcLibraryVersion: String by project
 val grpcKotlinStubVersion: String by project
 
 dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm:${kotlinxCoroutinesVersion}")
-    implementation("com.google.protobuf:protobuf-java:${protobufJavaVersion}")
-    implementation("com.google.protobuf:protobuf-kotlin:${protobufKotlinVersion}")
+    implementation("com.google.protobuf:protobuf-java:${protobufLibraryVersion}")
+    implementation("com.google.protobuf:protobuf-kotlin:${protobufLibraryVersion}")
     implementation("build.buf.protoc-gen-validate:pgv-java-stub:${protobufValidateVersion}")
-    implementation("io.grpc:grpc-core:${grpcCoreVersion}")
-    implementation("io.grpc:grpc-stub:${grpcStubVersion}")
-    implementation("io.grpc:grpc-netty:${grpcStubVersion}")
-    implementation("io.grpc:grpc-services:${grpcStubVersion}")
-    implementation("io.grpc:grpc-protobuf:${grpcProtobufVersion}")
+    implementation("io.grpc:grpc-core:${grpcLibraryVersion}")
+    implementation("io.grpc:grpc-stub:${grpcLibraryVersion}")
+    implementation("io.grpc:grpc-netty:${grpcLibraryVersion}")
+    implementation("io.grpc:grpc-services:${grpcLibraryVersion}")
+    implementation("io.grpc:grpc-protobuf:${grpcLibraryVersion}")
     implementation("io.grpc:grpc-kotlin-stub:${grpcKotlinStubVersion}")
 }
 

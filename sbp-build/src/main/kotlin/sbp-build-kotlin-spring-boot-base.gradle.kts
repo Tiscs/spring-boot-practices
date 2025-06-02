@@ -2,10 +2,10 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("sbp-build-kotlin-library-base")
-    id("org.graalvm.buildtools.native")
     id("org.jetbrains.kotlin.plugin.spring")
     id("org.springframework.boot")
     id("io.spring.dependency-management")
+    id("org.graalvm.buildtools.native")
 }
 
 configurations {
