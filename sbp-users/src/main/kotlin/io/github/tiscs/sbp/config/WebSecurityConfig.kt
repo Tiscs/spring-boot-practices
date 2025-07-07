@@ -35,9 +35,9 @@ class WebSecurityConfig(
     /**
      * @see org.springframework.security.converter.RsaKeyConverters
      */
-    @Value("\${spring.security.oauth2.authorization.jwt.private-key-value}")
+    @Value($$"${spring.security.oauth2.authorization.jwt.private-key-value}")
     private val jwtPrivateKey: RSAPrivateKey,
-    @Value("\${spring.security.oauth2.resourceserver.jwt.public-key-value}")
+    @Value($$"${spring.security.oauth2.resourceserver.jwt.public-key-value}")
     private val jwtPublicKey: RSAPublicKey,
 ) {
     @Bean

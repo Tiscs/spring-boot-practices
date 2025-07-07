@@ -49,6 +49,12 @@ dependencies {
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
+kotlin {
+    compilerOptions {
+        freeCompilerArgs.addAll("-Xannotation-default-target=param-property")
+    }
+}
+
 tasks.getByName<BootJar>("bootJar") {
     archiveClassifier.set("boot")
 }
