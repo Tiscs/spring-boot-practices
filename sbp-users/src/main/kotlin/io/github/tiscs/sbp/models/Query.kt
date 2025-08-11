@@ -3,10 +3,7 @@
 package io.github.tiscs.sbp.models
 
 data class Filter(val name: String, val params: List<Any?> = emptyList()) {
-    inline fun <reified T> getParam(index: Int): T? {
-        return params.getOrNull(index) as? T
-    }
-
+    inline fun <reified T> getParam(index: Int): T? = params.getOrNull(index) as? T
 }
 
 data class Sorting(val keys: List<String>, val modes: List<Mode>) {

@@ -24,11 +24,11 @@ enum class Gender {
 }
 
 data class User(
-    @Schema(example = "04d604b6e1400000")
-    @Pattern(regexp = DEFAULT_ID_PATTERN)
+    @field:Schema(example = "04d604b6e1400000")
+    @field:Pattern(regexp = DEFAULT_ID_PATTERN)
     val id: String? = null,
-    @Schema(example = "04d604af4d400000")
-    @Pattern(regexp = DEFAULT_ID_PATTERN)
+    @field:Schema(example = "04d604af4d400000")
+    @field:Pattern(regexp = DEFAULT_ID_PATTERN)
     val realmId: String? = null,
     val createdAt: LocalDateTime? = null,
     val expiresAt: LocalDateTime? = null,
@@ -42,11 +42,11 @@ data class User(
 )
 
 data class Client(
-    @Schema(example = "04d604c328800000")
-    @Pattern(regexp = DEFAULT_ID_PATTERN)
+    @field:Schema(example = "04d604c328800000")
+    @field:Pattern(regexp = DEFAULT_ID_PATTERN)
     val id: String? = null,
-    @Schema(example = "04d604bcd0400000")
-    @Pattern(regexp = DEFAULT_ID_PATTERN)
+    @field:Schema(example = "04d604bcd0400000")
+    @field:Pattern(regexp = DEFAULT_ID_PATTERN)
     val vendorId: String? = null,
     val createdAt: LocalDateTime? = null,
     val expiresAt: LocalDateTime? = null,

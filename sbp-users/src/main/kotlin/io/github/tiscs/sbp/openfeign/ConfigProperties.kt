@@ -10,7 +10,5 @@ data class ConfigProperties(
     val readTimeout: Long = 60,
     val followRedirects: Boolean = true,
 ) {
-    fun toRequestOptions(): Request.Options {
-        return Request.Options(connectTimeout, TimeUnit.SECONDS, readTimeout, TimeUnit.SECONDS, followRedirects)
-    }
+    fun toRequestOptions(): Request.Options = Request.Options(connectTimeout, TimeUnit.SECONDS, readTimeout, TimeUnit.SECONDS, followRedirects)
 }

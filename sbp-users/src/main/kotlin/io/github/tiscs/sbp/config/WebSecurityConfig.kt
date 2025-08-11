@@ -1,10 +1,7 @@
 package io.github.tiscs.sbp.config
 
-import com.nimbusds.jose.jwk.JWKSelector
-import com.nimbusds.jose.jwk.JWKSet
 import com.nimbusds.jose.jwk.RSAKey
-import com.nimbusds.jose.jwk.source.JWKSource
-import com.nimbusds.jose.proc.SecurityContext
+import io.github.tiscs.sbp.security.SingletonJWKSource
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -35,23 +32,20 @@ class WebSecurityConfig(
     /**
      * @see org.springframework.security.converter.RsaKeyConverters
      */
-    @Value($$"${spring.security.oauth2.authorization.jwt.private-key-value}")
+    @param:Value($$"${spring.security.oauth2.authorization.jwt.private-key-value}")
     private val jwtPrivateKey: RSAPrivateKey,
-    @Value($$"${spring.security.oauth2.resourceserver.jwt.public-key-value}")
+    @param:Value($$"${spring.security.oauth2.resourceserver.jwt.public-key-value}")
     private val jwtPublicKey: RSAPublicKey,
 ) {
     @Bean
     fun passwordEncoder(): PasswordEncoder = PasswordEncoderFactories.createDelegatingPasswordEncoder()
 
     @Bean
-    fun jwkSource(): JWKSource<SecurityContext> {
-        return JWKSource<SecurityContext> { selector: JWKSelector, _: SecurityContext? ->
-            selector.select(JWKSet(RSAKey.Builder(jwtPublicKey).privateKey(jwtPrivateKey).build()))
-        }
-    }
-
-    @Bean
-    fun jwtEncoder(): JwtEncoder = NimbusJwtEncoder(jwkSource())
+    fun jwtEncoder(): JwtEncoder = NimbusJwtEncoder(
+        SingletonJWKSource(
+            RSAKey.Builder(jwtPublicKey).privateKey(jwtPrivateKey).build()
+        )
+    )
 
     @Bean
     fun jwtDecoder(): ReactiveJwtDecoder = NimbusReactiveJwtDecoder.withPublicKey(jwtPublicKey).build()

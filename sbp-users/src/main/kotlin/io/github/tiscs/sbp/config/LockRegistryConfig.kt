@@ -8,13 +8,11 @@ import org.springframework.integration.redis.util.RedisLockRegistry
 
 @Configuration
 class LockRegistryConfig(
-    @Value($$"${spring.application.name}")
+    @param:Value($$"${spring.application.name}")
     private val registryKey: String,
 ) {
     @Bean
     fun redisLockRegistry(
         connectionFactory: RedisConnectionFactory,
-    ): RedisLockRegistry {
-        return RedisLockRegistry(connectionFactory, "LOCK_REGISTRY.$registryKey")
-    }
+    ): RedisLockRegistry = RedisLockRegistry(connectionFactory, "LOCK_REGISTRY.$registryKey")
 }
