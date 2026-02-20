@@ -5,29 +5,27 @@ import io.github.tiscs.sbp.security.SingletonJWKSource
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity
-import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity
-import org.springframework.security.config.web.server.ServerHttpSecurity
-import org.springframework.security.config.web.server.invoke
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
+import org.springframework.security.config.annotation.web.builders.HttpSecurity
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
+import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.crypto.factory.PasswordEncoderFactories
 import org.springframework.security.crypto.password.PasswordEncoder
+import org.springframework.security.oauth2.jwt.JwtDecoder
 import org.springframework.security.oauth2.jwt.JwtEncoder
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder
-import org.springframework.security.oauth2.jwt.NimbusReactiveJwtDecoder
-import org.springframework.security.oauth2.jwt.ReactiveJwtDecoder
-import org.springframework.security.web.server.SecurityWebFilterChain
-import org.springframework.security.web.server.context.NoOpServerSecurityContextRepository
-import org.springframework.security.web.server.savedrequest.NoOpServerRequestCache
-import org.springframework.security.web.server.savedrequest.WebSessionServerRequestCache
-import org.springframework.security.web.server.util.matcher.ServerWebExchangeMatchers
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.router
+import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache
+import org.springframework.security.web.savedrequest.NullRequestCache
+import org.springframework.web.servlet.function.ServerResponse
+import org.springframework.web.servlet.function.router
 import java.security.interfaces.RSAPrivateKey
 import java.security.interfaces.RSAPublicKey
 
 @Configuration
-@EnableWebFluxSecurity
-@EnableReactiveMethodSecurity
+@EnableWebSecurity
+@EnableMethodSecurity
 class WebSecurityConfig(
     /**
      * @see org.springframework.security.converter.RsaKeyConverters
@@ -48,15 +46,16 @@ class WebSecurityConfig(
     )
 
     @Bean
-    fun jwtDecoder(): ReactiveJwtDecoder = NimbusReactiveJwtDecoder.withPublicKey(jwtPublicKey).build()
+    fun jwtDecoder(): JwtDecoder = NimbusJwtDecoder.withPublicKey(jwtPublicKey).build()
 
     @Bean
-    fun formFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
-        return http {
-            securityMatcher(ServerWebExchangeMatchers.pathMatchers("/login", "/logout", "/oauth/authorize"))
-            authorizeExchange {
-                authorize(ServerWebExchangeMatchers.pathMatchers("/login"), permitAll)
-                authorize(ServerWebExchangeMatchers.pathMatchers("/logout", "/oauth/authorize"), authenticated)
+    fun formFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http {
+            securityMatcher("/login", "/logout", "/oauth/authorize")
+            authorizeHttpRequests {
+                authorize("/login", permitAll)
+                authorize("/logout", authenticated)
+                authorize("/oauth/authorize", authenticated)
             }
             formLogin {
                 loginPage = "/login"
@@ -65,25 +64,32 @@ class WebSecurityConfig(
                 logoutUrl = "/logout"
             }
             requestCache {
-                requestCache = WebSessionServerRequestCache()
+                requestCache = HttpSessionRequestCache()
             }
         }
+        return http.build()
     }
 
     @Bean
-    fun jwtFilterChain(http: ServerHttpSecurity): SecurityWebFilterChain {
-        http.securityContextRepository(NoOpServerSecurityContextRepository.getInstance())
-        return http {
-            authorizeExchange {
-                authorize(anyExchange, permitAll)
+    fun jwtFilterChain(http: HttpSecurity): SecurityFilterChain {
+        http {
+            authorizeHttpRequests {
+                authorize(anyRequest, permitAll)
             }
-            oauth2ResourceServer { jwt {} }
-            logout { disable() }
-            csrf { disable() }
+            oauth2ResourceServer {
+                jwt {}
+            }
+            logout {
+                disable()
+            }
+            csrf {
+                disable()
+            }
             requestCache {
-                requestCache = NoOpServerRequestCache.getInstance()
+                requestCache = NullRequestCache()
             }
         }
+        return http.build()
     }
 
     @Bean

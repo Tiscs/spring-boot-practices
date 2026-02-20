@@ -15,7 +15,6 @@ configurations {
 }
 
 val springDocVersion: String by project
-val springOAuth2ServerVersion: String by project
 val springGrpcVersion: String by project
 val exposedVersion: String by project
 val mybatisVersion: String by project
@@ -27,7 +26,6 @@ dependencies {
     constraints {
         implementation("org.springdoc:springdoc-openapi-starter-webmvc-api:${springDocVersion}")
         implementation("org.springdoc:springdoc-openapi-starter-webflux-api:${springDocVersion}")
-        implementation("org.springframework.security:spring-security-oauth2-authorization-server:${springOAuth2ServerVersion}")
         implementation("org.springframework.grpc:spring-grpc-spring-boot-starter:${springGrpcVersion}")
         implementation("org.springframework.grpc:spring-grpc-client-spring-boot-starter:${springGrpcVersion}")
         implementation("org.springframework.grpc:spring-grpc-server-spring-boot-starter:${springGrpcVersion}")
@@ -35,7 +33,7 @@ dependencies {
         implementation("org.jetbrains.exposed:exposed-jdbc:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-r2dbc:${exposedVersion}")
         implementation("org.jetbrains.exposed:exposed-java-time:${exposedVersion}")
-        implementation("org.jetbrains.exposed:exposed-spring-boot-starter:${exposedVersion}")
+        implementation("org.jetbrains.exposed:exposed-spring-boot4-starter:${exposedVersion}")
         implementation("org.mybatis:mybatis:${mybatisVersion}")
         implementation("org.mybatis.spring.boot:mybatis-spring-boot-starter:${mybatisSpringVersion}")
         implementation("org.postgresql:postgresql:${postgresqlDriverVersion}")

@@ -81,4 +81,16 @@ class UtilsController(
     fun fetchGitHubZen(): ResponseEntity<String> {
         return ResponseEntity.ok(gitHubClient.fetchZen())
     }
+
+    @RequestMapping("/thread/info")
+    fun getThreadInfo(): Map<String, String?> {
+        val currentThread = Thread.currentThread()
+        return mapOf(
+            "threadName" to currentThread.name,
+            "threadClass" to currentThread.javaClass.simpleName,
+            "isVirtual" to currentThread.isVirtual.toString(),
+            "threadGroup" to (currentThread.threadGroup?.name),
+            "javaVersion" to System.getProperty("java.version")
+        )
+    }
 }

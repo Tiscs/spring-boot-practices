@@ -17,7 +17,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses
 import io.swagger.v3.oas.annotations.security.SecurityRequirement
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.jetbrains.exposed.v1.core.ResultRow
-import org.jetbrains.exposed.v1.core.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.v1.core.eq
+import org.jetbrains.exposed.v1.core.like
 import org.jetbrains.exposed.v1.jdbc.*
 import org.springframework.amqp.rabbit.core.RabbitTemplate
 import org.springframework.http.HttpStatus
@@ -36,7 +37,7 @@ import org.springframework.web.bind.annotation.*
 class UserController(
     private val idWorker: IdWorker,
     private val rabbitTemplate: RabbitTemplate,
-) : CurdController<User, String> {
+) : CurdController<String, User> {
     @ApiResponses(
         ApiResponse(responseCode = "200"),
         ApiResponse(responseCode = "400", content = [Content(schema = Schema(implementation = ProblemDetail::class))]),

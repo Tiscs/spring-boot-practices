@@ -1,21 +1,20 @@
 package io.github.tiscs.sbp.config
 
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.databind.PropertyNamingStrategies
-import com.fasterxml.jackson.databind.SerializationFeature
-import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer
+import org.springframework.boot.jackson.autoconfigure.JsonMapperBuilderCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import tools.jackson.databind.PropertyNamingStrategies
+import tools.jackson.databind.cfg.DateTimeFeature
 
 @Configuration
 class ObjectMapperConfig {
+
     @Bean
-    fun jacksonBuilderCustomizer(): Jackson2ObjectMapperBuilderCustomizer {
-        return Jackson2ObjectMapperBuilderCustomizer {
-            it.findModulesViaServiceLoader(true)
-                .serializationInclusion(JsonInclude.Include.NON_NULL)
+    fun jsonMapperBuilderCustomizer(): JsonMapperBuilderCustomizer {
+        return JsonMapperBuilderCustomizer { builder ->
+            builder
                 .propertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
-                .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .disable(DateTimeFeature.WRITE_DATES_AS_TIMESTAMPS)
         }
     }
 }

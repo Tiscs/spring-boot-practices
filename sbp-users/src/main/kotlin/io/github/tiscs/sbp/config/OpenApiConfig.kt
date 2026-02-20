@@ -1,6 +1,8 @@
 package io.github.tiscs.sbp.config
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.PropertyNamingStrategies
+import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.databind.node.ArrayNode
 import com.fasterxml.jackson.databind.node.ObjectNode
 import io.github.tiscs.sbp.models.Query
@@ -16,8 +18,8 @@ import org.springdoc.core.utils.SpringDocUtils
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
-import org.springframework.web.reactive.function.server.ServerResponse
-import org.springframework.web.reactive.function.server.router
+import org.springframework.web.servlet.function.ServerResponse
+import org.springframework.web.servlet.function.router
 
 @Configuration
 @ConditionalOnProperty(name = [SPRINGDOC_ENABLED], matchIfMissing = true)
@@ -28,6 +30,8 @@ class OpenApiConfig {
                 .addRequestWrapperToIgnore(Query::class.java)
                 .replaceWithClass(ObjectNode::class.java, Map::class.java)
                 .replaceWithClass(ArrayNode::class.java, List::class.java)
+                .replaceWithClass(tools.jackson.databind.node.ObjectNode::class.java, Map::class.java)
+                .replaceWithClass(tools.jackson.databind.node.ArrayNode::class.java, List::class.java)
         }
     }
 
@@ -41,7 +45,11 @@ class OpenApiConfig {
 
 
     @Bean
-    fun modelResolver(objectMapper: ObjectMapper) = ModelResolver(objectMapper)
+    fun modelResolver() = ModelResolver(
+        ObjectMapper()
+            .setPropertyNamingStrategy(PropertyNamingStrategies.SNAKE_CASE)
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+    )
 
     @Bean
     fun queryParamsCustomizer() = QueryParamsCustomizer()

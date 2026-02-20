@@ -12,7 +12,7 @@ private val SEQ_REDIS_SCRIPT = RedisSerializer.string().serialize(
         end
         return redis.call('get', KEYS[1]) - 1
     """.trimIndent()
-)!!
+)
 
 class RedisSequenceProvider(
     sequenceKey: String,
@@ -20,9 +20,9 @@ class RedisSequenceProvider(
     minValue: Long = 0,
     maxValue: Long = Long.MAX_VALUE,
 ) : SequenceProvider {
-    private val minValueParam = RedisSerializer.string().serialize(minValue.toString(10))!!
-    private val maxValueParam = RedisSerializer.string().serialize(maxValue.toString(10))!!
-    private val sequenceKeyParam = RedisSerializer.string().serialize(sequenceKey)!!
+    private val minValueParam = RedisSerializer.string().serialize(minValue.toString(10))
+    private val maxValueParam = RedisSerializer.string().serialize(maxValue.toString(10))
+    private val sequenceKeyParam = RedisSerializer.string().serialize(sequenceKey)
 
     override fun nextValue(): Long = connectionFactory.connection.use {
         it.scriptingCommands().eval<Long>(

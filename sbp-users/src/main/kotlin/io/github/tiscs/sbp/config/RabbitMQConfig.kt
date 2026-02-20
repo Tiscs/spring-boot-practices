@@ -1,21 +1,21 @@
 package io.github.tiscs.sbp.config
 
-import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.amqp.core.Binding
 import org.springframework.amqp.core.Exchange
 import org.springframework.amqp.core.Queue
 import org.springframework.amqp.core.TopicExchange
-import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter
+import org.springframework.amqp.support.converter.JacksonJsonMessageConverter
 import org.springframework.amqp.support.converter.MessageConverter
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import tools.jackson.databind.json.JsonMapper
 
 @Configuration
 class RabbitMQConfig(
-    private val objectMapper: ObjectMapper,
+    private val jsonMapper: JsonMapper,
 ) {
     @Bean
-    fun messageConverter(): MessageConverter = Jackson2JsonMessageConverter(objectMapper)
+    fun messageConverter(): MessageConverter = JacksonJsonMessageConverter(jsonMapper)
 
     @Bean
     fun userEventQueue(): Queue = Queue("users.events", true, false, false)

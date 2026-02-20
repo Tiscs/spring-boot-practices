@@ -4,7 +4,8 @@ import io.github.tiscs.sbp.handlers.MqttLoggingHandler
 import io.github.tiscs.sbp.handlers.MqttServiceHandler
 import io.netty.bootstrap.ServerBootstrap
 import io.netty.channel.ChannelInitializer
-import io.netty.channel.nio.NioEventLoopGroup
+import io.netty.channel.MultiThreadIoEventLoopGroup
+import io.netty.channel.nio.NioIoHandler
 import io.netty.channel.socket.SocketChannel
 import io.netty.channel.socket.nio.NioServerSocketChannel
 import io.netty.handler.codec.mqtt.MqttDecoder
@@ -19,8 +20,8 @@ private val LOGGER = LoggerFactory.getLogger(NettyMqttService::class.java)
 
 @Component
 class NettyMqttService {
-    private val parentGroup: NioEventLoopGroup = NioEventLoopGroup(1)
-    private val workerGroup: NioEventLoopGroup = NioEventLoopGroup()
+    private val parentGroup: MultiThreadIoEventLoopGroup = MultiThreadIoEventLoopGroup(1, NioIoHandler.newFactory())
+    private val workerGroup: MultiThreadIoEventLoopGroup = MultiThreadIoEventLoopGroup(0, NioIoHandler.newFactory())
 
     @PostConstruct
     fun start() {

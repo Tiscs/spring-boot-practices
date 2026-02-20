@@ -4,6 +4,7 @@ package io.github.tiscs.sbp.models
 
 import io.swagger.v3.oas.annotations.media.Schema
 import jakarta.validation.constraints.Pattern
+import org.springframework.data.annotation.Id
 import java.time.LocalDate
 import java.time.LocalDateTime
 
@@ -24,6 +25,7 @@ enum class Gender {
 }
 
 data class User(
+    @field:Id
     @field:Schema(example = "04d604b6e1400000")
     @field:Pattern(regexp = DEFAULT_ID_PATTERN)
     val id: String? = null,
@@ -42,6 +44,7 @@ data class User(
 )
 
 data class Client(
+    @field:Id
     @field:Schema(example = "04d604c328800000")
     @field:Pattern(regexp = DEFAULT_ID_PATTERN)
     val id: String? = null,
